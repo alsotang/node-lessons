@@ -11,12 +11,12 @@
 课程列表
 ==
 
-1. Lesson 1: 《一个最简单的 express 应用》
-1. Lesson 2: 《学习使用外部模块》
-1. Lesson 3: 《使用 superagent 与 cheerio 完成简单爬虫》
-1. Lesson 4: 《使用 eventproxy 控制并发》
-1. Lesson 5: 《使用 async 控制并发》
-1. Lesson 6: 《测试用例：mocha，should，istanbul》
+* Lesson 1: 《一个最简单的 express 应用》
+* Lesson 2: 《学习使用外部模块》
+* Lesson 3: 《使用 superagent 与 cheerio 完成简单爬虫》
+* Lesson 4: 《使用 eventproxy 控制并发》
+* Lesson 5: 《使用 async 控制并发》
+* Lesson 6: 《测试用例：mocha，should，istanbul》
 
 License
 ==
