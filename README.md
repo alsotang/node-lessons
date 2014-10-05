@@ -16,7 +16,7 @@
 * Lesson 0: [《搭建 Node.js 开发环境》](https://github.com/alsotang/node-lessons/tree/master/lesson0)
 * Lesson 1: [《一个最简单的 express 应用》](https://github.com/alsotang/node-lessons/tree/master/lesson1)
 * Lesson 2: [《学习使用外部模块》](https://github.com/alsotang/node-lessons/tree/master/lesson2)
-* Lesson 3: 《使用 superagent 与 cheerio 完成简单爬虫》
+* Lesson 3: [《使用 superagent 与 cheerio 完成简单爬虫》](https://github.com/alsotang/node-lessons/tree/master/lesson3)
 * Lesson 4: 《使用 eventproxy 控制并发》
 * Lesson 5: 《使用 async 控制并发》
 * Lesson 6: 《测试用例：mocha，should，istanbul》
