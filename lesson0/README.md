@@ -39,6 +39,7 @@ $ nvm ls
 
 这时候可以看到自己安装的所有 Node.js 版本，输出应如下：
 
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson0/1.png)
 
 
 3.
