@@ -43,9 +43,9 @@ $ nvm ls
 
 （图1）
 
-那个绿色小箭头的意思就是现在正在使用的版本，我这里是 `v0.10.29`。我还安装了 `v0.11.14`，但我目前没有使用。
+那个绿色小箭头的意思就是现在正在使用的版本，我这里是 `v0.10.29`。我还安装了 `v0.11.14`，但它并非我当前使用的版本。
 
-如果你那里没有出现绿色小箭头的话，告诉 nvm 你要使用 `0.10.x` 版本。
+如果你那里没有出现绿色小箭头的话，告诉 nvm 你要使用 `0.10.x` 版本
 
 ```
 $ nvm use 0.10
@@ -63,9 +63,11 @@ REPL(read–eval–print loop) 应该就出来了，那我们就成功了。
 
 随便敲两行命令玩玩吧。
 
+比如 `> while (true) {}`，这时你的 CPU 应该会飚高。
+
 3. 完善安装
 
-上述过程完成后，有时会出现开启一个新的 shell 窗口时，找不到 node 命令的情况。
+上述过程完成后，有时会出现，当开启一个新的 shell 窗口时，找不到 node 命令的情况。
 
 这种情况一般来自两个原因
 
@@ -77,7 +79,7 @@ REPL(read–eval–print loop) 应该就出来了，那我们就成功了。
 一、检查 `~/.profile` 或者 `~/.bash_profile` 中有没有这样两句
 
 ```
-export NVM_DIR="/Users/alsotang/.nvm"
+export NVM_DIR="/Users/YOURUSERNAME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 ```
 
