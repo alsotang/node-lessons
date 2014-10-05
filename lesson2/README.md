@@ -91,6 +91,10 @@ OK，运行我们的程序
 
 如果直接访问 `http://localhost:3000/` 会抛错
 
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson2/2.png)
 
+可以看到，这个错误是从 `crypto.js` 中抛出的。
+
+这是因为，当我们不传入 `q` 参数时，`req.query.q` 取到的值是 `undefined`，`utility.md5` 直接使用了这个空值，导致下层的 `crypto` 抛错。
 
 
