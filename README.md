@@ -8,6 +8,8 @@
 
 这个课程是希望提供更多的 Node.js 实战机会，通过每一节精心安排的课程目标，让 Node.js 的初学者们可以循序渐进地，有目的有挑战地开展 Node.js 的学习。
 
+更多 Node.js 入门资料请前往：https://cnodejs.org/getstart
+
 课程列表
 ==
 
