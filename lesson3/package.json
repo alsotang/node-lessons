@@ -1,0 +1,17 @@
+{
+  "name": "lesson3",
+  "version": "0.0.0",
+  "description": "使用 superagent 与 cheerio 完成简单爬虫",
+  "main": "app.js",
+  "dependencies": {
+    "cheerio": "^0.17.0",
+    "express": "^4.9.5",
+    "superagent": "^0.20.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alsotang <alsotang@gmail.com>",
+  "license": "MIT"
+}
