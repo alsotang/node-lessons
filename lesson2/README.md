@@ -40,8 +40,11 @@ OK，这时会要求我们输入一些信息，乱填就好了，反正这个地
 
 `$ npm install express utility --save`
 
-这次的安装命令与上节课的命令有两点不同，一是没有指定 registry，没有指定的情况下，默认从 npm 官方安装，上次我们是从淘宝的源安装的。二是多了个 `--save` 参数，这个参数的作用，就是会在你安装依赖的同时，自动把这些依赖写入 package.json。命令执行完成之后，查看 package.json，会发现多了一个字段，如下图：
+这次的安装命令与上节课的命令有两点不同，一是没有指定 registry，没有指定的情况下，默认从 npm 官方安装，上次我们是从淘宝的源安装的。二是多了个 `--save` 参数，这个参数的作用，就是会在你安装依赖的同时，自动把这些依赖写入 package.json。命令执行完成之后，查看 package.json，会发现多了一个 `dependencies` 字段，如下图：
 
 ![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson2/1.png)
+
+这时查看 `node_modules` 目录，会发现有两个文件夹，分别是 express 和 utility
+
 
 
