@@ -91,7 +91,7 @@ OK，运行我们的程序
 
 如果直接访问 `http://localhost:3000/` 会抛错
 
-![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson2/2.png)
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson2/3.png)
 
 可以看到，这个错误是从 `crypto.js` 中抛出的。
 
