@@ -29,9 +29,10 @@ express 的官网是 http://expressjs.com/ ，我常常上去看它的 API。
 
 不同于 ruby 的 gem 装在全局，Node.js 的依赖是以项目为单位管理的，直接就安装在项目的 `node_modules` 目录下，而且每个依赖都可以有指定版本的其他依赖，这些依赖像一棵树一样。根据我自己的使用经验来说，npm 的体验在 pip 和 gem 之上。
 
-OK，新建一个文件夹叫 lesson1 的，进去里面执行
+OK，新建一个文件夹叫 lesson1 的，进去里面安装 express
 
 ```
+$ mkdir lesson1 && cd lesson1
 # 这里没有从官方 npm 安装，而是使用了大淘宝的 npm 镜像
 $ npm install express --registry=https://registry.npm.taobao.org
 ```
@@ -78,7 +79,7 @@ app.listen(3000, function () {
 
 `$ node app.js`
 
-这时候我们的 app 就跑起来了，终端中会输出 `app is listening at port 3000`。这时我们打开浏览器，访问 `http://localhost:3000/`，会出现 `Hello World`。如果没有出现的话，肯定是上述哪一步弄错了，自己调试以下。
+这时候我们的 app 就跑起来了，终端中会输出 `app is listening at port 3000`。这时我们打开浏览器，访问 `http://localhost:3000/`，会出现 `Hello World`。如果没有出现的话，肯定是上述哪一步弄错了，自己调试一下。
 
 
 
