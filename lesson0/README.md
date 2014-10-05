@@ -41,6 +41,64 @@ $ nvm ls
 
 ![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson0/1.png)
 
+（图1）
 
-3.
+那个绿色小箭头的意思就是现在正在使用的版本，我这里是 `v0.10.29`。我还安装了 `v0.11.14`，但我目前没有使用。
 
+如果你那里没有出现绿色小箭头的话，告诉 nvm 你要使用 `0.10.x` 版本。
+
+```
+$ nvm use 0.10
+```
+
+然后再次查看，这时候小箭头应该出现了。
+
+OK，我们在终端中输入
+
+```
+$ node
+```
+
+REPL(read–eval–print loop) 应该就出来了，那我们就成功了。
+
+随便敲两行命令玩玩吧。
+
+3. 完善安装
+
+上述过程完成后，有时会出现开启一个新的 shell 窗口时，找不到 node 命令的情况。
+
+这种情况一般来自两个原因
+
+一、shell 不知道 nvm 的存在
+二、nvm 已经存在，但是没有 default 的 Node.js 版本可用。
+
+解决方式：
+
+一、检查 `~/.profile` 或者 `~/.bash_profile` 中有没有这样两句
+
+```
+export NVM_DIR="/Users/alsotang/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+```
+
+没有的话，加进去。
+
+这两句会在 bash 启动的时候被调用，然后注册 nvm 命令。
+
+二、
+
+调用
+
+`$ nvm ls`
+
+看看像不像上述图1中一样，有 default 的指向。
+
+如果没有的话，执行
+
+`$ nvm use default 0.10`
+
+再
+
+`$ nvm ls`
+
+看一下
