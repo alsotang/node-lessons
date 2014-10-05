@@ -1,0 +1,15 @@
+{
+  "name": "lesson2",
+  "version": "0.0.0",
+  "description": "学习使用外部模块",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alsotang <alsotang@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.9.5",
+    "utility": "^1.2.0"
+  }
+}
