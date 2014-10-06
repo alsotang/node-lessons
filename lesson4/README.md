@@ -238,6 +238,10 @@ topicUrls.forEach(function (topicUrl) {
 });
 ```
 
+输出长这样：
+
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson4/2.png)
+
 完整的代码请查看 lesson4 目录下的 app.js 文件
 
 
