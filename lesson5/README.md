@@ -68,8 +68,10 @@ fetchUrl('http://www.baidu.com', function (err, content) {
 当然，我们这里的返回内容是假的，返回延时是随机的。并且在它被调用时，会告诉你它现在一共被多少个地方并发调用着。
 
 ```js
+// 并发连接数的计数器
 var concurrencyCount = 0;
 var fetchUrl = function (url, callback) {
+  // delay 的值在 2000 以内，是个随机的整数
   var delay = parseInt((Math.random() * 10000000) % 2000, 10);
   concurrencyCount++;
   console.log('现在的并发数是', concurrencyCount, '，正在抓取的是', url, '，耗时' + delay + '毫秒');
