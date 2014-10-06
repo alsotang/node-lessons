@@ -1,0 +1,16 @@
+{
+  "name": "lesson4",
+  "version": "0.0.0",
+  "description": "使用 eventproxy 控制并发",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alsotang <alsotang@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.17.0",
+    "eventproxy": "^0.3.1",
+    "superagent": "^0.20.0"
+  }
+}
