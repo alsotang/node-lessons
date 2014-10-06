@@ -152,7 +152,7 @@ $.get("http://data1_source", function (data1) {
 })();
 ```
 
-<del>丑的一逼</del>，也不算丑，主要我写代码好看。
+<del>丑的一逼，</del>也不算丑，主要我写代码好看。
 
 如果我们用 eventproxy，写出来是这样的：
 
