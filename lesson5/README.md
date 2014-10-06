@@ -103,3 +103,10 @@ async.mapLimit(urls, 5, function (url, callback) {
 });
 ```
 
+运行输出是这样的：
+
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson5/2.png)
+
+
+
+
