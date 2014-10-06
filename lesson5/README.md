@@ -70,12 +70,13 @@ fetchUrl('http://www.baidu.com', function (err, content) {
 ```js
 var concurrencyCount = 0;
 var fetchUrl = function (url, callback) {
+  var delay = parseInt((Math.random() * 10000000) % 2000, 10);
   concurrencyCount++;
-  console.log('现在的并发数是', concurrencyCount, '正在抓取的是', url);
+  console.log('现在的并发数是', concurrencyCount, '，正在抓取的是', url, '，耗时' + delay + '毫秒');
   setTimeout(function () {
     concurrencyCount--;
     callback(null, url + ' html content');
-  }, (Math.random() * 10000000) % 2000);
+  }, delay);
 };
 ```
 
@@ -106,6 +107,10 @@ async.mapLimit(urls, 5, function (url, callback) {
 运行输出是这样的：
 
 ![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson5/2.png)
+
+可以看到，一开始，并发链接数是从 1 开始增长的，增长到 5 时，就不再增加。当其中有任务完成时，再继续抓取。并发连接数始终控制在 5 个。
+
+完整代码请参见 app.js 文件。
 
 
 
