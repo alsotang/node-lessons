@@ -18,5 +18,6 @@ for(var i = 0; i < 30; i++) {
 async.mapLimit(urls, 5, function (url, callback) {
   fetchUrl(url, callback);
 }, function (err, result) {
+  console.log('final:');
   console.log(result);
 });

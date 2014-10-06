@@ -8,6 +8,8 @@
 
 代码的入口是 `app.js`，当调用 `node app.js` 时，它会输出 CNode(https://cnodejs.org/ ) 社区首页的所有主题的标题，链接和第一条评论，以 json 的格式。
 
+注意：与上节课不同，并发连接数需要控制在 5 个。
+
 输出示例：
 
 ```js
@@ -89,4 +91,15 @@ for(var i = 0; i < 30; i++) {
 这组链接的长这样：
 
 ![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson5/1.png)
+
+接着，我们使用 `async.mapLimit` 来并发抓取，并获取结果。
+
+```js
+async.mapLimit(urls, 5, function (url, callback) {
+  fetchUrl(url, callback);
+}, function (err, result) {
+  console.log('final:');
+  console.log(result);
+});
+```
 
