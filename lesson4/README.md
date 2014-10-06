@@ -82,7 +82,7 @@ superagent.get(cnodeUrl)
 
 输出如下图：
 
-
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson4/1.png)
 
 
 
