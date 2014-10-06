@@ -51,5 +51,42 @@ lesson4 的代码其实是不完美的。为什么这么说，是因为在 lesso
 
 当你需要去多个源(一般是小于 10 个)汇总数据的时候，用 eventproxy 方便；当你需要用到队列，需要控制并发数，或者你喜欢函数式编程思维时，使用 async。大部分场景是前者，所以我个人大部分时间是用 eventproxy 的。
 
+正题开始。
 
+首先，我们伪造一个 `fetchUrl(url, callback)` 函数，这个函数的作用就是，当你通过
+
+```js
+fetchUrl('http://www.baidu.com', function (err, content) {
+  // do something with `content`
+});
+```
+
+调用它时，它会返回 `http://www.baidu.com` 的页面内容回来。
+
+当然，我们这里的返回内容是假的，返回延时是随机的。并且在它被调用时，会告诉你现在一共它一共被多少个地方并发调用着。
+
+```js
+var concurrencyCount = 0;
+var fetchUrl = function (url, callback) {
+  concurrencyCount++;
+  console.log('现在的并发数是', concurrencyCount, '正在抓取的是', url);
+  setTimeout(function () {
+    concurrencyCount--;
+    callback(null, url + ' html content');
+  }, (Math.random() * 10000000) % 2000);
+};
+```
+
+我们继续来伪造一组链接
+
+```js
+var urls = [];
+for(var i = 0; i < 30; i++) {
+  urls.push('http://datasource_' + i);
+}
+```
+
+这组链接的长这样：
+
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson5/1.png)
 
