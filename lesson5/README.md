@@ -65,7 +65,7 @@ fetchUrl('http://www.baidu.com', function (err, content) {
 
 调用它时，它会返回 `http://www.baidu.com` 的页面内容回来。
 
-当然，我们这里的返回内容是假的，返回延时是随机的。并且在它被调用时，会告诉你现在一共它一共被多少个地方并发调用着。
+当然，我们这里的返回内容是假的，返回延时是随机的。并且在它被调用时，会告诉你它现在一共被多少个地方并发调用着。
 
 ```js
 var concurrencyCount = 0;
