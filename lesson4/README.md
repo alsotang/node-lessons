@@ -198,10 +198,49 @@ eventproxy 这套处理异步并发的思路，我一直觉得就像是汇编里
 
 编程语言美丑啥的，咱心中有佛就好。
 
-回到正题，之前我们已经得到了一个长度为 40 的数组，里面包含了每条主题的链接。那么意味着，我们接下来要发出 40 个并发请求。我们需要用到 eventproxy 的 `#after` API。
+回到正题，之前我们已经得到了一个长度为 40 的 `topicUrls` 数组，里面包含了每条主题的链接。那么意味着，我们接下来要发出 40 个并发请求。我们需要用到 eventproxy 的 `#after` API。
 
 大家自行学习一下这个 API 吧：https://github.com/JacksonTian/eventproxy#%E9%87%8D%E5%A4%8D%E5%BC%82%E6%AD%A5%E5%8D%8F%E4%BD%9C
 
+我代码就直接贴了哈。
+
+```js
+// 得到 topicUrls 之后
+
+// 得到一个 eventproxy 的实例
+var ep = new eventproxy();
+
+// 命令 ep 重复监听 topicUrls.length 次（在这里也就是 40 次） `topic_html` 事件再行动
+ep.after('topic_html', topicUrls.length, function (topics) {
+  // topics 是个数组，包含了 40 次 ep.emit('topic_html', pair) 中的那 40 个 pair
+
+  // 开始行动
+  topics = topics.map(function (topicPair) {
+    // 接下来都是 jquery 的用法了
+    var topicUrl = topicPair[0];
+    var topicHtml = topicPair[1];
+    var $ = cheerio.load(topicHtml);
+    return ({
+      title: $('.topic_full_title').text().trim(),
+      href: topicUrl,
+      comment1: $('.reply_content').eq(0).text().trim(),
+    });
+  });
+
+  console.log('final:');
+  console.log(topics);
+});
+
+topicUrls.forEach(function (topicUrl) {
+  superagent.get(topicUrl)
+    .end(function (err, res) {
+      console.log('fetch ' + topicUrl + ' successful');
+      ep.emit('topic_html', [topicUrl, res.text]);
+    });
+});
+```
+
+完整的代码请查看 lesson4 目录下的 app.js 文件
 
 
 
