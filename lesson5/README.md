@@ -82,7 +82,7 @@ var fetchUrl = function (url, callback) {
 };
 ```
 
-我们继续来伪造一组链接
+我们接着来伪造一组链接
 
 ```js
 var urls = [];
