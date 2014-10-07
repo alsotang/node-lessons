@@ -112,9 +112,9 @@ https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js
 
 should 在 js 的 Object “基类”上注入了一个 `#should` 属性，这个属性中，又有着许许多多的属性可以被访问。
 
-比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`
+比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`。API 在：https://github.com/visionmedia/should.js/
 
-should.js 如果现在还是 version 3 的话，我倒是推荐大家去看看它的 API 和 源码；现在 should 是 version 4 了，API 丑得很，但为了不掉队，我还是一直用着它。我觉得 expect 麻烦得很，对了 expect 也是一个断言库：https://github.com/LearnBoost/expect.js/ 。
+should.js 如果现在还是 version 3 的话，我倒是推荐大家去看看它的 API 和 源码；现在 should 是 version 4 了，API 丑得很，但为了不掉队，我还是一直用着它。我觉得 expect 麻烦得很，对了，expect 也是一个断言库：https://github.com/LearnBoost/expect.js/ 。
 
 
 
