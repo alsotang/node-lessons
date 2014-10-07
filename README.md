@@ -22,9 +22,10 @@
 * Lesson 4: [《使用 eventproxy 控制并发》](https://github.com/alsotang/node-lessons/tree/master/lesson4)
 * Lesson 5: [《使用 async 控制并发》](https://github.com/alsotang/node-lessons/tree/master/lesson5)
 * Lesson 6: [《测试用例：mocha，should，istanbul》](https://github.com/alsotang/node-lessons/tree/master/lesson6)
-* Lesson 7: 《测试用例：supertest》
-* Lesson 8: 《Mongodb 与 Mongoose 的使用》
-* Lesson 9: 《一个简单的 blog》
+* 《测试用例：supertest》
+* 《benchmark 怎么写》
+* 《Mongodb 与 Mongoose 的使用》
+* 《一个简单的 blog》
 
 License
 ==
