@@ -1,0 +1,14 @@
+{
+  "name": "lesson6",
+  "version": "0.0.0",
+  "description": "测试用例：mocha，should，istanbul",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "author": "alsotang <alsotang@gmail.com>",
+  "license": "MIT"
+}
