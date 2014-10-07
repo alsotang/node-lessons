@@ -112,10 +112,108 @@ https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js
 
 should 在 js 的 Object “基类”上注入了一个 `#should` 属性，这个属性中，又有着许许多多的属性可以被访问。
 
-比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`。API 在：https://github.com/visionmedia/should.js/
+比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`。should.js API 在：https://github.com/visionmedia/should.js/
 
-should.js 如果现在还是 version 3 的话，我倒是推荐大家去看看它的 API 和 源码；现在 should 是 version 4 了，API 丑得很，但为了不掉队，我还是一直用着它。我觉得 expect 麻烦得很，对了，expect 也是一个断言库：https://github.com/LearnBoost/expect.js/ 。
+should.js 如果现在还是 version 3 的话，我倒是推荐大家去看看它的 API 和 源码；现在 should 是 version 4 了，API 丑得很，但为了不掉队，我还是一直用着它。我觉得 expect 麻烦，所以不用 expect，对了，expect 也是一个断言库：https://github.com/LearnBoost/expect.js/ 。
 
+回到正题，还记得我们 fibonacci 函数的几个要求吗？
+
+```
+* 当 n === 0 时，返回 0；n === 1时，返回 1;
+* n > 1 时，返回 `fibonacci(n) === fibonacci(n-1) + fibonacci(n-2)`，如 `fibonacci(10) === 55`;
+* n 不可大于10，否则抛错，因为 Node.js 的计算性能没那么强。
+* n 也不可小于 0，否则抛错，因为没意义。
+* n 不为数字时，抛错。
+```
+
+我们用测试用例来描述一下这几个要求，更新后的 main.test.js 如下：
+
+```js
+var main = require('../main');
+var should = require('should');
+
+describe('test/main.test.js', function () {
+  it('should equal 0 when n === 0', function () {
+    main.fibonacci(0).should.equal(0);
+  });
+
+  it('should equal 1 when n === 1', function () {
+    main.fibonacci(1).should.equal(1);
+  });
+
+  it('should equal 55 when n === 10', function () {
+    main.fibonacci(10).should.equal(55);
+  });
+
+  it('should throw when n > 10', function () {
+    (function () {
+      main.fibonacci(11);
+    }).should.throw('n should <= 10');
+  });
+
+  it('should throw when n < 0', function () {
+    (function () {
+      main.fibonacci(-1);
+    }).should.throw('n should >= 0');
+  });
+
+  it('should throw when n isnt Number', function () {
+    (function () {
+      main.fibonacci('呵呵');
+    }).should.throw('n should be a Number');
+  });
+});
+```
+
+还是比较清晰的吧？
+
+我们这时候跑一下 `$ mocha`，会发现后三个 case 都没过。
+
+于是我们更新 fibonacci 的实现：
+
+```js
+var fibonacci = function (n) {
+  if (typeof n !== 'number') {
+    throw new Error('n should be a Number');
+  }
+  if (n < 0) {
+    throw new Error('n should >= 0')
+  }
+  if (n > 10) {
+    throw new Error('n should <= 10');
+  }
+  if (n === 0) {
+    return 0;
+  }
+  if (n === 1) {
+    return 1;
+  }
+
+  return fibonacci(n-1) + fibonacci(n-2);
+};
+```
+
+再跑一次 `$ mocha`，就过了。这就是传说中的测试驱动开发：先把要达到的目的都描述清楚，然后让现有的程序跑不过 case，再修补程序，让 case 通过。
+
+安装一个 istanbul : `$ npm i istanbul -g`
+
+执行 `$ istanbul cover _mocha`
+
+这会比直接使用 mocha 多一行覆盖率的输出，
+
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson6/3.png)
+
+可以看到，我们其中的分支覆盖率是 91.67%，行覆盖率是 87.5%。
+
+打开 `open coverage/lcov-report/index.html` 看看
+
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson6/4.png)
+
+其实这覆盖率是 100% 的。
+
+mocha 和 istanbul 的结合是相当无缝的，只要 mocha 跑得动，那么 istanbul 就接得进来。
+
+到此这门课其实就完了，剩下要说的内容，都是些比较细节的。项目做大了之后可以再回来看。
 
 
 
