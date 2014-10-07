@@ -209,12 +209,35 @@ var fibonacci = function (n) {
 
 ![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson6/4.png)
 
-其实这覆盖率是 100% 的。
+其实这覆盖率是 100% 的，24 25 两行没法测。
 
 mocha 和 istanbul 的结合是相当无缝的，只要 mocha 跑得动，那么 istanbul 就接得进来。
 
-到此这门课其实就完了，剩下要说的内容，都是些比较细节的。项目做大了之后可以再回来看。
+到此这门课其实就完了，剩下要说的内容，都是些比较细节的。比较懒的同学可以踩坑了之后再回来看。
 
+上面的课程，不完美的地方就在于 mocha 和 istanbul 版本依赖的问题，但为了不引入不必要的复杂性，所以上面就没提到这点了。
 
+假设你有一个项目A，用到了 mocha 的 version 3，其他人有个项目B，用到了 mocha 的 version 10，那么如果你 `npm i mocha -g` 装的是 version 3 的话，你用 `$ mocha` 是不兼容B项目的。因为 mocha 版本改变之后，很可能语法也变了，对吧。
 
+这时，跑测试用例的正确方法，应该是
 
+1. `$ npm i mocha --save-dev`，装个 mocha 到项目目录中去
+2. `$ ./node_modules/.bin/mocha`，用刚才安装的这个特定版本的 mocha，来跑项目的测试代码。
+
+`./node_modules/.bin` 这个目录下放着我们所有依赖自带的那些可执行文件。
+
+每次输入这个很麻烦对吧？所以我们要引入 Makefile，让 Makefile 帮我们记住复杂的配置。
+
+```
+test:
+  ./node_modules/.bin/mocha
+
+cov test-cov:
+  ./node_modules/.bin/istanbul cover _mocha
+
+.PHONY: test cov test-cov
+```
+
+这时，我们只需要调用 `make test` 或者 `make cov`，就可以跑我们相应的测试了。
+
+至于 Makefile 怎么写？以及 .PHONY 是什么意思，请看这里：http://blog.csdn.net/haoel/article/details/2886 ，左耳朵耗子陈皓2004的文章。
