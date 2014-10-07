@@ -66,7 +66,7 @@ OK，这只是个简单的实现。
 
 我们先得把 main.js 里面的 fibonacci 暴露出来，这个简单。加一句
 
-`exports.fibonacci = fibonacci;`
+`exports.fibonacci = fibonacci;`（要是看不懂这句就去补补 Node.js 的基础知识吧）
 
 就好了。
 
@@ -98,6 +98,21 @@ describe('test/main.test.js', function () {
 
 ![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson6/2.png)
 
+那么，代码中的 describe 和 it 是什么意思呢？其实就是 BDD 中的那些意思，把它们当做语法来记就好了。
+
+大家来看看 nodeclub 中，关于 topicController 的测试文件：
+
+https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js
+
+这文件的内容没有超出之前课程的范围吧。
+
+`describe` 中的字符串，用来描述你要测的主体是什么；`it` 当中，描述具体的 case 内容。
+
+而引入的那个 should 模块，是个断言库。玩过 ruby 的同学应该知道 `rspec`，rspec 它把测试框架和断言库的事情一起做了，而在 Node.js 中，这两样东西的作用分别是 mocha 和 should 在协作完成。
+
+should 在 js 的 Object “基类”上注入了一个 `#should` 属性，这个属性中，又有着许许多多的属性可以被访问。
+
+比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`
 
 
 
