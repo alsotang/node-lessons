@@ -10,6 +10,8 @@
 
 话说看书是一件很头疼的事情，可如果想学到知识，又必须得看书。为了解决大家的这个困惑，我在每一课的开头都写有一个可检验的课程目标，如果你喜欢自己倒腾而不喜欢听别人逼逼的话，把那个课程目标倒腾出来，那课你也就算掌握了。
 
+本课程的更新信息可见我的微博：http://weibo.com/tangzhanli
+
 更多 Node.js 入门资料请前往：https://cnodejs.org/getstart
 
 课程列表
@@ -24,6 +26,7 @@
 * Lesson 6: [《测试用例：mocha，should，istanbul》](https://github.com/alsotang/node-lessons/tree/master/lesson6)
 * 《测试用例：supertest》
 * 《benchmark 怎么写》
+* 《线上部署：heroku》
 * 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog》
 
