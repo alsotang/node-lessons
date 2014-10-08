@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script type="text/javascript">
+      var fibonacci = function (n) {
+        if (n === 0) {
+          return 0;
+        }
+        if (n === 1) {
+          return 1;
+        }
+        return fibonacci(n-1) + fibonacci(n-2);
+      };
+    </script>
+    <script src='chai.js'></script>
+    <script src="mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="tests.js"></script>
+    <script>
+      if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+      else { mocha.run(); }
+    </script>
+  </body>
+</html>
