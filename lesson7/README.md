@@ -102,4 +102,18 @@ mocha-phantomjs index.html
 ```
 结果展现是不是和后端代码测试很类似 :smile:
 
+你也可以直接在package.json中定义
+```json
+"scripts": {
+  "test": "./node_modules/.bin/mocha-phantomjs vendor/index.html"
+},
+```
+将mocha-phantomjs作为依赖
+```shell
+npm i mocha-phantomjs --save-dev
+```
+直接运行
+```shell
+npm test
+```
 至此,我们实现了前端脚本的单元测试，基于phanatomjs你几乎可以调用所有的浏览器方法，而mocha-phanatomjs也可以很便捷地将测试结果反馈到mocha，便于后续的持续集成。

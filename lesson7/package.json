@@ -1,21 +1,15 @@
 {
-  "name": "lesson6",
+  "name": "lesson7",
   "version": "0.0.0",
-  "description": "测试用例：mocha，should，istanbul",
-  "main": "main.js",
-  "directories": {
-    "test": "test"
-  },
+  "description": "测试用例：mocha，chai，phantomjs",
   "scripts": {
-    "test": "make test"
+    "test": "./node_modules/.bin/mocha-phantomjs vendor/index.html"
   },
-  "author": "alsotang <alsotang@gmail.com>",
+  "author": "elrrrrrrr <elrrrrrrr@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "istanbul": "^0.3.2",
     "mocha": "^1.21.4",
     "mocha-phantomjs": "^3.5.1",
-    "phantomjs": "^1.9.10",
-    "should": "^4.0.4"
+    "phantomjs": "^1.9.10"
   }
 }
