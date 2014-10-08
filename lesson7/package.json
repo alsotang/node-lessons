@@ -8,8 +8,6 @@
   "author": "elrrrrrrr <elrrrrrrr@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^1.21.4",
-    "mocha-phantomjs": "^3.5.1",
-    "phantomjs": "^1.9.10"
+    "mocha-phantomjs": "^3.5.1"
   }
 }
