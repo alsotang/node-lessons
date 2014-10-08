@@ -1,8 +1,8 @@
 # 《Node.js 包教不包会》 -- by alsotang
 
 
-为何写作此课程
-==
+## 为何写作此课程
+
 
 在 CNode(https://cnodejs.org/) 混了那么久，解答了不少 Node.js 初学者们的问题。回头想想，那些问题所需要的思路都不难，但大部分人由于练手机会少，所以在遇到问题的时候很无措。国内唯一一本排的上号的 Node.js 书是 @朴灵(https://github.com/JacksonTian) 的 《深入浅出Node.js》(http://book.douban.com/subject/25768396/ )，但这本书离实战还是比较远的。
 
@@ -14,8 +14,7 @@
 
 更多 Node.js 入门资料请前往：https://cnodejs.org/getstart
 
-课程列表
-==
+## 课程列表
 
 * Lesson 0: [《搭建 Node.js 开发环境》](https://github.com/alsotang/node-lessons/tree/master/lesson0)
 * Lesson 1: [《一个最简单的 express 应用》](https://github.com/alsotang/node-lessons/tree/master/lesson1)
@@ -35,7 +34,7 @@
 * 《一个简单的 blog》
 * 《持续集成平台：travis》
 
-License
-==
+## License
+
 
 MIT
