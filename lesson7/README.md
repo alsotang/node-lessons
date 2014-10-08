@@ -1,4 +1,4 @@
-《测试用例：mocha，should，istanbul》
+《测试用例：mocha，chai，phantomjs》
 =
 
 目标
