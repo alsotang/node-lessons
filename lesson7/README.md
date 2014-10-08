@@ -23,7 +23,7 @@ vendor/tests.js 编写针对前端脚本的测试用例
 
 ### 前端脚本单元测试
 
-[lesson6](https://github.com/alsotang/node-lessons/tree/master/lesson6 )的内容都是针对后端环境中 node 的一些单元测试方案，出于应用健壮性的考量，针对前端 js 脚本的单元测试也非常重要。而前后端通吃，也是 mocha 的一大特点。
+[lesson6](https://github.com/alsotang/node-lessons/tree/master/lesson6 ) 的内容都是针对后端环境中 node 的一些单元测试方案，出于应用健壮性的考量，针对前端 js 脚本的单元测试也非常重要。而前后端通吃，也是 mocha 的一大特点。
 
 首先，前端脚本的单元测试主要有两个困难需要解决。
 
