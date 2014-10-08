@@ -23,7 +23,7 @@
 * Lesson 4: [《使用 eventproxy 控制并发》](https://github.com/alsotang/node-lessons/tree/master/lesson4)
 * Lesson 5: [《使用 async 控制并发》](https://github.com/alsotang/node-lessons/tree/master/lesson5)
 * Lesson 6: [《测试用例：mocha，should，istanbul》](https://github.com/alsotang/node-lessons/tree/master/lesson6)
-* Lesson 7: [《浏览器端测试：mocha，chai，phantomjs》](https://github.com/alsotang/node-lessons/tree/master/lesson7)
+* Lesson 7: [《浏览器端测试：mocha，chai，phantomjs》](https://github.com/alsotang/node-lessons/tree/master/lesson7) -- by [@elrrrrrrr](https://github.com/elrrrrrrr)
 
 ## 计划
 * 《测试用例：supertest》
