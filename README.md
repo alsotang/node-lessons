@@ -29,6 +29,7 @@
 * 《线上部署：heroku》
 * 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog》
+* 《持续集成平台：travis》
 
 License
 ==
