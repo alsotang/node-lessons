@@ -27,6 +27,7 @@
 * 《测试用例：supertest》
 * 《benchmark 怎么写》
 * 《线上部署：heroku》
+* 《何为 connect 中间件》
 * 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog》
 * 《持续集成平台：travis》
