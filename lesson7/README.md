@@ -82,6 +82,8 @@ describe('simple test', function () {
 
 这时打开index.html，可以发现测试结果，我们完成了浏览器端的脚本测试(注意我们调用了 **window** 对象)
 
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson7/1.png)
+
 #### 测试反馈
 
 mocha没有提供一个命令行的前端脚本测试环境(因为我们的脚本文件需要运行在浏览器环境中)，因此我们使用phanatomjs帮助我们搭建一个模拟环境。不重复制造轮子，这里直接使用mocha-phantomjs帮助我们在命令行运行测试。
