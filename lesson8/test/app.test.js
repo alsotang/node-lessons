@@ -3,10 +3,9 @@ var supertest = require('supertest');
 var request = supertest(app);
 var should = require('should');
 
-var agent = request.agent();
 describe('test/app.test.js', function () {
   it('should return 55 when n is 10', function (done) {
-    agent.get('/fib')
+    request.get('/fib')
       .query({n: 10})
       .end(function (err, res) {
         res.text.should.equal('55');
