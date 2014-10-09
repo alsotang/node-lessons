@@ -231,6 +231,8 @@ agent.post('create_topic').end(...); // 此时的 agent 中有用户登陆后的
 
 ```
 
+但 supertest 不支持这种方式，我也不懂为什么，这里有个相关讨论，无疾而终了：https://github.com/visionmedia/supertest/issues/46
+
 2. 在发起请求时，调用 `.set('Cookie', 'a cookie string')` 这样的方式。
 
 ```js
