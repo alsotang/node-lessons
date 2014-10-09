@@ -31,7 +31,7 @@ OK，基础知识前面都讲得很多了，这节课我不会事无巨细地写
 
 先来介绍一下 supertest。supertest 是 superagent 的孪生库。他的作者叫 tj，这是个在 Node.js 的历史上会永远被记住的名字，因为他一个人撑起了 npm 的半边天。别误会成他是 npm 的开发者，他的贡献是在 Node.js 的方方面面都贡献了非常高质量和口碑的库，比如 mocha 是他的，superagent 是他的，express 是他的，should 也是他的，还有其他很多很多，比如 koa，都是他的。如果你更详细点了解一些 Node 圈内的八卦，一定也会像我一样对 tj 佩服得五体投地。他的 github 首页是：https://github.com/visionmedia 。
 
-假使你作为一个有志之士，想要以他为榜样，跟随他前进的步伐，那么我指条明路给你，不收费的：[!!请用力点我!!](http://tour.golang.org/#1)
+假使你作为一个有志之士，想要以他为榜样，跟随他前进的步伐，那么我指条明路给你，不收费的：http://tour.golang.org/
 
 为什么说 supertest 是 superagent 的孪生库呢，因为他们的 API 是一模一样的。superagent 是用来抓取页面用的，而 supertest，是专门用来配合 express （准确来说是所有兼容 connect 的 web 框架）进行集成测试的。
 
