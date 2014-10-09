@@ -6,7 +6,7 @@
 
 其实这过程特别简单:
 
-1. 先安装一个 nvm（ https://github.com/creationix/nvm ）
+### 先安装一个 nvm（ https://github.com/creationix/nvm ）
 
 ```
 $ curl https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
@@ -22,7 +22,7 @@ $ nvm
 
 当看到有输出时，则 nvm 安装成功。
 
-2. 安装 Node.js
+### 安装 Node.js
 
 使用 nvm 的命令安装 Node.js 最新稳定版，现在是 `v0.10.32`。
 
@@ -64,7 +64,7 @@ REPL(read–eval–print loop) 应该就出来了，那我们就成功了。
 
 比如 `> while (true) {}`，这时你的 CPU 应该会飚高。
 
-3. 完善安装
+### 完善安装
 
 上述过程完成后，有时会出现，当开启一个新的 shell 窗口时，找不到 node 命令的情况。
 
