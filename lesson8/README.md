@@ -91,7 +91,7 @@ app.get('/fib', function (req, res) {
   var n = Number(req.query.n);
   try {
     // 为何使用 String 做类型转换，是因为如果你直接给个数字给 res.send 的话，
-    // 它会
+    // 它会当成是你给了它一个 http 状态码，所以我们明确给 String
     res.send(String(fibonacci(n)));
   } catch (e) {
     // 如果 fibonacci 抛错的话，错误信息会记录在 err 对象的 .message 属性中。
