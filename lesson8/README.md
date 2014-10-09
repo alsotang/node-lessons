@@ -221,31 +221,31 @@ describe('test/app.test.js', function () {
 
 1. 在 supertest 中，可以通过 `var agent = supertest.agent(app)` 获取一个 agent 对象，这个对象的 API 跟直接在 superagent 上调用各种方法是一样的。agent 对象在被多次调用 `get` 和 `post` 之后，可以一路把 cookie 都保存下来。
 
-```js
-var supertest = require('supertest');
-var app = express();
-var agent = superagent.agent(app);
+    ```js
+    var supertest = require('supertest');
+    var app = express();
+    var agent = superagent.agent(app);
 
-agent.post('login').end(...);
-// then ..
-agent.post('create_topic').end(...); // 此时的 agent 中有用户登陆后的 cookie
+    agent.post('login').end(...);
+    // then ..
+    agent.post('create_topic').end(...); // 此时的 agent 中有用户登陆后的 cookie
 
-```
+    ```
 
 2. 在发起请求时，调用 `.set('Cookie', 'a cookie string')` 这样的方式。
 
-```js
-var supertest = require('supertest');
-var userCookie;
-supertest.post('login').end(function (err, res) {
-    userCookie = res.headres['Cookie']
-  });
-// then ..
+    ```js
+    var supertest = require('supertest');
+    var userCookie;
+    supertest.post('login').end(function (err, res) {
+        userCookie = res.headres['Cookie']
+      });
+    // then ..
 
-supertest.post('create_topic')
-  .set('Cookie', userCookie)
-  .end(...)
-```
+    supertest.post('create_topic')
+      .set('Cookie', userCookie)
+      .end(...)
+    ```
 
 这里有个相关讨论：https://github.com/visionmedia/supertest/issues/46
 
