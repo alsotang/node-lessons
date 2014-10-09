@@ -71,6 +71,7 @@ REPL(read–eval–print loop) 应该就出来了，那我们就成功了。
 这种情况一般来自两个原因
 
 一、shell 不知道 nvm 的存在
+
 二、nvm 已经存在，但是没有 default 的 Node.js 版本可用。
 
 解决方式：
