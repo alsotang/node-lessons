@@ -27,6 +27,7 @@
 ## 计划
 * 《benchmark 怎么写》
 * 《线上部署：heroku》
+* 《cookie 与 session》
 * 《何为 connect 中间件》
 * 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog》
