@@ -1,0 +1,19 @@
+{
+  "name": "lesson8",
+  "version": "0.0.0",
+  "description": "测试用例：supertest",
+  "main": "app.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "author": "alsotang <alsotang@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "should": "^4.0.4",
+    "supertest": "^0.14.0"
+  },
+  "dependencies": {
+    "express": "^4.9.6"
+  }
+}

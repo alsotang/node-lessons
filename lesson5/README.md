@@ -1,8 +1,6 @@
-《使用 async 控制并发》
-=
+# 《使用 async 控制并发》
 
-目标
-==
+## 目标
 
 建立一个 lesson5 项目，在其中编写代码。
 
@@ -28,14 +26,12 @@
 
 ```
 
-知识点
-==
+## 知识点
 
 1. 学习 async(https://github.com/caolan/async ) 的使用。这里有个详细的 async demo 演示：https://github.com/alsotang/async_demo
 1. 学习使用 async 来控制并发连接数。
 
-课程内容
-==
+## 课程内容
 
 lesson4 的代码其实是不完美的。为什么这么说，是因为在 lesson4 中，我们一次性发了 40 个并发请求出去，要知道，除去 CNode 的话，别的网站有可能会因为你发出的并发连接数太多而当你是在恶意请求，把你的 IP 封掉。
 

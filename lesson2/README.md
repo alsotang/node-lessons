@@ -1,21 +1,17 @@
-《学习使用外部模块》
-=
+# 《学习使用外部模块》
 
-目标
-==
+## 目标
 
 建立一个 lesson2 项目，在其中编写代码。
 
 当在浏览器中访问 `http://localhost:3000/?q=alsotang` 时，输出`alsotang`的 md5 值，即 `bdd5e57b5c0040f9dc23d430846e68a3`。
 
-知识点
-==
+## 知识点
 
 1. 学习 req.query 的用法
 2. 学习建立 package.json 来管理 Node.js 项目。
 
-课程内容
-==
+## 课程内容
 
 卧槽，不写 package.json 就写项目我觉得好不爽啊，所以这个 lesson2 我就得跟大家介绍一下 package.json 这个文件的用法了。
 
@@ -86,8 +82,7 @@ OK，运行我们的程序
 
 访问 `http://localhost:3000/?q=alsotang`，完成。
 
-题外话
-==
+## 题外话
 
 如果直接访问 `http://localhost:3000/` 会抛错
 

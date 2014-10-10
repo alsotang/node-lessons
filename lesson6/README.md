@@ -1,8 +1,6 @@
-《测试用例：mocha，should，istanbul》
-=
+# 《测试用例：mocha，should，istanbul》
 
-目标
-==
+## 目标
 
 建立一个 lesson6 项目，在其中编写代码。
 
@@ -18,16 +16,14 @@ main.js: 其中有个 fibonacci 函数。fibonacci 的介绍见：http://en.wiki
 
 test/main.test.js: 对 main 函数进行测试，并使行覆盖率和分支覆盖率都达到 100%。
 
-知识点
-==
+## 知识点
 
 1. 学习使用测试框架 mocha : http://visionmedia.github.io/mocha/
 2. 学习使用断言库 should : https://github.com/visionmedia/should.js/
 3. 学习使用测试率覆盖工具 istanbul : https://github.com/gotwarlost/istanbul
 4. 简单 Makefile 的编写 : http://blog.csdn.net/haoel/article/details/2886
 
-课程内容
-==
+## 课程内容
 
 首先，作为一个 Node.js 项目，先执行 `npm init` 创建 package.json。
 
