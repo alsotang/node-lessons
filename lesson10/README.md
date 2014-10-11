@@ -61,6 +61,7 @@ suite
   console.log('Fastest is ' + this.filter('fastest').pluck('name'));
 })
 // run async
+// 这里的 async 不是 mocha 测试那个 async 的意思，这个选项与它的时间计算有关，默认勾上就好了。
 .run({ 'async': true });
 ```
 
