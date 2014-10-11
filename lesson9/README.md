@@ -114,5 +114,40 @@ undefined
 >
 ```
 
+第三，
+
+大家知道，`.` 是不可以匹配 `\n` 的。如果我们想匹配的数据涉及到了跨行，比如下面这样的。
+
+```js
+var multiline = require('multiline');
+
+var text = multiline(function () {
+/*
+head
+```
+code code2 code3
+```
+foot
+*/
+});
+```
+
+如果我们想把两个 \`\`\` 中包含的内容取出来，应该怎么办？
+
+直接用 `.` 匹配不到 `\n`，所以我们需要找到一个原子，能匹配包括 `\n` 在内的所有字符。
+
+这个原子的惯用写法就是 `[\s\S]`
+
+```js
+var match1 = text.match(/^```[\s\S]+^```/gm);
+console.log(match1) // => [ '```\ncode code2 code3```\n```' ]
+
+// 这是另一种很骚的写法
+var match2 = text.match(/^```[^.]+^```/gm)
+console.log(match2) // => [ '```\ncode code2 code3```\n```' ]
+
+```
+
+
 
 
