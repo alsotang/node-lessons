@@ -65,8 +65,16 @@ suite
 
 直接运行：
 
-图！
+![](https://raw.githubusercontent.com/alsotang/node-lessons/master/lesson10/1.png)
 
 可以看到，parseInt 是最快的。
 
+### 在线分享
 
+如果想要在线分享你的 js benchmark，用这个网站：http://jsperf.com/ 。
+
+比如我在上面测试 `Math.log` 的效率：
+
+http://jsperf.com/math-perf-alsotang
+
+进入之后点击那个 `Run tests` 按钮，就可以在浏览器中看到它们的效率差异了，毕竟浏览器也是可以跑 js 的。
