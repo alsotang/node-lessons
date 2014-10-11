@@ -6,7 +6,6 @@
 
 ## 知识点
 
-1. 正则表达式的使用
-2. js 中的正则表达式与 pcre(http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions ) 的区别
+1.
 
 ## 课程内容
