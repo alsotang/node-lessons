@@ -51,7 +51,8 @@ js 中，正则表达式后面可以跟三个 flag，比如 `/something/igm`。
 /a/.test('A') // => false
 /a/i.test('A') // => true
 
-'hello hell hoo'.match(/h.*?\b/) // => hello
+'hello hell hoo'.match(/h.*?\b/) // => [ 'hello', index: 0, input: 'hello hell hoo' ]
+
 'hello hell hoo'.match(/h.*?\b/g) // => [ 'hello', 'hell', 'hoo' ]
 
 'aaa\nbbb\nccc'.match(/^[\s\S]*?$/g) // => [ 'aaa\nbbb\nccc' ]
