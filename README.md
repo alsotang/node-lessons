@@ -32,6 +32,7 @@
 * 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog》
 * 《持续集成平台：travis》
+* 《正则表达式》
 
 ## 本课程特点
 
