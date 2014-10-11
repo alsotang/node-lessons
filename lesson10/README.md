@@ -42,7 +42,7 @@ var int3 = function (str) {
 ```js
 var number = '100';
 
-// add tests
+// 添加测试
 suite
 .add('+', function() {
   int1(number);
@@ -53,14 +53,13 @@ suite
 .add('Number', function () {
   int3(number);
 })
-// add listeners
+// 每个测试跑完后，输出信息
 .on('cycle', function(event) {
   console.log(String(event.target));
 })
 .on('complete', function() {
   console.log('Fastest is ' + this.filter('fastest').pluck('name'));
 })
-// run async
 // 这里的 async 不是 mocha 测试那个 async 的意思，这个选项与它的时间计算有关，默认勾上就好了。
 .run({ 'async': true });
 ```
