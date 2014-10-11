@@ -141,6 +141,10 @@ var text = multiline.stripIndent(function () {
 ```js
 var match1 = text.match(/^```[\s\S]+?^```/gm);
 console.log(match1) // => [ '```\ncode code2 code3```\n```' ]
+
+// 这里有一种很骚的写法，[^] 与 [\s\S] 等价
+var match2 = text.match(/^```[^]+?^```/gm)
+console.log(match2)
 ```
 
 完。
