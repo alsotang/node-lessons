@@ -23,6 +23,7 @@
 * Lesson 6: [《测试用例：mocha，should，istanbul》](https://github.com/alsotang/node-lessons/tree/master/lesson6)
 * Lesson 7: [《浏览器端测试：mocha，chai，phantomjs》](https://github.com/alsotang/node-lessons/tree/master/lesson7) -- by [@elrrrrrrr](https://github.com/elrrrrrrr)
 * Lesson 8: [《测试用例：supertest》](https://github.com/alsotang/node-lessons/tree/master/lesson8)
+* Lesson 9: [《正则表达式》](https://github.com/alsotang/node-lessons/tree/master/lesson9)
 
 ## 计划
 * 《benchmark 怎么写》
