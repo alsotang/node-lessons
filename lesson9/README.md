@@ -123,11 +123,11 @@ var multiline = require('multiline');
 
 var text = multiline(function () {
 /*
-head
-\`\`\`
-code code2 code3
-\`\`\`
-foot
+    head
+    ```
+    code code2 code3
+    ```
+    foot
 */
 });
 ```
