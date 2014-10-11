@@ -24,9 +24,9 @@
 * Lesson 7: [《浏览器端测试：mocha，chai，phantomjs》](https://github.com/alsotang/node-lessons/tree/master/lesson7) -- by [@elrrrrrrr](https://github.com/elrrrrrrr)
 * Lesson 8: [《测试用例：supertest》](https://github.com/alsotang/node-lessons/tree/master/lesson8)
 * Lesson 9: [《正则表达式》](https://github.com/alsotang/node-lessons/tree/master/lesson9)
+* Lesson 10: [《benchmark 怎么写》](https://github.com/alsotang/node-lessons/tree/master/lesson10)
 
 ## 计划
-* 《benchmark 怎么写》
 * 《线上部署：heroku》
 * 《cookie 与 session》
 * 《何为 connect 中间件》
