@@ -27,7 +27,7 @@
 * Lesson 10: [《benchmark 怎么写》](https://github.com/alsotang/node-lessons/tree/master/lesson10)
 
 ## 计划
-* 《作用域与闭包：this，var，(function () {}》
+* 《作用域与闭包：this，var，(function () {})》
 * 《线上部署：heroku》
 * 《cookie 与 session》
 * 《何为 connect 中间件》
