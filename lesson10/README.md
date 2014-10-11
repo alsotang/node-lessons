@@ -11,6 +11,7 @@
 ## 知识点
 
 1. 学习使用 benchmark 库
+2. 学习使用 http://jsperf.com/ 分享你的 benchmark
 
 ## 课程内容
 
