@@ -6,7 +6,9 @@
 var web_development = "python php ruby javascript jsonp perhapsphpisoutdated";
 ```
 
-找出其中 包含 `p` 但不包含 `ph` 的所有单词
+找出其中 包含 `p` 但不包含 `ph` 的所有单词，即
+
+`[ 'python', 'javascript', 'jsonp' ]`
 
 ## 知识点
 
