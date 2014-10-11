@@ -52,7 +52,6 @@ js 中，正则表达式后面可以跟三个 flag，比如 `/something/igm`。
 /a/i.test('A') // => true
 
 'hello hell hoo'.match(/h.*?\b/) // => [ 'hello', index: 0, input: 'hello hell hoo' ]
-
 'hello hell hoo'.match(/h.*?\b/g) // => [ 'hello', 'hell', 'hoo' ]
 
 'aaa\nbbb\nccc'.match(/^[\s\S]*?$/g) // => [ 'aaa\nbbb\nccc' ]
@@ -125,9 +124,9 @@ var multiline = require('multiline');
 var text = multiline(function () {
 /*
 head
-```
+\`\`\`
 code code2 code3
-```
+\`\`\`
 foot
 */
 });
