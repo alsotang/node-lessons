@@ -28,12 +28,12 @@
 
 ## 计划
 * 《作用域与闭包：this，var，(function () {})》
-* 《线上部署：heroku》
+* 《线上部署：heroku》-- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
 * 《cookie 与 session》
 * 《何为 connect 中间件》
-* 《Mongodb 与 Mongoose 的使用》
-* 《一个简单的 blog》
-* 《持续集成平台：travis》
+* 《Mongodb 与 Mongoose 的使用》-- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
+* 《一个简单的 blog》-- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
+* 《持续集成平台：travis》-- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
 
 ## 本课程特点
 
