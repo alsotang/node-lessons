@@ -97,7 +97,7 @@ export NVM_DIR="/Users/YOURUSERNAME/.nvm"
 
 如果没有的话，执行
 
-`$ nvm use default 0.10`
+`$ nvm alias default 0.10`
 
 再
 
