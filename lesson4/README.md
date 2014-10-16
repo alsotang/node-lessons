@@ -167,8 +167,8 @@ $.get('http://data2_source', function (data) {
   ep.emit('data2_event', data);
   });
 
-$.get('http://data2_source', function (data) {
-  ep.emit('data2_event', data);
+$.get('http://data3_source', function (data) {
+  ep.emit('data3_event', data);
   });
 ```
 
