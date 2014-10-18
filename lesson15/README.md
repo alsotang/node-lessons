@@ -54,6 +54,8 @@ mongodb 中有个最亮眼的特性，就是 **Auto-Sharding**，sharding 的意
 
 mongodb 中的索引特性跟 sql 中差不多，只是它对于嵌套的数据类型也提供了支持。在建立复合索引时，mongodb 可以指定不同字段的排序，比如两个字段 `is_top`（置顶） 和 `create_time`（创建时间） 要建立复合索引，我们可以指定 is_top 按正序排，create_time 按逆序排。mysql 说是有计划支持这个特性，不过目前也没什么消息。具体还是去看文档了解吧。
 
+mongodb 中，collection 是 schema-less 的。在 sql 中，我们需要用建表语句来表明数据应该具有的形式，而 mongodb 中，可以在同一张里存各种各样不同的形式的数据。一个 collection 中，可以有些 document 具有 100 个字段，而另一些，则只具有 5 个字段。如果你分不清这个特性的使用场景，那么请像使用 sql 一样的，尽可能保证一个 collection 中数据格式是统一的。这个 schema-less 的特性，有个比较典型的场景是用来存储日志类型的数据，可以搜搜看这方面的典型场景。
+
 mongodb 和 mysql 要我选的话，无关紧要的应用我会选择 mongodb，就当个简单的存 json 数据的数据库来用；如果是线上应用，肯定还是会选择 mysql。毕竟 sql 比较成熟，而且各种场景的最佳实践都有先例了。
 
 这里还有个很好玩的网站：http://www.mongodb-is-web-scale.com/
