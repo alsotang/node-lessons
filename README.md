@@ -26,8 +26,8 @@
 * Lesson 9: [《正则表达式》](https://github.com/alsotang/node-lessons/tree/master/lesson9)
 * Lesson 10: [《benchmark 怎么写》](https://github.com/alsotang/node-lessons/tree/master/lesson10)
 * Lesson 11: [《作用域与闭包：this，var，(function () {})》](https://github.com/alsotang/node-lessons/tree/master/lesson11) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
-* Lesson 12：[《线上部署：heroku》](https://github.com/alsotang/node-lessons/tree/master/lesson12)
-* Lesson 13：[《持续集成平台：travis》](https://github.com/alsotang/node-lessons/tree/master/lesson13)
+* Lesson 12: [《线上部署：heroku》](https://github.com/alsotang/node-lessons/tree/master/lesson12)
+* Lesson 13: [《持续集成平台：travis》](https://github.com/alsotang/node-lessons/tree/master/lesson13)
 
 ## 计划
 * 《cookie 与 session》
