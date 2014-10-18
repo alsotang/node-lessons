@@ -74,7 +74,7 @@ mongodb 的官网中有一些特性介绍：
 
 ![](https://github.com/alsotang/node-lessons/blob/master/lesson15/1.png)
 
-其中标有箭头的是基本概念，圆圈的是进阶概念，画叉的不必了解。
+其中标有箭头的是基本概念，圆圈的是进阶概念，画叉的不必了解。对于生产环境和提高生产力来说，mongodb 没什么好的。
 
 ### mongoose
 
