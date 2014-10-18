@@ -6,7 +6,7 @@
 
 ## 知识点
 
-1. 学习使用 travis-ci 对项目进行持续集成测试
+1. 学习使用 travis-ci 对项目进行持续集成测试 (https://travis-ci.org/ )
 
 ## 课程内容
 

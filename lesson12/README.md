@@ -8,7 +8,7 @@
 
 ## 知识点
 
-1. 学习 heroku 的线上部署
+1. 学习 heroku 的线上部署(https://www.heroku.com/ )
 
 ## 课程内容
 
