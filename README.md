@@ -35,6 +35,9 @@
 * 《cookie 与 session》
 * 《何为 connect 中间件》
 * 《一个简单的 blog 程序》
+* 《http 中各个 header 的含义》
+* 《操作 mysql》
+* 《在全新的 vps 上搭建 node.js、mongodb、nginx》
 
 ## 本课程特点
 
