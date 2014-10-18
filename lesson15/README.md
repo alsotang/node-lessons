@@ -52,15 +52,15 @@ mongodb 中有个最亮眼的特性，就是 **Auto-Sharding**，sharding 的意
 
 反正使用 mongodb 时，一定要思考的两点就是：表 join 到底要不要，事务支持到底要不要。
 
-mongodb 中的索引特性跟 sql 中差不多，只是它对于嵌套的数据类型也提供了支持。在建立复合索引时，mongodb 可以指定不同字段的排序，比如两个字段 `is_top`（置顶） 和 `create_time`（创建时间） 要建立复合索引，我们可以指定 is_top 按正序排，create_time 按逆序排。mysql 说是有计划支持这个特性，不过目前也没什么消息。具体还是去看文档了解吧。
+mongodb 中的索引特性跟 sql 中差不多，只是它对于嵌套的数据类型也提供了支持。在建立复合索引时，mongodb 可以指定不同字段的排序，比如两个字段 `is_top`（置顶） 和 `create_time`（创建时间） 要建立复合索引，我们可以指定 is_top 按正序排，create_time 按逆序排。mysql 说是有计划支持这个特性，不过目前也没什么消息。不过这点不重要。
 
-mongodb 中，collection 是 schema-less 的。在 sql 中，我们需要用建表语句来表明数据应该具有的形式，而 mongodb 中，可以在同一张里存各种各样不同的形式的数据。一个 collection 中，可以有些 document 具有 100 个字段，而另一些，则只具有 5 个字段。如果你分不清这个特性的使用场景，那么请像使用 sql 一样的，尽可能保证一个 collection 中数据格式是统一的。这个 schema-less 的特性，有个比较典型的场景是用来存储日志类型的数据，可以搜搜看这方面的典型场景。
+mongodb 中，collection 是 schema-less 的。在 sql 中，我们需要用建表语句来表明数据应该具有的形式，而 mongodb 中，可以在同一张里存各种各样不同的形式的数据。同一个 collection 中，可以有些 document 具有 100 个字段，而另一些，则只具有 5 个字段。如果你分不清这个特性的使用场景，那么请像使用 sql 一样的，尽可能保证一个 collection 中数据格式是统一的。这个 schema-less 的特性，有个比较典型的场景是用来存储日志类型的数据，可以搜搜看这方面的典型场景。
 
-mongodb 和 mysql 要我选的话，无关紧要的应用我会选择 mongodb，就当个简单的存 json 数据的数据库来用；如果是线上应用，肯定还是会选择 mysql。毕竟 sql 比较成熟，而且各种场景的最佳实践都有先例了。
+mongodb 和 mysql 要我选的话，无关紧要的应用我会选择 mongodb，就当个简单的存 json 数据的数据库来用；如果是线上应用，肯定还是会选择 mysql。毕竟 sql 比较成熟，而且各种常用场景的最佳实践都有先例了。
 
 这里还有个很好玩的网站：http://www.mongodb-is-web-scale.com/
 
-顺便说说 mongodb 与 redis 的不同。mongodb 是用来存数据的，可以认为是存在硬盘上，而 redis 的数据可以认为都在内存中。对于稍微复杂的查询，redis 支持的查询方式太少太少了，几乎可以认为是 key-value 的。据说 instagram 的数据就全部存在 redis 中，用了好几个几十 G 内存的 aws ec2 机器在存。redis 也是支持把数据写入硬盘的，aof 貌似都过时了，好久没关注了。
+顺便说说 mongodb 与 redis 的不同。mongodb 是用来存非临时数据的，可以认为是存在硬盘上，而 redis 的数据可以认为都在内存中，存储临时数据，丢了也无所谓。对于稍微复杂的查询，redis 支持的查询方式太少太少了，几乎可以认为是 key-value 的。据说 instagram 的数据就全部存在 redis 中，用了好几个几十 G 内存的 aws ec2 机器在存。redis 也是支持把数据写入硬盘的，aof 貌似都过时了，好久没关注了。
 
 主题所限，就不展开讲了。这之间的选择和权衡，说起来真的是个很大的话题。
 
@@ -76,7 +76,7 @@ mongodb 的官网中有一些特性介绍：
 
 mongoose 是个 odm。odm 的概念对应 sql 中的 orm。也就是 ruby on rails 中的 activerecord 那一层。orm 全称是 `Object-Relational Mapping`，对象关系映射；而 odm 是 `Object-Document Mapping`，对象文档映射。
 
-它的作用就是，在程序代码中，定义一下数据库中的数据格式，然后取数据时通过它们，可以把数据库中的 document 映射成程序中的一个对象，这个对象有 .save .update 等一系列方法。在调用这些方法时，odm 会根据你调用时所用的条件，自动转换成相应的 mongodb shell 语句帮你发送出去。自然地，在程序中链式调用一个个的方法要比手写数据库操作语句具有更大的灵活性和便利性。
+它的作用就是，在程序代码中，定义一下数据库中的数据格式，然后取数据时通过它们，可以把数据库中的 document 映射成程序中的一个对象，这个对象有 .save .update 等一系列方法，和 .name .age 等一系列属性。在调用这些方法时，odm 会根据你调用时所用的条件，自动转换成相应的 mongodb shell 语句帮你发送出去。自然地，在程序中链式调用一个个的方法要比手写数据库操作语句具有更大的灵活性和便利性。
 
 （待续）
 
