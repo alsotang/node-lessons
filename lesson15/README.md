@@ -6,8 +6,8 @@
 
 ## 知识点
 
-1. 了解 mongodb
-1. 学习 mongoose 的使用
+1. 了解 mongodb (http://www.mongodb.org/ )
+1. 学习 mongoose 的使用 (http://mongoosejs.com/ )
 
 ## 课程内容
 
