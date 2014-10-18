@@ -133,5 +133,7 @@ js 中，匿名函数非常的方便，有效利用函数式编程的特性可�
 
 ### 设计模式
 
+《解密设计模式-王垠》
 
+https://github.com/alsotang/node-lessons/blob/master/lesson14/%E8%A7%A3%E5%AF%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%8E%8B%E5%9E%A0.txt
 
