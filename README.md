@@ -34,7 +34,7 @@
 * 《cookie 与 session》
 * 《何为 connect 中间件》
 * 《Mongodb 与 Mongoose 的使用》
-* 《一个简单的 blog》
+* 《一个简单的 blog 程序》
 
 ## 本课程特点
 
