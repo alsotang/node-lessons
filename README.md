@@ -29,11 +29,11 @@
 * Lesson 12: [《线上部署：heroku》](https://github.com/alsotang/node-lessons/tree/master/lesson12)
 * Lesson 13: [《持续集成平台：travis》](https://github.com/alsotang/node-lessons/tree/master/lesson13)
 * Lesson 14: [《js 中的那些最佳实践》](https://github.com/alsotang/node-lessons/tree/master/lesson14)
+* Lesson 15: [《Mongodb 与 Mongoose 的使用》](https://github.com/alsotang/node-lessons/tree/master/lesson15)
 
 ## 计划
 * 《cookie 与 session》
 * 《何为 connect 中间件》
-* 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog 程序》
 
 ## 本课程特点
