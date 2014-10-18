@@ -1,5 +1,7 @@
 **这个章节需要大家帮忙补充，一次性想不完那么多**
 
+----
+
 ### JavaScript 语言精粹
 
 http://book.douban.com/subject/3590768/
