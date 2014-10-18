@@ -28,6 +28,7 @@
 * Lesson 11: [《作用域与闭包：this，var，(function () {})》](https://github.com/alsotang/node-lessons/tree/master/lesson11) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
 * Lesson 12: [《线上部署：heroku》](https://github.com/alsotang/node-lessons/tree/master/lesson12)
 * Lesson 13: [《持续集成平台：travis》](https://github.com/alsotang/node-lessons/tree/master/lesson13)
+* Lesson 14: [《js 中的那些最佳实践》](https://github.com/alsotang/node-lessons/tree/master/lesson14)
 
 ## 计划
 * 《cookie 与 session》
