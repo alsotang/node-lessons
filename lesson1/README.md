@@ -102,16 +102,16 @@ scheme有我们很熟悉的`http`、`https`、`ftp`，以及著名的`ed2k`，`t
 
 通常我们熟悉的url定义成这个样子
 ```
-<scheme>//<user>:<password>@<host>:<port>/<url-path>
+<scheme>://<user>:<password>@<host>:<port>/<url-path>
 ```
 用过ftp的估计能体会这么长的，网页上很少带auth信息，所以就精简成这样:
 ```
-<scheme>//<host>:<port>/<url-path>
+<scheme>://<host>:<port>/<url-path>
 ```
 在上面的例子中, scheme=http, host=localhost, port=3000, url-path=/, 再联想对照一下浏览器端`window.location`对象。
 著名的`localhost`，你可以在电脑的hosts文件上找到
 
-[在这偏文章中提到](http://en.wikipedia.org/wiki/URI_scheme)： `URI schemes are frequently and incorrectly referred to as "protocols", or specifically as URI protocols or URL protocols, since most were originally designed to be used with a particular protocol, and often have the same name`，比较认同这个观点，尤其是今天移动设备的时代里， android和ios的开发中大量使用uri作为跨app通讯通道，把scheme理解为协议略狭隘了。
+[在这篇文章中提到](http://en.wikipedia.org/wiki/URI_scheme)： `URI schemes are frequently and incorrectly referred to as "protocols", or specifically as URI protocols or URL protocols, since most were originally designed to be used with a particular protocol, and often have the same name`，比较认同这个观点，尤其是今天移动设备的时代里， android和ios的开发中大量使用uri作为跨app通讯通道，把scheme理解为协议略狭隘了。
 
 ### 尾声
 
