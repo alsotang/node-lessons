@@ -27,13 +27,13 @@
 * Lesson 10: [《benchmark 怎么写》](https://github.com/alsotang/node-lessons/tree/master/lesson10)
 * Lesson 11: [《作用域与闭包：this，var，(function () {})》](https://github.com/alsotang/node-lessons/tree/master/lesson11) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
 * Lesson 12：[《线上部署：heroku》](https://github.com/alsotang/node-lessons/tree/master/lesson12)
+* Lesson 13：[《持续集成平台：travis》](https://github.com/alsotang/node-lessons/tree/master/lesson13)
 
 ## 计划
 * 《cookie 与 session》
 * 《何为 connect 中间件》
 * 《Mongodb 与 Mongoose 的使用》
 * 《一个简单的 blog》
-* 《持续集成平台：travis》
 
 ## 本课程特点
 
