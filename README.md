@@ -25,9 +25,9 @@
 * Lesson 8: [《测试用例：supertest》](https://github.com/alsotang/node-lessons/tree/master/lesson8)
 * Lesson 9: [《正则表达式》](https://github.com/alsotang/node-lessons/tree/master/lesson9)
 * Lesson 10: [《benchmark 怎么写》](https://github.com/alsotang/node-lessons/tree/master/lesson10)
+* Lesson 11: [《作用域与闭包：this，var，(function () {})》](https://github.com/alsotang/node-lessons/tree/master/lesson11) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
 
 ## 计划
-* 《作用域与闭包：this，var，(function () {})》
 * 《线上部署：heroku》
 * 《cookie 与 session》
 * 《何为 connect 中间件》
