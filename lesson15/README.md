@@ -11,7 +11,7 @@
 
 ## 课程内容
 
-TL;DR 对于生产环境和提高生产力来说，mongodb 没什么好的。
+TL;DR 对于生产环境和提高生产力来说，mongodb 没什么好的。这跟我平时黑 node.js 不同，node.js 好的地方还是挺多的，mongodb 真没什么好的。
 
 ### mongodb
 
