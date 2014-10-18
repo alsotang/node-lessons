@@ -123,7 +123,7 @@ js 中，匿名函数非常的方便，有效利用函数式编程的特性可�
 
 ### 泛型
 
-类型都经常忽略还泛型！everything is 泛型 in js
+类型都经常忽略还泛型！every parammeter is 泛型 in js
 
 ### 权限控制
 
