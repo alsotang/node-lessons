@@ -137,3 +137,6 @@ js 中，匿名函数非常的方便，有效利用函数式编程的特性可�
 
 https://github.com/alsotang/node-lessons/blob/master/lesson14/%E8%A7%A3%E5%AF%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%8E%8B%E5%9E%A0.txt
 
+### 构建大型项目
+
+从 npm 上面寻找质量高的库，并用质量高的方式拼凑起来。
