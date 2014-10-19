@@ -162,4 +162,11 @@ var Post = mongoose.model('Post', {
 
 用户系统也不做，硬编码几个管理员账号在配置文件中，然后用 http basic auth：https://github.com/jshttp/basic-auth 来做验证。
 
+
+### 示例程序
+
+Nodeclub 是使用 Node.js 和 MongoDB 开发的社区系统
+
+https://github.com/cnodejs/nodeclub
+
 完。
