@@ -76,15 +76,88 @@ mongodb 的官网中有一些特性介绍：
 
 其中标有箭头的是基本概念，圆圈的是进阶概念，画叉的不必了解。
 
+### 安装 mongodb
+
+课程到这，一直忘记说 mongodb 的安装了。
+
+ubuntu: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+
+mac: `$ brew install mongodb`
+
+装好以后，在命令行 `$ mongod`，然后另外开个 shell 窗口，输入 `$ mongo` 就能使用了。
+
 ### mongoose
 
 mongoose 是个 odm。odm 的概念对应 sql 中的 orm。也就是 ruby on rails 中的 activerecord 那一层。orm 全称是 `Object-Relational Mapping`，对象关系映射；而 odm 是 `Object-Document Mapping`，对象文档映射。
 
-它的作用就是，在程序代码中，定义一下数据库中的数据格式，然后取数据时通过它们，可以把数据库中的 document 映射成程序中的一个对象，这个对象有 .save .update 等一系列方法，和 .name .age 等一系列属性。在调用这些方法时，odm 会根据你调用时所用的条件，自动转换成相应的 mongodb shell 语句帮你发送出去。自然地，在程序中链式调用一个个的方法要比手写数据库操作语句具有更大的灵活性和便利性。
+它的作用就是，在程序代码中，定义一下数据库中的数据格式，然后取数据时通过它们，可以把数据库中的 document 映射成程序中的一个对象，这个对象有 .save .update 等一系列方法，和 .title .author 等一系列属性。在调用这些方法时，odm 会根据你调用时所用的条件，自动转换成相应的 mongodb shell 语句帮你发送出去。自然地，在程序中链式调用一个个的方法要比手写数据库操作语句具有更大的灵活性和便利性。
 
-（待续）
+mongoose 的官网给出了类似这样一个示例，我改造了一下：
 
+```js
+// 首先引入 mongoose 这个模块
+var mongoose = require('mongoose');
+// 然后连接对应的数据库：mongodb://localhost/test
+// 其中，前面那个 mongodb 是 protocol scheme 的名称；localhost 是 mongod 所在的地址；
+// 端口号省略则默认连接 27017；test 是数据库的名称
+// mongodb 中不需要建立数据库，当你需要连接的数据库不存在时，会自动创建一个出来。
+// 关于 mongodb 的安全性，mongodb 我印象中安全机制很残废，用户名密码那套都做得不好，更
+// 别提细致的用户权限控制了。不过不用担心，mongodb 的默认配置只接受来自本机的请求，内网都连不上。
+// 当需要在内网中为其他机器提供 mongodb 服务时，或许可以去看看 iptables 相关的东西。
+mongoose.connect('mongodb://localhost/test');
 
+// 上面说了，我推荐在同一个 collection 中使用固定的数据形式。
+// 在这里，我们创建了一个名为 Cat 的 model，它在数据库中的名字根据传给 mongoose.model 的第一个参数决定，mongoose 会将名词变为复数，在这里，collection 的名字会是 `cats`。
+// 这个 model 的定义是，有一个 String 类型的 name，String 数组类型的 friends，Number 类型的 age。
+// mongodb 中大多数的数据类型都可以用 js 的原生类型来表示。至于说 String 的长度是多少，Number 的精度是多少。String 的最大限度是 16MB，Number 的整型是 64-bit，浮点数的话，js 中 `0.1 + 0.2` 的结果都是乱来的。。就不指望什么了。。
+// 这里可以看到各种示例：http://mongoosejs.com/docs/schematypes.html
+var Cat = mongoose.model('Cat', {
+  name: String,
+  friends: [String],
+  age: Number,
+});
 
+// new 一个新对象，名叫 kitty
+// 接着为 kitty 的属性们赋值
+var kitty = new Cat({ name: 'Zildjian', friends: ['tom', 'jerry']});
+kitty.age = 3;
 
+// 调用 .save 方法后，mongoose 会去你的 mongodb 中的 test 数据库里，存入一条记录。
+kitty.save(function (err) {
+  if (err) // ...
+  console.log('meow');
+});
+```
 
+我们可以验证一下
+
+```shell
+$ mongo
+MongoDB shell version: 2.6.4
+connecting to: test
+> show dbs
+> use test
+> show collections
+> db.cats.find()
+```
+
+会发现里面就有一条记录了。
+
+### 设计个简单博客程序
+
+如果要写个博客程序练手。数据库可以这样设计
+
+```js
+var Post = mongoose.model('Post', {
+  title: String,
+  content: String,
+  author: String,
+  create_at: Date,
+});
+```
+
+评论就不要自己做了，接入多说：http://duoshuo.com/
+编辑器就纯文本好了，用 markdown 写。
+用户系统也不做，硬编码几个管理员账号在配置文件中，然后用 http basic auth：https://github.com/jshttp/basic-auth 来做验证。
+
+完。
