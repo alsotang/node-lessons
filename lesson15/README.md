@@ -157,7 +157,9 @@ var Post = mongoose.model('Post', {
 ```
 
 评论就不要自己做了，接入多说：http://duoshuo.com/
+
 编辑器就纯文本好了，用 markdown 写。
+
 用户系统也不做，硬编码几个管理员账号在配置文件中，然后用 http basic auth：https://github.com/jshttp/basic-auth 来做验证。
 
 完。
