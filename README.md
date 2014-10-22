@@ -24,20 +24,25 @@
 * Lesson 7: [《浏览器端测试：mocha，chai，phantomjs》](https://github.com/alsotang/node-lessons/tree/master/lesson7) -- by [@elrrrrrrr](https://github.com/elrrrrrrr)
 * Lesson 8: [《测试用例：supertest》](https://github.com/alsotang/node-lessons/tree/master/lesson8)
 * Lesson 9: [《正则表达式》](https://github.com/alsotang/node-lessons/tree/master/lesson9)
+* Lesson 10: [《benchmark 怎么写》](https://github.com/alsotang/node-lessons/tree/master/lesson10)
+* Lesson 11: [《作用域与闭包：this，var，(function () {})》](https://github.com/alsotang/node-lessons/tree/master/lesson11) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
+* Lesson 12: [《线上部署：heroku》](https://github.com/alsotang/node-lessons/tree/master/lesson12)
+* Lesson 13: [《持续集成平台：travis》](https://github.com/alsotang/node-lessons/tree/master/lesson13)
+* Lesson 14: [《js 中的那些最佳实践》](https://github.com/alsotang/node-lessons/tree/master/lesson14)
+* Lesson 15: [《Mongodb 与 Mongoose 的使用》](https://github.com/alsotang/node-lessons/tree/master/lesson15)
 
 ## 计划
-* 《benchmark 怎么写》
-* 《线上部署：heroku》
+* 《http 中各个 header 的含义》
+* 《操作 mysql》
+* 《在全新的 vps 上搭建 node.js、mongodb、nginx》
 * 《cookie 与 session》
 * 《何为 connect 中间件》
-* 《Mongodb 与 Mongoose 的使用》
-* 《一个简单的 blog》
-* 《持续集成平台：travis》
+* 《一个简单的 blog 程序》
 
 ## 本课程特点
 
 * 每一课的课程目标如果有能力完成，则可考虑放弃阅读课程内容
-* 对 web 开发初学者不友好，对 Windows 开发者不友好，对 ruby on rails 开发者友好
+* 对 web 开发初学者不友好，对 Windows 用户不友好，对 ruby on rails 开发者友好
 * 内容笼统，课程重点随心所欲
 
 ## License
