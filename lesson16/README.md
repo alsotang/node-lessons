@@ -22,7 +22,7 @@ express 在4.xx版本之后，session管理和cookies等许多模块都不再直
 
 express 中 cookie 使用 `cookie-parser` 模块。
 
-```
+```js
 var express = require('express');
 // 首先引入 cookie-parser 这个模块
 var cookieParser = require('cookie-parser');
@@ -69,7 +69,7 @@ express 中使用 session 要用到 `express-session` 这个模块，主要的�
 
 1） 在内存中存储 session
 
-```
+```js
 var express = require('express');
 // 首先引入 express-session 这个模块
 var session = require('express-session');
@@ -102,7 +102,7 @@ app.get('/', function (req, res) {
 
 大量的 session 放在内存中会影响性能，因此可以使用高速缓存来存储 session，据说在 redis 中缓存马上变得高大上了，需要用到 connect-redis 模块来连接 redis，然后在 session 中设置存储方式为 redis。
 
-```
+```js
 var express = require('express');
 var session = require('express-session');
 var redisStore = require('connect-redis')(session);
