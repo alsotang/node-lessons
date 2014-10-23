@@ -44,7 +44,7 @@ cheerio(https://github.com/cheeriojs/cheerio ) 大家可以理解成一个 Node.
 还记得我们怎么新建一个项目吗？
 
 1. 新建一个文件夹，进去之后 `npm init`
-1. 安装依赖 `npm install --save PACKAGE_NAME`
+1. 安装依赖 `npm install PACKAGE_NAME --save `
 1. 写应用逻辑
 
 我们应用的核心逻辑长这样
