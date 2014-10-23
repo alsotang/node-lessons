@@ -70,3 +70,15 @@ travis 接着会做的事情是：
 
 对了，行覆盖率的那个 badge 是由一个叫 coveralls(https://coveralls.io/ ) 的服务提供的。大家可以试着自己接入。
 
+## 补充说明:
+
+如果你的应用有使用到数据库, 需要要在 `.travis.yml` 中添加一些内容.
+
+以 MongoDB 为例:
+
+```yml
+services:
+    mongodb
+```
+
+其它数据库详细内容参考[travis 官方文档](http://docs.travis-ci.com/user/database-setup/)
