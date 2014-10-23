@@ -1,8 +1,8 @@
 # cookie 和 session
 
-众所周知，HTTP 是一个无状态协议，所以客户端每次发出请求时，下一次请求无法得知上一次请求所包含的状态数据，如何能把一个用户请求的数据关联起来呢？
+众所周知，HTTP 是一个无状态协议，所以客户端每次发出请求时，下一次请求无法得知上一次请求所包含的状态数据，如何能把一个用户的状态数据关联起来呢？
 
-比如在淘宝的某个页面中，你进行了登陆操作。当你跳转的商品页时，服务端如何知道你是已经登陆的状态？
+比如在淘宝的某个页面中，你进行了登陆操作。当你跳转到商品页时，服务端如何知道你是已经登陆的状态？
 
 ### cookie
 
@@ -57,13 +57,13 @@ app.get('/', function (req, res) {
 
 cookie 虽然很方便，但是使用 cookie 有一个很大的弊端，cookie 中的所有数据在客户端就可以被修改，数据非常容易被伪造，那么一些重要的数据就不能存放在 cookie 中了，而且如果 cookie 中数据字段太多会影响传输效率。为了解决这些问题，就产生了 session，session 中的数据是保留在服务器端的。
 
-session 的运作通过一个 `session_id` 来进行的。`session_id` 通常是存放在客户端的 cookie 中，比如在 express 中，默认叫做 `connect.sid`，当请求到来时，检查 cookie 中保存的 session_id 并通过这个 session_id 与服务器端的 session 关联起来，进行数据的保存和修改。
+session 的运作通过一个 `session_id` 来进行。`session_id` 通常是存放在客户端的 cookie 中，比如在 express 中，默认是 `connect.sid` 这个字段，当请求到来时，服务端检查 cookie 中保存的 session_id 并通过这个 session_id 与服务器端的 session data 关联起来，进行数据的保存和修改。
 
 这意思就是说，当你浏览一个网页时，服务端随机产生一个 1024 比特长的字符串，然后存在你 cookie 中的 `connect.sid` 字段中。当你下次访问时，cookie 会带有这个字符串，然后浏览器就知道你是上次访问过的某某某，然后从服务器的存储中取出上次记录在你身上的数据。由于字符串是随机产生的，而且位数足够多，所以也不担心有人能够伪造。伪造成功的概率比坐在家里编程时被邻居家的狗突然闯入并咬死的几率还低。
 
-session 可以存放在 1）内存、2）cookie本身、3）redis 或 memcached 等缓存中，或者4）放在数据库中。线上一般缓存的方案比较常见，存数据库的话，查询效率比前两者低太多，不推荐。
+session 可以存放在 1）内存、2）cookie本身、3）redis 或 memcached 等缓存中，或者4）数据库中。线上一般缓存的方案比较常见，存数据库的话，查询效率相比前三者都太低，不推荐。
 
-express 中使用 session 要用到 `express-session` (https://github.com/expressjs/session ) 这个模块，主要的方法就是 `session(options)`，其中 options 中包含可选参数，主要有：
+express 中操作 session 要用到 `express-session` (https://github.com/expressjs/session ) 这个模块，主要的方法就是 `session(options)`，其中 options 中包含可选参数，主要有：
 
 - name: 设置 cookie 中，保存 session 的字段名称，默认为 `connect.sid` 。
 - store: session 的存储方式，默认存放在内存中，也可以使用 redis，mongodb 等。express 生态中都有相应模块的支持。
@@ -75,6 +75,8 @@ express 中使用 session 要用到 `express-session` (https://github.com/expres
 - resave: 即使 session 没有被修改，也保存 session 值，默认为 true。
 
 1） 在内存中存储 session
+
+`express-session` 默认使用内存来存 session，对于开发调试来说很方便。
 
 ```js
 var express = require('express');
@@ -108,7 +110,9 @@ app.get('/', function (req, res) {
 2） 在 redis 中存储 session
 
 session 存放在内存中不方便进程间共享，因此可以使用 redis 等缓存来存储 session。
+
 假设你的机器是 4 核的，你使用了 4 个进程在跑同一个 node web 服务，当用户访问进程1时，他被设置了一些数据当做 session 存在内存中。而下一次访问时，他被负载均衡到了进程2，则此时进程2的内存中没有他的信息，认为他是个新用户。这就会导致用户在我们服务中的状态不一致。
+
 使用 redis 作为缓存，可以使用 `connect-redis` 模块(https://github.com/tj/connect-redis )来得到 redis 连接实例，然后在 session 中设置存储方式为该实例。
 
 ```js
@@ -146,9 +150,9 @@ app.get('/', function (req, res) {
 
 上面我们说到，session 的 store 有四个常用选项：1）内存 2）cookie 3）缓存 4）数据库
 
-其中，开发环境存内存就好了。一般的小程序为了省事，如果不要状态共享的问题，用内存 session 也没问题。但内存 session 除了省事之外，没有别的好处。
+其中，开发环境存内存就好了。一般的小程序为了省事，如果不涉及状态共享的问题，用内存 session 也没问题。但内存 session 除了省事之外，没有别的好处。
 
-cookie session 我们下面会提到，现在说说利弊。用 cookie session 的话，是不用担心状态共享问题的，因为 session 的 data 不是由服务器来保存，而是保存在用户浏览器端，每次用户访问时，都会主动带上他自己的信息。当然在这里，安全性之类的，只要遵照最佳实践来，也是有保证的。
+cookie session 我们下面会提到，现在说说利弊。用 cookie session 的话，是不用担心状态共享问题的，因为 session 的 data 不是由服务器来保存，而是保存在用户浏览器端，每次用户访问时，都会主动带上他自己的信息。当然在这里，安全性之类的，只要遵照最佳实践来，也是有保证的。它的弊端是增大了数据量传输，利端是方便。
 
 缓存方式是最常用的方式了，即快，又能共享状态。相比 cookie session 来说，当 session data 比较大的时候，可以节省网络传输。推荐使用。
 
@@ -162,7 +166,7 @@ cookie session 我们下面会提到，现在说说利弊。用 cookie session �
 
 > cookie 虽然很方便，但是使用 cookie 有一个很大的弊端，cookie 中的所有数据在客户端就可以被修改，数据非常容易被伪造
 
-其实不是这样的，那只是为了方便理解才那么写。要知道，计算机领域有个名词叫 **签名**，专业点说，叫信息摘要算法。
+其实不是这样的，那只是为了方便理解才那么写。要知道，计算机领域有个名词叫 **签名**，专业点说，叫 **信息摘要算法**。
 
 比如我们现在面临着一个菜鸟开发的网站，他用 cookie 来记录登陆的用户凭证。相应的 cookie 长这样：`dotcom_user=alsotang`，它说明现在的用户是 alsotang 这个用户。如果我在浏览器中装个插件，把它改成 `dotcom_user=ricardo`，服务器一读取，就会误认为我是 ricardo。然后我就可以进行 ricardo 才能进行的操作了。之前 web 开发不成熟的时候，用这招甚至可以黑个网站下来，把 cookie 改成 `dotcom_user=admin` 就行了，唉，那是个玩黑客的黄金年代啊。
 
@@ -174,7 +178,9 @@ OK，现在我有一些数据，不想存在 session 中，想存在 cookie 中�
 {dotcom_user: 'alsotang'}
 ```
 
-这样的。而如果我们签个名，比如把 `dotcom_user` 的值跟我的 secret_string 做个 sha1
+这样的。
+
+而如果我们签个名，比如把 `dotcom_user` 的值跟我的 secret_string 做个 sha1
 
 `sha1('this_is_my_secret_and_fuck_you_all' + 'alsotang') === '4850a42e3bc0d39c978770392cbd8dc2923e3d1d'`
 
@@ -187,7 +193,9 @@ OK，现在我有一些数据，不想存在 session 中，想存在 cookie 中�
 }
 ```
 
-这样一来，用户就没法伪造信息了。毕竟他不懂我们的 secret_string 是什么，信息摘要算法反推的成功率和成本都太低。
+这样一来，用户就没法伪造信息了。一旦它更改了 cookie 中的信息，则服务器会发现 hash 校验的不一致。
+
+毕竟他不懂我们的 secret_string 是什么，而暴力破解哈希值的成本太高。
 
 ### cookie-session
 
@@ -195,9 +203,17 @@ OK，现在我有一些数据，不想存在 session 中，想存在 cookie 中�
 
 假设我们想在用户的 cookie 中存 session data，使用一个名为 `session_data` 的字段。
 
-仍是存 `var sessionData = {dotcom_user: 'alsotang'}` 这段信息的话，可以将 `sessionData` 与我们的 `secret_string` 一起做个对称加密，存到 `session_data` 字段中，只要你的 `secret_string` 足够长，那么攻击者也是无法获取实际 session 内容的。对称加密之后的内容对于攻击者来说相当于一段乱码。
+存
+
+```js
+var sessionData = {username: 'alsotang', age: 22, company: 'alibaba', location: 'hangzhou'}
+```
+
+这段信息的话，可以将 `sessionData` 与我们的 `secret_string` 一起做个对称加密，存到 cookie 的 `session_data` 字段中，只要你的 `secret_string` 足够长，那么攻击者也是无法获取实际 session 内容的。对称加密之后的内容对于攻击者来说相当于一段乱码。
 
 而当用户下次访问时，我们就可以用 `secret_string` 来解密 `sessionData`，得到我们需要的 session data。
+
+signedCookies 跟 cookie-session 还是有区别的。1）是前者信息可见不可篡改，后者不可见也不可篡改 2）是前者一般是长期保存，而后者是 session cookie
 
 ### session cookie
 
@@ -224,11 +240,16 @@ if (req.session.user) {
   next()
 } else if (req.signedCookies['username']) {
   // 如果存在则从数据库中获取这个 username 的信息，并保存到 session 中
+  getuser(function (err, user) {
+    req.session.user = user;
+    next();
+  });
 } else {
   // 当做为登陆用户处理
+  next();
 }
 ```
 
-### etag session保存http会话
+### etag 当做 session，保存 http 会话
 
 很黑客的一种玩法：https://cnodejs.org/topic/5212d82d0a746c580b43d948
