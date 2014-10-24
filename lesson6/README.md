@@ -18,7 +18,7 @@ test/main.test.js: 对 main 函数进行测试，并使行覆盖率和分支覆�
 
 ## 知识点
 
-1. 学习使用测试框架 mocha : http://visionmedia.github.io/mocha/
+1. 学习使用测试框架 mocha : http://mochajs.org/
 2. 学习使用断言库 should : https://github.com/visionmedia/should.js/
 3. 学习使用测试率覆盖工具 istanbul : https://github.com/gotwarlost/istanbul
 4. 简单 Makefile 的编写 : http://blog.csdn.net/haoel/article/details/2886
