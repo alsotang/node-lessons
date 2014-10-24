@@ -61,7 +61,7 @@ session 的运作通过一个 `session_id` 来进行。`session_id` 通常是存
 
 这意思就是说，当你浏览一个网页时，服务端随机产生一个 1024 比特长的字符串，然后存在你 cookie 中的 `connect.sid` 字段中。当你下次访问时，cookie 会带有这个字符串，然后浏览器就知道你是上次访问过的某某某，然后从服务器的存储中取出上次记录在你身上的数据。由于字符串是随机产生的，而且位数足够多，所以也不担心有人能够伪造。伪造成功的概率比坐在家里编程时被邻居家的狗突然闯入并咬死的几率还低。
 
-session 可以存放在 1）内存、2）cookie本身、3）redis 或 memcached 等缓存中，或者4）数据库中。线上一般缓存的方案比较常见，存数据库的话，查询效率相比前三者都太低，不推荐。
+session 可以存放在 1）内存、2）cookie本身、3）redis 或 memcached 等缓存中，或者4）数据库中。线上来说，缓存的方案比较常见，存数据库的话，查询效率相比前三者都太低，不推荐；cookie session 有安全性问题，下面会提到。
 
 express 中操作 session 要用到 `express-session` (https://github.com/expressjs/session ) 这个模块，主要的方法就是 `session(options)`，其中 options 中包含可选参数，主要有：
 
@@ -156,7 +156,7 @@ cookie session 我们下面会提到，现在说说利弊。用 cookie session �
 
 缓存方式是最常用的方式了，即快，又能共享状态。相比 cookie session 来说，当 session data 比较大的时候，可以节省网络传输。推荐使用。
 
-数据库 session。除非你很熟悉这一块，知道自己要什么，否则不如用 cookie session。
+数据库 session。除非你很熟悉这一块，知道自己要什么，否则还是老老实实用缓存吧。
 
 ### signedCookie
 
@@ -222,6 +222,12 @@ signedCookies 跟 cookie-session 还是有区别的：
 </del>
 
 cookie-session 的实现跟 signedCookies 差不多。
+
+不过 cookie-session 我个人建议不要使用，有受到回放攻击的危险。
+
+回放攻击指的是，比如一个用户，它现在有 100 积分，积分存在 session 中，session 保存在 cookie 中。他先复制下现在的这段 cookie，然后去发个帖子，扣掉了 20 积分，于是他就只有 80 积分了。而他现在可以将之前复制下的那段 cookie 再粘贴回去浏览器中，于是服务器在一些场景下会认为他又有了 100 积分。
+
+如果避免这种攻击呢？这就需要引入一个第三方的手段来验证 cookie session，而验证所需的信息，一定不能存在 cookie 中。这么一来，避免了这种攻击后，使用 cookie session 的好处就荡然无存了。如果为了避免攻击而引入了缓存使用的话，那不如把 cookie session 也一起放进缓存中。
 
 ### session cookie
 
