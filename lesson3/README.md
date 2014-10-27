@@ -22,6 +22,27 @@
 
 ```
 
+## 挑战
+
+访问 `http://localhost:3000/` 时，输出包括主题的作者，
+
+示例：
+
+```js
+[
+  {
+    "title": "【公告】发招聘帖的同学留意一下这里",
+    "href": "http://cnodejs.org/topic/541ed2d05e28155f24676a12",
+    "author": "alsotang"
+  },
+  {
+    "title": "发布一款 Sublime Text 下的 JavaScript 语法高亮插件",
+    "href": "http://cnodejs.org/topic/54207e2efffeb6de3d61f68f",
+    "author": "otheruser"
+  }
+]
+```
+
 ## 知识点
 
 1. 学习使用 superagent 抓取网页

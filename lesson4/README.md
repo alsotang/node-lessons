@@ -21,7 +21,25 @@
     "comment1": "沙发！"
   }
 ]
+```
 
+## 挑战
+
+以上文目标为基础，输出 `comment1` 的作者，以及他在 cnode 社区的积分值。
+
+示例：
+
+```js
+[
+  {
+    "title": "【公告】发招聘帖的同学留意一下这里",
+    "href": "http://cnodejs.org/topic/541ed2d05e28155f24676a12",
+    "comment1": "呵呵呵呵",
+    "author1": "auser",
+    "score1": 80
+  },
+  ...
+]
 ```
 
 ## 知识点
