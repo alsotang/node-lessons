@@ -18,7 +18,7 @@ test/main.test.js: 对 app 的接口进行测试，覆盖以上所有情况。
 
 ## 知识点
 
-1. 学习 supertest 的使用 (https://github.com/visionmedia/supertest )
+1. 学习 supertest 的使用 (https://github.com/tj/supertest )
 2. 复习 mocha，should 的使用
 
 ## 课程内容
@@ -29,7 +29,7 @@ OK，基础知识前面都讲得很多了，这节课我不会事无巨细地写
 
 噢，对了，说到 fibonacci，Node 中文圈的大神 @苏千(https://github.com/fengmk2 ) 写过一个页面，对各种语言的 fibonacci 效率进行了测试：http://fengmk2.cnpmjs.org/blog/2011/fibonacci/nodejs-python-php-ruby-lua.html 。其中，Node 的表现不知道比 Python 和 Ruby 高到哪里去了，与 CPU 谈笑风生。怀疑 js 的人啊，都 too simple，sometimes naive。
 
-先来介绍一下 supertest。supertest 是 superagent 的孪生库。他的作者叫 tj，这是个在 Node.js 的历史上会永远被记住的名字，因为他一个人撑起了 npm 的半边天。别误会成他是 npm 的开发者，他的贡献是在 Node.js 的方方面面都贡献了非常高质量和口碑的库，比如 mocha 是他的，superagent 是他的，express 是他的，should 也是他的，还有其他很多很多，比如 koa，都是他的。如果你更详细点了解一些 Node 圈内的八卦，一定也会像我一样对 tj 佩服得五体投地。他的 github 首页是：https://github.com/visionmedia 。
+先来介绍一下 supertest。supertest 是 superagent 的孪生库。他的作者叫 tj，这是个在 Node.js 的历史上会永远被记住的名字，因为他一个人撑起了 npm 的半边天。别误会成他是 npm 的开发者，他的贡献是在 Node.js 的方方面面都贡献了非常高质量和口碑的库，比如 mocha 是他的，superagent 是他的，express 是他的，should 也是他的，还有其他很多很多，比如 koa，都是他的。如果你更详细点了解一些 Node 圈内的八卦，一定也会像我一样对 tj 佩服得五体投地。他的 github 首页是：https://github.com/tj 。
 
 假使你作为一个有志之士，想要以他为榜样，跟随他前进的步伐，那么我指条明路给你，不收费的：http://tour.golang.org/
 
@@ -247,7 +247,7 @@ describe('test/app.test.js', function () {
       .end(...)
     ```
 
-这里有个相关讨论：https://github.com/visionmedia/supertest/issues/46
+这里有个相关讨论：https://github.com/tj/supertest/issues/46
 
 ## 拓展学习
 

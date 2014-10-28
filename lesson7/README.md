@@ -17,7 +17,7 @@ vendor/tests.js 编写针对前端脚本的测试用例
 
 ## 知识点
 
-1. 学习使用测试框架 mocha 进行前端测试 : http://visionmedia.github.io/mocha/
+1. 学习使用测试框架 mocha 进行前端测试 : http://mochajs.org/
 2. 了解全栈的断言库 chai: http://chaijs.com/
 3. 了解 headless 浏览器 phantomjs: http://phantomjs.org/
 

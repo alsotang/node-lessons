@@ -19,7 +19,7 @@ test/main.test.js: 对 main 函数进行测试，并使行覆盖率和分支覆�
 ## 知识点
 
 1. 学习使用测试框架 mocha : http://mochajs.org/
-2. 学习使用断言库 should : https://github.com/visionmedia/should.js/
+2. 学习使用断言库 should : https://github.com/tj/should.js
 3. 学习使用测试率覆盖工具 istanbul : https://github.com/gotwarlost/istanbul
 4. 简单 Makefile 的编写 : http://blog.csdn.net/haoel/article/details/2886
 
@@ -108,7 +108,7 @@ https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js
 
 should 在 js 的 Object “基类”上注入了一个 `#should` 属性，这个属性中，又有着许许多多的属性可以被访问。
 
-比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`。should.js API 在：https://github.com/visionmedia/should.js/
+比如测试一个数是不是大于3，则是 `(5).should.above(3)`；测试一个字符串是否有着特定前缀：`'foobar'.should.startWith('foo');`。should.js API 在：https://github.com/tj/should.js
 
 should.js 如果现在还是 version 3 的话，我倒是推荐大家去看看它的 API 和 源码；现在 should 是 version 4 了，API 丑得很，但为了不掉队，我还是一直用着它。我觉得 expect 麻烦，所以不用 expect，对了，expect 也是一个断言库：https://github.com/LearnBoost/expect.js/ 。
 
