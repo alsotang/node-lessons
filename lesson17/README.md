@@ -36,7 +36,40 @@
 
 首先，我们思考一个典型的异步编程模型，考虑这样一个题目：读取一个文件，在控制台输出这个文件内容。
 
-用 async 来做这件事很简单。
+```js
+var fs = require('fs');
+fs.readFile('sample.txt','utf8',function(err,data){
+	console.log(data);
+})
+```
+
+看起来很简单，再进一步: 读取两个文件，在控制台输出这两个文件内容。
+
+```js
+var fs = require('fs');
+fs.readFile('sample01.txt','utf8',function(err,data){
+	console.log(data);
+	fs.readFile('sample02.txt','utf8',function(err,data){
+		console.log(data);
+	})
+});
+```
+
+要是读取更多的文件呢?
+
+```js
+var fs = require('fs');
+fs.readFile('sample01.txt','utf8',function(err,data){
+	fs.readFile('sample02.txt','utf8',function(err,data){
+		fs.readFile('sample03.txt','utf8',function(err,data){
+			fs.readFile('sample04.txt','utf8',function(err,data){
+			
+			})
+		})
+	})
+})
+```
+
 
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
 
