@@ -129,8 +129,11 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 现在outputPromise就变成了受function(fulfiled)或者function(rejected)控制状态的promise了。怎么理解这句话呢？
 
 * 当function(fulfiled)或者function(rejected)返回一个值，比如一个字符串，数组，对象等等，那么outputPromise的状态就会变成fulfiled。
+
 在下面这个例子中，我们可以看到，当我们把inputPromise的状态通过defer.resovle()变成fulfiled时，控制台输出fulfiled. 
+
 当我们把inputPromise的状态通过defer.reject()变成rejected，控制台输出rejected
+
 ```js
 	/**
 	 * 通过defer获得promise
@@ -175,6 +178,128 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 	//defer.resolve();
 ```
 * 当function(fulfiled)或者function(rejected)抛出异常时，那么outputPromise的状态就会变成rejected
+
+```JS
+	var Q = require('q');
+	var fs = require('fs');
+	var defer = Q.defer();
+
+	/**
+	 * 通过defer获得promise
+	 * @private
+	 */
+	function getInputPromise() {
+		return defer.promise;
+	}
+
+	/**
+	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+	 * 将then返回的promise赋给outputPromise
+	 * function(fulfiled) 和 function(rejected) 通过抛出异常将outputPromise的状态由
+	 * 未完成改变为reject
+	 * @private
+	 */
+	var outputPromise = getInputPromise().then(function(fulfiled){
+		throw new Error('fulfiled');
+	},function(rejected){
+		throw new Error('rejected');
+	});
+
+	/**
+	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'[Error:fulfiled]'。
+	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'[Error:rejected]'。
+	 */
+	outputPromise.then(function(fulfiled){
+		console.log(fulfiled);
+	},function(rejected){
+		console.log(rejected);
+	});
+
+	/**
+	 * 将inputPromise的状态由未完成变成rejected
+	 */
+	defer.reject();
+
+	/**
+	 * 将inputPromise的状态由未完成变成fulfiled
+	 */
+	//defer.resolve();
+```
+
+* 当function(fulfiled)或者function(rejected)返回一个promise时，outputPromise就会成为这个新的promise.
+
+这样做有什么意义呢? 主要在于聚合结果(Q.all)，管理延时，异常恢复等等
+
+比如说我们想要读取一个文件的内容，然后把这些内容打印出来。可能会写出这样的代码：
+
+```js
+//错误的写法
+var outputPromise = getInputPromise().then(function(fulfiled){
+			fs.readFile('test.txt','utf8',function(err,data){
+				return data;
+			});
+			},function(rejected){
+			throw new Error('rejected');
+			});
+```
+
+然而由于异步IO的原因，这样写是不行的。需要下面的方式:
+
+```js
+	var Q = require('q');
+	var fs = require('fs');
+	var defer = Q.defer();
+
+	/**
+	 * 通过defer获得promise
+	 * @private
+	 */
+	function getInputPromise() {
+		return defer.promise;
+	}
+
+	/**
+	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+	 * 将then返回的promise赋给outputPromise
+	 * function(fulfiled)将新的promise赋给outputPromise
+	 * 未完成改变为reject
+	 * @private
+	 */
+	var outputPromise = getInputPromise().then(function(fulfiled){
+		var myDefer = Q.defer();
+		fs.readFile('test.txt','utf8',function(err,data){
+			if(!err && data) {
+				myDefer.resolve(data);
+			}
+		});
+		return myDefer.promise;
+	},function(rejected){
+		throw new Error('rejected');
+	});
+
+	/**
+	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'[Error:fulfiled]'。
+	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'[Error:rejected]'。
+	 */
+	outputPromise.then(function(fulfiled){
+		console.log(fulfiled);
+	},function(rejected){
+		console.log(rejected);
+	});
+
+	/**
+	 * 将inputPromise的状态由未完成变成rejected
+	 */
+	//defer.reject();
+
+	/**
+	 * 将inputPromise的状态由未完成变成fulfiled
+	 */
+	defer.resolve();
+```
+
 
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
 
