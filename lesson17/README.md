@@ -91,7 +91,35 @@ promiseSomething().then(function(fulfiled){
 	});
 ```
 
+学习一个简单的例子
+```js
+var Q = require('q');
+var defer = Q.defer();
+/**
+ * 获取初始promise
+ * @private
+ */
+function getInitialPromise() {
+ return defer.promise;
+}
+/**
+ * 为promise设置三种状态的回调函数
+ */
+getInitialPromise().then(function(success){
+	console.log(success);
+},function(error){
+	console.log(error);
+},function(progress){
+	console.log(progress);
+});
+defer.notify('in progress');//控制台打印in progress
+defer.resolve('resolve');   //控制台打印resolve
+defer.reject('reject');		//没有输出。promise的状态只能改变一次
+```
+
 ## promise的传递
+
+
 
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
 
