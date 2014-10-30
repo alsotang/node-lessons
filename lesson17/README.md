@@ -300,6 +300,172 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 	defer.resolve();
 ```
 
+## 方法传递
+
+方法传递有些类似于Java中的try和catch。当一个异常没有响应的捕获时，这个异常会接着往下传递。
+
+方法传递的含义是当一个状态没有响应的回调函数，就会沿着then往下找。
+
+1. 没有提供function(rejected)
+
+```js
+var outputPromise = getInputPromise().then(function(fulfiled){})
+```
+如果inputPromise的状态由未完成变成rejected, 此时对rejected的处理会由outputPromise来完成。
+
+```js
+	var Q = require('q');
+	var fs = require('fs');
+	var defer = Q.defer();
+
+	/**
+	 * 通过defer获得promise
+	 * @private
+	 */
+	function getInputPromise() {
+		return defer.promise;
+	}
+
+	/**
+	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+	 * 当inputPromise状态由未完成变成rejected时，这个rejected会传向outputPromise
+	 */
+	var outputPromise = getInputPromise().then(function(fulfiled){
+		return 'fulfiled'
+	});
+	outputPromise.then(function(fulfiled){
+		console.log(fulfiled);
+	},function(rejected){
+		console.log(rejected);
+	});
+
+	/**
+	 * 将inputPromise的状态由未完成变成rejected
+	 */
+	defer.reject('inputpromise rejected'); //控制台打印inputpromise rejected
+
+	/**
+	 * 将inputPromise的状态由未完成变成fulfiled
+	 */
+	//defer.resolve();
+```
+
+2. 没有提供function(fulfiled)
+
+```js
+var outputPromise = getInputPromise().then(null,function(rejected){})
+```
+
+如果inputPromise的状态由未完成变成fulfiled, 此时对fulfil的处理会由outputPromise来完成。
+
+```js
+	var Q = require('q');
+	var fs = require('fs');
+	var defer = Q.defer();
+
+	/**
+	 * 通过defer获得promise
+	 * @private
+	 */
+	function getInputPromise() {
+		return defer.promise;
+	}
+
+	/**
+	 * 当inputPromise状态由未完成变成fulfil时，传递给outputPromise
+	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+	 * function(fulfiled)将新的promise赋给outputPromise
+	 * 未完成改变为reject
+	 * @private
+	 */
+	var outputPromise = getInputPromise().then(null,function(rejected){
+		return 'rejected';
+	});
+
+	outputPromise.then(function(fulfiled){
+		console.log(fulfiled);
+	},function(rejected){
+		console.log(rejected);
+	});
+
+	/**
+	 * 将inputPromise的状态由未完成变成rejected
+	 */
+	//defer.reject('inputpromise rejected');
+
+	/**
+	 * 将inputPromise的状态由未完成变成fulfiled
+	 */
+	defer.resolve('inputpromise fulfiled'); //控制台打印inputpromise fulfiled
+```
+
+3. 可以使用fail(function(error))来专门针对错误处理，而不是使用then(null,function(error))
+
+```js
+ var outputPromise = getInputPromise().fail(function(error){})
+```
+
+看这个例子
+```js
+	var Q = require('q');
+	var fs = require('fs');
+	var defer = Q.defer();
+
+	/**
+	 * 通过defer获得promise
+	 * @private
+	 */
+	function getInputPromise() {
+		return defer.promise;
+	}
+
+	/**
+	 * 当inputPromise状态由未完成变成fulfil时，调用then(function(fulfiled))
+	 * 当inputPromise状态由未完成变成rejected时，调用fail(function(error))
+	 * function(fulfiled)将新的promise赋给outputPromise
+	 * 未完成改变为reject
+	 * @private
+	 */
+	var outputPromise = getInputPromise().then(function(fulfiled){
+		return fulfiled;
+	}).fail(function(error){
+		console.log(error);
+	});
+	/**
+	 * 将inputPromise的状态由未完成变成rejected
+	 */
+	defer.reject('inputpromise rejected');//控制台打印inputpromise rejected
+
+	/**
+	 * 将inputPromise的状态由未完成变成fulfiled
+	 */
+	//defer.resolve('inputpromise fulfiled');
+```
+
+4. 可以使用progress(function(progress))来专门针对进度信息进行处理，而不是使用then(function(success){},function(error){},function(progress){})
+
+```js
+var Q = require('q');
+var defer = Q.defer();
+/**
+ * 获取初始promise
+ * @private
+ */
+function getInitialPromise() {
+ return defer.promise;
+}
+/**
+ * 为promise设置progress信息处理函数
+ */
+var outputPromise = getInitialPromise().then(function(success){
+	
+}).progress(function(progress){
+	console.log(progress);
+});
+
+defer.notify(1);
+defer.notify(2); //控制台打印1，2
+```
 
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
 
