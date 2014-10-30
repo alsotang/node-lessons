@@ -72,7 +72,7 @@ fs.readFile('sample01.txt','utf8',function(err,data){
 
 这段代码就是臭名昭著的邪恶金字塔(Pyramid of Doom)。可以使用async来改善这段代码，但是在本课中我们要用promise/defer来改善它。
 
-## 基本概念
+## promise基本概念
 先学习promise的基本概念。
 
 *promise只有三种状态，未完成，完成(fulfiled)和失败(rejected)。
@@ -90,6 +90,8 @@ promiseSomething().then(function(fulfiled){
 		//当返回进度信息时，调用此函数
 	});
 ```
+
+## promise的传递
 
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
 
