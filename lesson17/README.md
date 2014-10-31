@@ -1,42 +1,34 @@
 # 《使用 promise 替代回调函数》
 
-## 目标
-
-理解promise的三种状态
-
-学会promise的基本api: then, Q.all, Q.allSettled 
-
-学会用promise来替换回调函数
-
-学会编写自己的promise链
-
 ## 知识点
 
 1. 理解 Promise 概念，为什么需要 promise
-1. 学习 q 的API，利用 q 来替代回调函数
+1. 学习 q 的 API，利用 q 来替代回调函数(https://github.com/kriskowal/q )
 
 ## 课程内容
 
-第五课讲述了如何使用 async 来控制并发。async的本质是一个流程控制。其实在异步编程中，还有一个更为经典的模型，叫做Promise/Deferred模式。本节我们就来学习这个模型的代表实现[q](https://github.com/kriskowal/q)
+第五课(https://github.com/alsotang/node-lessons/tree/master/lesson5 )讲述了如何使用 async 来控制并发。async 的本质是一个流程控制。其实在异步编程中，还有一个更为经典的模型，叫做 Promise/Deferred 模型。
+
+本节我们就来学习这个模型的代表实现：[q](https://github.com/kriskowal/q)
 
 首先，我们思考一个典型的异步编程模型，考虑这样一个题目：读取一个文件，在控制台输出这个文件内容。
 
 ```js
 var fs = require('fs');
-fs.readFile('sample.txt','utf8',function(err,data){
+fs.readFile('sample.txt', 'utf8', function (err, data) {
 	console.log(data);
-})
+});
 ```
 
 看起来很简单，再进一步: 读取两个文件，在控制台输出这两个文件内容。
 
 ```js
 var fs = require('fs');
-fs.readFile('sample01.txt','utf8',function(err,data){
+fs.readFile('sample01.txt', 'utf8', function (err, data) {
 	console.log(data);
-	fs.readFile('sample02.txt','utf8',function(err,data){
+	fs.readFile('sample02.txt', 'utf8', function (err,data) {
 		console.log(data);
-	})
+	});
 });
 ```
 
@@ -44,20 +36,21 @@ fs.readFile('sample01.txt','utf8',function(err,data){
 
 ```js
 var fs = require('fs');
-fs.readFile('sample01.txt','utf8',function(err,data){
-	fs.readFile('sample02.txt','utf8',function(err,data){
-		fs.readFile('sample03.txt','utf8',function(err,data){
-			fs.readFile('sample04.txt','utf8',function(err,data){
-			
-			})
-		})
-	})
-})
+fs.readFile('sample01.txt', 'utf8', function (err, data) {
+	fs.readFile('sample02.txt', 'utf8', function (err,data) {
+		fs.readFile('sample03.txt', 'utf8', function (err, data) {
+			fs.readFile('sample04.txt', 'utf8', function (err, data) {
+
+			});
+		});
+	});
+});
 ```
 
 这段代码就是臭名昭著的邪恶金字塔(Pyramid of Doom)。可以使用async来改善这段代码，但是在本课中我们要用promise/defer来改善它。
 
 ## promise基本概念
+
 先学习promise的基本概念。
 
 * promise只有三种状态，未完成，完成(fulfiled)和失败(rejected)。
@@ -76,7 +69,8 @@ promiseSomething().then(function(fulfiled){
 	});
 ```
 
-学习一个简单的例子
+学习一个简单的例子：
+
 ```js
 var Q = require('q');
 var defer = Q.defer();
@@ -85,7 +79,7 @@ var defer = Q.defer();
  * @private
  */
 function getInitialPromise() {
- return defer.promise;
+  return defer.promise;
 }
 /**
  * 为promise设置三种状态的回调函数
@@ -107,111 +101,113 @@ defer.reject('reject');		//没有输出。promise的状态只能改变一次
 then方法会返回一个promise，在下面这个例子中，我们用outputPromise指向then返回的promise。
 
 ```js
-var outputPromise = getInputPromise().then(function(fulfiled){
-	},function(rejected){
+var outputPromise = getInputPromise().then(function (fulfiled) {
+	}, function (rejected) {
 	});
 ```
-现在outputPromise就变成了受function(fulfiled)或者function(rejected)控制状态的promise了。怎么理解这句话呢？
+
+现在outputPromise就变成了受 `function(fulfiled)` 或者 `function(rejected)`控制状态的promise了。怎么理解这句话呢？
 
 * 当function(fulfiled)或者function(rejected)返回一个值，比如一个字符串，数组，对象等等，那么outputPromise的状态就会变成fulfiled。
 
-在下面这个例子中，我们可以看到，当我们把inputPromise的状态通过defer.resovle()变成fulfiled时，控制台输出fulfiled. 
+在下面这个例子中，我们可以看到，当我们把inputPromise的状态通过defer.resovle()变成fulfiled时，控制台输出fulfiled.
 
 当我们把inputPromise的状态通过defer.reject()变成rejected，控制台输出rejected
 
 ```js
-	var Q = require('q'); 
-	var defer = Q.defer();
-	/**
-	 * 通过defer获得promise
-	 * @private
-	 */
-	function getInputPromise() {
-		return defer.promise;
-	}
+var Q = require('q');
+var defer = Q.defer();
+/**
+ * 通过defer获得promise
+ * @private
+ */
+function getInputPromise() {
+	return defer.promise;
+}
 
-	/**
-	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
-	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
-	 * 将then返回的promise赋给outputPromise
-	 * function(fulfiled) 和 function(rejected) 通过返回字符串将outputPromise的状态由
-	 * 未完成改变为fulfiled
-	 * @private
-	 */
-	var outputPromise = getInputPromise().then(function(fulfiled){
-		return 'fulfiled';
-	},function(rejected){
-		return 'rejected';
-	});
+/**
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+ * 将then返回的promise赋给outputPromise
+ * function(fulfiled) 和 function(rejected) 通过返回字符串将outputPromise的状态由
+ * 未完成改变为fulfiled
+ * @private
+ */
+var outputPromise = getInputPromise().then(function(fulfiled){
+	return 'fulfiled';
+},function(rejected){
+	return 'rejected';
+});
 
-	/**
-	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'fulfiled: fulfiled'。
-	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'fulfiled: rejected'。
-	 */
-	outputPromise.then(function(fulfiled){
-		console.log('fulfiled: ' + fulfiled);
-	},function(rejected){
-		console.log('rejected: ' + rejected);
-	});
+/**
+ * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'fulfiled: fulfiled'。
+ * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'fulfiled: rejected'。
+ */
+outputPromise.then(function(fulfiled){
+	console.log('fulfiled: ' + fulfiled);
+},function(rejected){
+	console.log('rejected: ' + rejected);
+});
 
-	/**
-	 * 将inputPromise的状态由未完成变成rejected
-	 */
-	defer.reject(); //输出 fulfiled: rejected
+/**
+ * 将inputPromise的状态由未完成变成rejected
+ */
+defer.reject(); //输出 fulfiled: rejected
 
-	/**
-	 * 将inputPromise的状态由未完成变成fulfiled
-	 */
-	//defer.resolve(); //输出 fulfiled: fulfiled
+/**
+ * 将inputPromise的状态由未完成变成fulfiled
+ */
+//defer.resolve(); //输出 fulfiled: fulfiled
 ```
+
 * 当function(fulfiled)或者function(rejected)抛出异常时，那么outputPromise的状态就会变成rejected
 
-```JS
-	var Q = require('q');
-	var fs = require('fs');
-	var defer = Q.defer();
+```js
+var Q = require('q');
+var fs = require('fs');
+var defer = Q.defer();
 
-	/**
-	 * 通过defer获得promise
-	 * @private
-	 */
-	function getInputPromise() {
-		return defer.promise;
-	}
+/**
+ * 通过defer获得promise
+ * @private
+ */
+function getInputPromise() {
+	return defer.promise;
+}
 
-	/**
-	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
-	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
-	 * 将then返回的promise赋给outputPromise
-	 * function(fulfiled) 和 function(rejected) 通过抛出异常将outputPromise的状态由
-	 * 未完成改变为reject
-	 * @private
-	 */
-	var outputPromise = getInputPromise().then(function(fulfiled){
-		throw new Error('fulfiled');
-	},function(rejected){
-		throw new Error('rejected');
-	});
+/**
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+ * 将then返回的promise赋给outputPromise
+ * function(fulfiled) 和 function(rejected) 通过抛出异常将outputPromise的状态由
+ * 未完成改变为reject
+ * @private
+ */
+var outputPromise = getInputPromise().then(function(fulfiled){
+	throw new Error('fulfiled');
+},function(rejected){
+	throw new Error('rejected');
+});
 
-	/**
-	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)。
-	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected)。
-	 */
-	outputPromise.then(function(fulfiled){
-		console.log('fulfiled: ' + fulfiled);
-	},function(rejected){
-		console.log('rejected: ' + rejected);
-	});
+/**
+ * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)。
+ * 当outputPromise状态由未完成变成rejected, 调用function(rejected)。
+ */
+outputPromise.then(function(fulfiled){
+	console.log('fulfiled: ' + fulfiled);
+},function(rejected){
+	console.log('rejected: ' + rejected);
+});
 
-	/**
-	 * 将inputPromise的状态由未完成变成rejected
-	 */
-	defer.reject();     //控制台打印 rejected [Error:rejected]
+/**
+ * 将inputPromise的状态由未完成变成rejected
+ */
+defer.reject();     //控制台打印 rejected [Error:rejected]
 
-	/**
-	 * 将inputPromise的状态由未完成变成fulfiled
-	 */
-	//defer.resolve(); //控制台打印 rejected [Error:fulfiled]
+/**
+ * 将inputPromise的状态由未完成变成fulfiled
+ */
+//defer.resolve(); //控制台打印 rejected [Error:fulfiled]
 ```
 
 * 当function(fulfiled)或者function(rejected)返回一个promise时，outputPromise就会成为这个新的promise.
@@ -223,66 +219,66 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 ```js
 //错误的写法
 var outputPromise = getInputPromise().then(function(fulfiled){
-			fs.readFile('test.txt','utf8',function(err,data){
-				return data;
-			});
-			});
+	fs.readFile('test.txt','utf8',function(err,data){
+		return data;
+	});
+});
 ```
 
 然而这样写是错误的，因为function(fulfiled)并没有返回任何值。需要下面的方式:
 
 ```js
-	var Q = require('q');
-	var fs = require('fs');
-	var defer = Q.defer();
+var Q = require('q');
+var fs = require('fs');
+var defer = Q.defer();
 
-	/**
-	 * 通过defer获得promise
-	 * @private
-	 */
-	function getInputPromise() {
-		return defer.promise;
-	}
+/**
+ * 通过defer获得promise
+ * @private
+ */
+function getInputPromise() {
+	return defer.promise;
+}
 
-	/**
-	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
-	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
-	 * 将then返回的promise赋给outputPromise
-	 * function(fulfiled)将新的promise赋给outputPromise
-	 * 未完成改变为reject
-	 * @private
-	 */
-	var outputPromise = getInputPromise().then(function(fulfiled){
-		var myDefer = Q.defer();
-		fs.readFile('test.txt','utf8',function(err,data){
-			if(!err && data) {
-				myDefer.resolve(data);
-			}
-		});
-		return myDefer.promise;
-	},function(rejected){
-		throw new Error('rejected');
+/**
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+ * 将then返回的promise赋给outputPromise
+ * function(fulfiled)将新的promise赋给outputPromise
+ * 未完成改变为reject
+ * @private
+ */
+var outputPromise = getInputPromise().then(function(fulfiled){
+	var myDefer = Q.defer();
+	fs.readFile('test.txt','utf8',function(err,data){
+		if(!err && data) {
+			myDefer.resolve(data);
+		}
 	});
+	return myDefer.promise;
+},function(rejected){
+	throw new Error('rejected');
+});
 
-	/**
-	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印test.txt文件内容。
-	 * 
-	 */
-	outputPromise.then(function(fulfiled){
-		console.log(fulfiled);
-	},function(rejected){
-		console.log(rejected);
-	});
+/**
+ * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印test.txt文件内容。
+ *
+ */
+outputPromise.then(function(fulfiled){
+	console.log(fulfiled);
+},function(rejected){
+	console.log(rejected);
+});
 
-	/**
-	 * 将inputPromise的状态由未完成变成rejected
-	 */
-	//defer.reject();
+/**
+ * 将inputPromise的状态由未完成变成rejected
+ */
+//defer.reject();
 
-	/**
-	 * 将inputPromise的状态由未完成变成fulfiled
-	 */
-	defer.resolve(); //控制台打印出 test.txt 的内容
+/**
+ * 将inputPromise的状态由未完成变成fulfiled
+ */
+defer.resolve(); //控制台打印出 test.txt 的内容
 ```
 
 ## 方法传递
@@ -296,43 +292,44 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 ```js
 var outputPromise = getInputPromise().then(function(fulfiled){})
 ```
+
 如果inputPromise的状态由未完成变成rejected, 此时对rejected的处理会由outputPromise来完成。
 
 ```js
-	var Q = require('q');
-	var fs = require('fs');
-	var defer = Q.defer();
+var Q = require('q');
+var fs = require('fs');
+var defer = Q.defer();
 
-	/**
-	 * 通过defer获得promise
-	 * @private
-	 */
-	function getInputPromise() {
-		return defer.promise;
-	}
+/**
+ * 通过defer获得promise
+ * @private
+ */
+function getInputPromise() {
+	return defer.promise;
+}
 
-	/**
-	 * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
-	 * 当inputPromise状态由未完成变成rejected时，这个rejected会传向outputPromise
-	 */
-	var outputPromise = getInputPromise().then(function(fulfiled){
-		return 'fulfiled'
-	});
-	outputPromise.then(function(fulfiled){
-		console.log('fulfiled: ' + fulfiled);
-	},function(rejected){
-		console.log('rejected: ' + rejected);
-	});
+/**
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成rejected时，这个rejected会传向outputPromise
+ */
+var outputPromise = getInputPromise().then(function(fulfiled){
+	return 'fulfiled'
+});
+outputPromise.then(function(fulfiled){
+	console.log('fulfiled: ' + fulfiled);
+},function(rejected){
+	console.log('rejected: ' + rejected);
+});
 
-	/**
-	 * 将inputPromise的状态由未完成变成rejected
-	 */
-	defer.reject('inputpromise rejected'); //控制台打印rejected: inputpromise rejected
+/**
+ * 将inputPromise的状态由未完成变成rejected
+ */
+defer.reject('inputpromise rejected'); //控制台打印rejected: inputpromise rejected
 
-	/**
-	 * 将inputPromise的状态由未完成变成fulfiled
-	 */
-	//defer.resolve();
+/**
+ * 将inputPromise的状态由未完成变成fulfiled
+ */
+//defer.resolve();
 ```
 
 * 没有提供function(fulfiled)
@@ -344,44 +341,44 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 如果inputPromise的状态由未完成变成fulfiled, 此时对fulfil的处理会由outputPromise来完成。
 
 ```js
-	var Q = require('q');
-	var fs = require('fs');
-	var defer = Q.defer();
+var Q = require('q');
+var fs = require('fs');
+var defer = Q.defer();
 
-	/**
-	 * 通过defer获得promise
-	 * @private
-	 */
-	function getInputPromise() {
-		return defer.promise;
-	}
+/**
+ * 通过defer获得promise
+ * @private
+ */
+function getInputPromise() {
+	return defer.promise;
+}
 
-	/**
-	 * 当inputPromise状态由未完成变成fulfil时，传递给outputPromise
-	 * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
-	 * function(fulfiled)将新的promise赋给outputPromise
-	 * 未完成改变为reject
-	 * @private
-	 */
-	var outputPromise = getInputPromise().then(null,function(rejected){
-		return 'rejected';
-	});
+/**
+ * 当inputPromise状态由未完成变成fulfil时，传递给outputPromise
+ * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
+ * function(fulfiled)将新的promise赋给outputPromise
+ * 未完成改变为reject
+ * @private
+ */
+var outputPromise = getInputPromise().then(null,function(rejected){
+	return 'rejected';
+});
 
-	outputPromise.then(function(fulfiled){
-		console.log('fulfiled: ' + fulfiled);
-	},function(rejected){
-		console.log('rejected: ' + rejected);
-	});
+outputPromise.then(function(fulfiled){
+	console.log('fulfiled: ' + fulfiled);
+},function(rejected){
+	console.log('rejected: ' + rejected);
+});
 
-	/**
-	 * 将inputPromise的状态由未完成变成rejected
-	 */
-	//defer.reject('inputpromise rejected');
+/**
+ * 将inputPromise的状态由未完成变成rejected
+ */
+//defer.reject('inputpromise rejected');
 
-	/**
-	 * 将inputPromise的状态由未完成变成fulfiled
-	 */
-	defer.resolve('inputpromise fulfiled'); //控制台打印fulfiled: inputpromise fulfiled
+/**
+ * 将inputPromise的状态由未完成变成fulfiled
+ */
+defer.resolve('inputpromise fulfiled'); //控制台打印fulfiled: inputpromise fulfiled
 ```
 
 * 可以使用fail(function(error))来专门针对错误处理，而不是使用then(null,function(error))
@@ -391,43 +388,44 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 ```
 
 看这个例子
+
 ```js
-	var Q = require('q');
-	var fs = require('fs');
-	var defer = Q.defer();
+var Q = require('q');
+var fs = require('fs');
+var defer = Q.defer();
 
-	/**
-	 * 通过defer获得promise
-	 * @private
-	 */
-	function getInputPromise() {
-		return defer.promise;
-	}
+/**
+ * 通过defer获得promise
+ * @private
+ */
+function getInputPromise() {
+	return defer.promise;
+}
 
-	/**
-	 * 当inputPromise状态由未完成变成fulfil时，调用then(function(fulfiled))
-	 * 当inputPromise状态由未完成变成rejected时，调用fail(function(error))
-	 * function(fulfiled)将新的promise赋给outputPromise
-	 * 未完成改变为reject
-	 * @private
-	 */
-	var outputPromise = getInputPromise().then(function(fulfiled){
-		return fulfiled;
-	}).fail(function(error){
-		console.log('fail: ' + error);
-	});
-	/**
-	 * 将inputPromise的状态由未完成变成rejected
-	 */
-	defer.reject('inputpromise rejected');//控制台打印fail: inputpromise rejected
+/**
+ * 当inputPromise状态由未完成变成fulfil时，调用then(function(fulfiled))
+ * 当inputPromise状态由未完成变成rejected时，调用fail(function(error))
+ * function(fulfiled)将新的promise赋给outputPromise
+ * 未完成改变为reject
+ * @private
+ */
+var outputPromise = getInputPromise().then(function(fulfiled){
+	return fulfiled;
+}).fail(function(error){
+	console.log('fail: ' + error);
+});
+/**
+ * 将inputPromise的状态由未完成变成rejected
+ */
+defer.reject('inputpromise rejected');//控制台打印fail: inputpromise rejected
 
-	/**
-	 * 将inputPromise的状态由未完成变成fulfiled
-	 */
-	//defer.resolve('inputpromise fulfiled');
+/**
+ * 将inputPromise的状态由未完成变成fulfiled
+ */
+//defer.resolve('inputpromise fulfiled');
 ```
 
-* 可以使用progress(function(progress))来专门针对进度信息进行处理，而不是使用then(function(success){},function(error){},function(progress){})
+* 可以使用progress(function(progress))来专门针对进度信息进行处理，而不是使用 `then(function(success){},function(error){},function(progress){})`
 
 ```js
 var Q = require('q');
@@ -437,13 +435,13 @@ var defer = Q.defer();
  * @private
  */
 function getInitialPromise() {
- return defer.promise;
+  return defer.promise;
 }
 /**
  * 为promise设置progress信息处理函数
  */
 var outputPromise = getInitialPromise().then(function(success){
-	
+
 }).progress(function(progress){
 	console.log(progress);
 });
@@ -459,34 +457,34 @@ promise链提供了一种让函数顺序执行的方法。
 函数顺序执行是很重要的一个功能。比如知道用户名，需要根据用户名从数据库中找到相应的用户，然后将用户信息传给下一个函数进行处理。
 
 ```js
-    var Q = require('q');
-	var defer = Q.defer();
-	
-	//一个模拟数据库
-	var users = [{'name':'andrew','passwd':'password'}];
-	
-	function getUsername() {
-	return defer.promise;
-	}
+var Q = require('q');
+var defer = Q.defer();
 
-	function getUser(username){
-		var user;
-		users.forEach(function(element){
-			if(element.name === username) {
-				user = element;
-			}
-		});
-		return user;
-	}
+//一个模拟数据库
+var users = [{'name':'andrew','passwd':'password'}];
 
-	//promise链
-	getUsername().then(function(username){
-	 return getUser(username);
-	}).then(function(user){
-	 console.log(user);
+function getUsername() {
+return defer.promise;
+}
+
+function getUser(username){
+	var user;
+	users.forEach(function(element){
+		if(element.name === username) {
+			user = element;
+		}
 	});
+	return user;
+}
 
-	defer.resolve('andrew');
+//promise链
+getUsername().then(function(username){
+ return getUser(username);
+}).then(function(user){
+ console.log(user);
+});
+
+defer.resolve('andrew');
 ```
 
 我们通过两个then达到让函数顺序执行的目的。
@@ -520,25 +518,25 @@ funcs.reduce(function(pre,current),Q(initialVal){
 看一个具体的例子
 
 ```js
-				function foo(result) {
-					console.log(result);
-					return result+result;
-				}
-				//手动链接
-				Q('hello').then(foo).then(foo).then(foo); 									//控制台输出： hello
-																							//			   hellohello
-																							//			   hellohellohello
+function foo(result) {
+	console.log(result);
+	return result+result;
+}
+//手动链接
+Q('hello').then(foo).then(foo).then(foo); 									//控制台输出： hello
+																			//			   hellohello
+																			//			   hellohellohello
 
-				//动态链接
-				var funcs = [foo,foo,foo];
-				var result = Q('hello');
-				funcs.forEach(function(func){
-					result = result.then(func);
-				});
-				//精简后的动态链接
-				funcs.reduce(function(prev,current){
-					return prev.then(current);
-				},Q('hello'));	
+//动态链接
+var funcs = [foo,foo,foo];
+var result = Q('hello');
+funcs.forEach(function(func){
+	result = result.then(func);
+});
+//精简后的动态链接
+funcs.reduce(function(prev,current){
+	return prev.then(current);
+},Q('hello'));
 ```
 
 对于promise链，最重要的是需要理解为什么这个链能够顺序执行。如果能够理解这点，那么以后自己写promise链可以说是轻车熟路啊。
@@ -564,9 +562,9 @@ function printFileContent(fileName) {
 }
 //手动链接
 printFileContent('sample01.txt')()
-			.then(printFileContent('sample02.txt'))
-			.then(printFileContent('sample03.txt'))
-			.then(printFileContent('sample04.txt'));   //控制台顺序打印sample01到sample04的内容
+	.then(printFileContent('sample02.txt'))
+	.then(printFileContent('sample03.txt'))
+	.then(printFileContent('sample04.txt'));   //控制台顺序打印sample01到sample04的内容
 ```
 
 很有成就感是不是。然而如果仔细分析，我们会发现为什么要他们顺序执行呢，如果他们能够并行执行不是更好吗? 我们只需要在他们都执行完成之后，得到他们的执行结果就可以了。
@@ -580,8 +578,8 @@ printFileContent('sample01.txt')()
 我们来把上面读取文件内容的例子改成并行执行吧
 
 ```js
-var Q = require('q'),
-	fs = require('fs');
+var Q = require('q');
+var fs = require('fs');
 /**
  *读取文件内容
  *@private
@@ -616,17 +614,17 @@ var Q = require('q'),
  *@private
  */
 function printFileContent(fileName) {
-		//Todo: 这段代码不够简洁。可以使用Q.denodeify来简化
-		var defer = Q.defer();
-		fs.readFile(fileName,'utf8',function(err,data){
-		  if(!err && data) {
-			console.log(data);
-			defer.resolve(fileName + ' success ');
-		  }else {
-			defer.reject(fileName + ' fail ');
-		  }
-		})
-		return defer.promise;
+	//Todo: 这段代码不够简洁。可以使用Q.denodeify来简化
+	var defer = Q.defer();
+	fs.readFile(fileName,'utf8',function(err,data){
+	  if(!err && data) {
+		console.log(data);
+		defer.resolve(fileName + ' success ');
+	  }else {
+		defer.reject(fileName + ' fail ');
+	  }
+	})
+	return defer.promise;
 }
 
 Q.allSettled([printFileContent('nosuchfile.txt'),printFileContent('sample02.txt'),printFileContent('sample03.txt'),printFileContent('sample04.txt')])
@@ -643,46 +641,46 @@ Q.allSettled([printFileContent('nosuchfile.txt'),printFileContent('sample02.txt'
 
 通常，对于一个promise链，有两种结束的方式。第一种方式是返回最后一个promise
 
-如 return foo().then(bar);
+如 `return foo().then(bar);`
 
 第二种方式就是通过done来结束promise链
 
-如 foo().then(bar).done()
+如 `foo().then(bar).done()`
 
 为什么需要通过done来结束一个promise链呢? 如果在我们的链中有错误没有被处理，那么在一个正确结束的promise链中，这个没被处理的错误会通过异常抛出。
 
 ```js
-					var Q = require('q');
-					/**
-					 *@private
-					 */
-					function getPromise(msg,timeout,opt) {
-						var defer = Q.defer();
-						setTimeout(function(){
-						console.log(msg);
-							if(opt)
-								defer.reject(msg);
-							else
-								defer.resolve(msg);
-						},timeout);
-						return defer.promise;
-					}
-					/**
-					 *没有用done()结束的promise链
-					 *由于getPromse('2',2000,'opt')返回rejected, getPromise('3',1000)就没有执行
-					 *然后这个异常并没有任何提醒，是一个潜在的bug
-					 */
-					getPromise('1',3000)
-							.then(function(){return getPromise('2',2000,'opt')})
-							.then(function(){return getPromise('3',1000)});
-					/**
-					 *用done()结束的promise链
-					 *有异常抛出
-					 */
-					getPromise('1',3000)
-							.then(function(){return getPromise('2',2000,'opt')})
-							.then(function(){return getPromise('3',1000)})
-							.done();
+var Q = require('q');
+/**
+ *@private
+ */
+function getPromise(msg,timeout,opt) {
+	var defer = Q.defer();
+	setTimeout(function(){
+	console.log(msg);
+		if(opt)
+			defer.reject(msg);
+		else
+			defer.resolve(msg);
+	},timeout);
+	return defer.promise;
+}
+/**
+ *没有用done()结束的promise链
+ *由于getPromse('2',2000,'opt')返回rejected, getPromise('3',1000)就没有执行
+ *然后这个异常并没有任何提醒，是一个潜在的bug
+ */
+getPromise('1',3000)
+	.then(function(){return getPromise('2',2000,'opt')})
+	.then(function(){return getPromise('3',1000)});
+/**
+ *用done()结束的promise链
+ *有异常抛出
+ */
+getPromise('1',3000)
+	.then(function(){return getPromise('2',2000,'opt')})
+	.then(function(){return getPromise('3',1000)})
+	.done();
 
 ```
 

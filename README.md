@@ -31,6 +31,7 @@
 * Lesson 14: [《js 中的那些最佳实践》](https://github.com/alsotang/node-lessons/tree/master/lesson14)
 * Lesson 15: [《Mongodb 与 Mongoose 的使用》](https://github.com/alsotang/node-lessons/tree/master/lesson15)
 * Lesson 16: [《cookie 与 session》](https://github.com/alsotang/node-lessons/tree/master/lesson16) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
+* Lesson 17: [《使用 promise 替代回调函数》](https://github.com/alsotang/node-lessons/tree/master/lesson17) -- by [@eeandrew](https://github.com/eeandrew)
 
 ## 计划
 * 《http 中各个 header 的含义》
