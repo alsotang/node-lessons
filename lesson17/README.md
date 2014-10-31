@@ -561,9 +561,143 @@ funcs.reduce(function(pre,current),Q(initialVal){
 回到我们一开始读取文件内容的例子。如果现在让我们把它改写成promise链，是不是很简单呢？
 
 ```js
-
+var Q = require('q'),
+	fs = require('fs');
+function printFileContent(fileName) {
+	return function(){
+		var defer = Q.defer();
+		fs.readFile(fileName,'utf8',function(err,data){
+		  if(!err && data) {
+			console.log(data);
+			defer.resolve();
+		  }
+		})
+		return defer.promise;
+	}
+}
+//手动链接
+printFileContent('sample01.txt')()
+			.then(printFileContent('sample02.txt'))
+			.then(printFileContent('sample03.txt'))
+			.then(printFileContent('sample04.txt'));
 ```
 
+很有成就感是不是。然而如果仔细分析，我们会发现为什么要他们顺序执行呢，如果他们能够并行执行不是更好吗? 我们只需要在他们都执行完成之后，得到他们的执行结果就可以了。
+
+我们可以通过Q.all([promise1,promise2...])将多个promise组合成一个promise返回。
+注意：
+
+1. 当all里面所有的promise都fulfil时，Q.all返回的promise状态变成fulfil
+2. 当任意一个promise被reject时，Q.all返回的promise状态立即变成reject
+
+我们来把上面读取文件内容的例子改成并行执行吧
+
+```js
+var Q = require('q'),
+	fs = require('fs');
+/**
+ *读取文件内容
+ *@private
+ */
+function printFileContent(fileName) {
+		//Todo: 这段代码不够简洁。可以使用Q.denodeify来简化
+		var defer = Q.defer();
+		fs.readFile(fileName,'utf8',function(err,data){
+		  if(!err && data) {
+			console.log(data);
+			defer.resolve(fileName + ' success ');
+		  }else {
+			defer.reject(fileName + ' fail ');
+		  }
+		})
+		return defer.promise;
+}
+
+Q.all([printFileContent('sample01.txt'),printFileContent('sample02.txt'),printFileContent('sample03.txt'),printFileContent('sample04.txt')])
+	.then(function(success){
+		console.log(success);
+	});
+```
+
+现在知道Q.all会在任意一个promise进入reject状态后立即进入reject状态。如果我们需要等到所有的promise都发生状态后(有的fulfil, 有的reject)，再转换Q.all的状态, 这时我们可以使用Q.allSettled
+
+```js
+var Q = require('q'),
+	fs = require('fs');
+/**
+ *读取文件内容
+ *@private
+ */
+function printFileContent(fileName) {
+		//Todo: 这段代码不够简洁。可以使用Q.denodeify来简化
+		var defer = Q.defer();
+		fs.readFile(fileName,'utf8',function(err,data){
+		  if(!err && data) {
+			console.log(data);
+			defer.resolve(fileName + ' success ');
+		  }else {
+			defer.reject(fileName + ' fail ');
+		  }
+		})
+		return defer.promise;
+}
+
+Q.allSettled([printFileContent('nosuchfile.txt'),printFileContent('sample02.txt'),printFileContent('sample03.txt'),printFileContent('sample04.txt')])
+	.then(function(results){
+		results.forEach(
+			function(result) {
+				console.log(result.state);
+			}
+		);
+	});
+```
+
+## 结束promise链
+
+通常，对于一个promise链，有两种结束的方式。第一种方式是返回最后一个promise
+
+如 return foo().then(bar);
+
+第二种方式就是通过done来结束promise链
+
+如 foo().then(bar).done()
+
+为什么需要通过done来结束一个promise链呢? 如果在我们的链中有错误没有被处理，那么在一个正确结束的promise链中，这个没被处理的错误会通过异常抛出。
+
+```js
+					var Q = require('q');
+					/**
+					 *@private
+					 */
+					function getPromise(msg,timeout,opt) {
+						var defer = Q.defer();
+						setTimeout(function(){
+						console.log(msg);
+							if(opt)
+								defer.reject(msg);
+							else
+								defer.resolve(msg);
+						},timeout);
+						return defer.promise;
+					}
+					/**
+					 *没有用done()结束的promise链
+					 *由于getPromse('2',2000,'opt')返回rejected, getPromise('3',1000)就没有执行
+					 *然后这个异常并没有任何提醒，是一个潜在的bug
+					 */
+					getPromise('1',3000)
+							.then(function(){return getPromise('2',2000,'opt')})
+							.then(function(){return getPromise('3',1000)});
+					/**
+					 *用done()结束的promise链
+					 *有异常抛出
+					 */
+					getPromise('1',3000)
+							.then(function(){return getPromise('2',2000,'opt')})
+							.then(function(){return getPromise('3',1000)})
+							.done();
+
+```
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
 
 这回我就不带大家爬网站了，我们来专注知识点：并发连接数控制。
