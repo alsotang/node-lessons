@@ -60,9 +60,9 @@ fs.readFile('sample01.txt','utf8',function(err,data){
 ## promise基本概念
 先学习promise的基本概念。
 
-*promise只有三种状态，未完成，完成(fulfiled)和失败(rejected)。
-*promise的状态可以由未完成转换成完成，或者未完成转换成失败。
-*promise的状态转换只发生一次
+* promise只有三种状态，未完成，完成(fulfiled)和失败(rejected)。
+* promise的状态可以由未完成转换成完成，或者未完成转换成失败。
+* promise的状态转换只发生一次
 
 promise有一个then方法，then方法可以接受3个函数作为参数。前两个函数对应promise的两种状态fulfiled, rejected的回调函数。第三个函数用于处理进度信息。
 
