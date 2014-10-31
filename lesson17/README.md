@@ -265,8 +265,8 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 	});
 
 	/**
-	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'[Error:fulfiled]'。
-	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'[Error:rejected]'。
+	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印test.txt文件内容。
+	 * 
 	 */
 	outputPromise.then(function(fulfiled){
 		console.log(fulfiled);
@@ -682,11 +682,6 @@ Q.allSettled([printFileContent('nosuchfile.txt'),printFileContent('sample02.txt'
 							.then(function(){return getPromise('3',1000)})
 							.done();
 
-```
-
-  console.log('final:');
-  console.log(result);
-});
 ```
 
 ## 结束语
