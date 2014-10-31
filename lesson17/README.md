@@ -120,6 +120,8 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 当我们把inputPromise的状态通过defer.reject()变成rejected，控制台输出rejected
 
 ```js
+	var Q = require('q'); 
+	var defer = Q.defer();
 	/**
 	 * 通过defer获得promise
 	 * @private
@@ -143,24 +145,24 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 	});
 
 	/**
-	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'fulfiled'。
-	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'rejected'。
+	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'fulfiled: fulfiled'。
+	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'fulfiled: rejected'。
 	 */
 	outputPromise.then(function(fulfiled){
-		console.log(fulfiled);
+		console.log('fulfiled: ' + fulfiled);
 	},function(rejected){
-		console.log(rejected);
+		console.log('rejected: ' + rejected);
 	});
 
 	/**
 	 * 将inputPromise的状态由未完成变成rejected
 	 */
-	defer.reject();
+	defer.reject(); //输出 fulfiled: rejected
 
 	/**
 	 * 将inputPromise的状态由未完成变成fulfiled
 	 */
-	//defer.resolve();
+	//defer.resolve(); //输出 fulfiled: fulfiled
 ```
 * 当function(fulfiled)或者function(rejected)抛出异常时，那么outputPromise的状态就会变成rejected
 
@@ -192,24 +194,24 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 	});
 
 	/**
-	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'[Error:fulfiled]'。
-	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'[Error:rejected]'。
+	 * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)。
+	 * 当outputPromise状态由未完成变成rejected, 调用function(rejected)。
 	 */
 	outputPromise.then(function(fulfiled){
-		console.log(fulfiled);
+		console.log('fulfiled: ' + fulfiled);
 	},function(rejected){
-		console.log(rejected);
+		console.log('rejected: ' + rejected);
 	});
 
 	/**
 	 * 将inputPromise的状态由未完成变成rejected
 	 */
-	defer.reject();
+	defer.reject();     //控制台打印 rejected [Error:rejected]
 
 	/**
 	 * 将inputPromise的状态由未完成变成fulfiled
 	 */
-	//defer.resolve();
+	//defer.resolve(); //控制台打印 rejected [Error:fulfiled]
 ```
 
 * 当function(fulfiled)或者function(rejected)返回一个promise时，outputPromise就会成为这个新的promise.
@@ -224,12 +226,10 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 			fs.readFile('test.txt','utf8',function(err,data){
 				return data;
 			});
-			},function(rejected){
-			throw new Error('rejected');
 			});
 ```
 
-然而由于异步IO的原因，这样写是不行的。需要下面的方式:
+然而这样写是错误的，因为function(fulfiled)并没有返回任何值。需要下面的方式:
 
 ```js
 	var Q = require('q');
@@ -282,7 +282,7 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 	/**
 	 * 将inputPromise的状态由未完成变成fulfiled
 	 */
-	defer.resolve();
+	defer.resolve(); //控制台打印出 test.txt 的内容
 ```
 
 ## 方法传递
@@ -319,15 +319,15 @@ var outputPromise = getInputPromise().then(function(fulfiled){})
 		return 'fulfiled'
 	});
 	outputPromise.then(function(fulfiled){
-		console.log(fulfiled);
+		console.log('fulfiled: ' + fulfiled);
 	},function(rejected){
-		console.log(rejected);
+		console.log('rejected: ' + rejected);
 	});
 
 	/**
 	 * 将inputPromise的状态由未完成变成rejected
 	 */
-	defer.reject('inputpromise rejected'); //控制台打印inputpromise rejected
+	defer.reject('inputpromise rejected'); //控制台打印rejected: inputpromise rejected
 
 	/**
 	 * 将inputPromise的状态由未完成变成fulfiled
@@ -368,9 +368,9 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 	});
 
 	outputPromise.then(function(fulfiled){
-		console.log(fulfiled);
+		console.log('fulfiled: ' + fulfiled);
 	},function(rejected){
-		console.log(rejected);
+		console.log('rejected: ' + rejected);
 	});
 
 	/**
@@ -381,7 +381,7 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 	/**
 	 * 将inputPromise的状态由未完成变成fulfiled
 	 */
-	defer.resolve('inputpromise fulfiled'); //控制台打印inputpromise fulfiled
+	defer.resolve('inputpromise fulfiled'); //控制台打印fulfiled: inputpromise fulfiled
 ```
 
 * 可以使用fail(function(error))来专门针对错误处理，而不是使用then(null,function(error))
@@ -414,12 +414,12 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 	var outputPromise = getInputPromise().then(function(fulfiled){
 		return fulfiled;
 	}).fail(function(error){
-		console.log(error);
+		console.log('fail: ' + error);
 	});
 	/**
 	 * 将inputPromise的状态由未完成变成rejected
 	 */
-	defer.reject('inputpromise rejected');//控制台打印inputpromise rejected
+	defer.reject('inputpromise rejected');//控制台打印fail: inputpromise rejected
 
 	/**
 	 * 将inputPromise的状态由未完成变成fulfiled
@@ -525,7 +525,9 @@ funcs.reduce(function(pre,current),Q(initialVal){
 					return result+result;
 				}
 				//手动链接
-				Q('hello').then(foo).then(foo).then(foo);
+				Q('hello').then(foo).then(foo).then(foo); 									//控制台输出： hello
+																							//			   hellohello
+																							//			   hellohellohello
 
 				//动态链接
 				var funcs = [foo,foo,foo];
@@ -564,7 +566,7 @@ function printFileContent(fileName) {
 printFileContent('sample01.txt')()
 			.then(printFileContent('sample02.txt'))
 			.then(printFileContent('sample03.txt'))
-			.then(printFileContent('sample04.txt'));
+			.then(printFileContent('sample04.txt'));   //控制台顺序打印sample01到sample04的内容
 ```
 
 很有成就感是不是。然而如果仔细分析，我们会发现为什么要他们顺序执行呢，如果他们能够并行执行不是更好吗? 我们只需要在他们都执行完成之后，得到他们的执行结果就可以了。
@@ -601,7 +603,7 @@ function printFileContent(fileName) {
 Q.all([printFileContent('sample01.txt'),printFileContent('sample02.txt'),printFileContent('sample03.txt'),printFileContent('sample04.txt')])
 	.then(function(success){
 		console.log(success);
-	});
+	}); //控制台打印各个文件内容 顺序不一定
 ```
 
 现在知道Q.all会在任意一个promise进入reject状态后立即进入reject状态。如果我们需要等到所有的promise都发生状态后(有的fulfil, 有的reject)，再转换Q.all的状态, 这时我们可以使用Q.allSettled
