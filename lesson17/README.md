@@ -306,7 +306,7 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 
 方法传递的含义是当一个状态没有响应的回调函数，就会沿着then往下找。
 
-1. 没有提供function(rejected)
+* 没有提供function(rejected)
 
 ```js
 var outputPromise = getInputPromise().then(function(fulfiled){})
@@ -350,7 +350,7 @@ var outputPromise = getInputPromise().then(function(fulfiled){})
 	//defer.resolve();
 ```
 
-2. 没有提供function(fulfiled)
+* 没有提供function(fulfiled)
 
 ```js
 var outputPromise = getInputPromise().then(null,function(rejected){})
@@ -399,7 +399,7 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 	defer.resolve('inputpromise fulfiled'); //控制台打印inputpromise fulfiled
 ```
 
-3. 可以使用fail(function(error))来专门针对错误处理，而不是使用then(null,function(error))
+* 可以使用fail(function(error))来专门针对错误处理，而不是使用then(null,function(error))
 
 ```js
  var outputPromise = getInputPromise().fail(function(error){})
@@ -442,7 +442,7 @@ var outputPromise = getInputPromise().then(null,function(rejected){})
 	//defer.resolve('inputpromise fulfiled');
 ```
 
-4. 可以使用progress(function(progress))来专门针对进度信息进行处理，而不是使用then(function(success){},function(error){},function(progress){})
+* 可以使用progress(function(progress))来专门针对进度信息进行处理，而不是使用then(function(success){},function(error){},function(progress){})
 
 ```js
 var Q = require('q');
@@ -465,6 +465,103 @@ var outputPromise = getInitialPromise().then(function(success){
 
 defer.notify(1);
 defer.notify(2); //控制台打印1，2
+```
+
+## promise链
+
+promise链提供了一种让函数顺序执行的方法。
+
+函数顺序执行是很重要的一个功能。比如知道用户名，需要根据用户名从数据库中找到相应的用户，然后将用户信息传给下一个函数进行处理。
+
+```js
+    var Q = require('q');
+	var defer = Q.defer();
+	
+	//一个模拟数据库
+	var users = [{'name':'andrew','passwd':'password'}];
+	
+	function getUsername() {
+	return defer.promise;
+	}
+
+	function getUser(username){
+		var user;
+		users.forEach(function(element){
+			if(element.name === username) {
+				user = element;
+			}
+		});
+		return user;
+	}
+
+	//promise链
+	getUsername().then(function(username){
+	 return getUser(username);
+	}).then(function(user){
+	 console.log(user);
+	});
+
+	defer.resolve('andrew');
+```
+
+我们通过两个then达到让函数顺序执行的目的。
+
+then的数量其实是没有限制的。当然，then的数量过多，要手动把他们链接起来是很麻烦的。比如
+
+```js
+foo(initialVal).then(bar).then(baz).then(qux)
+```
+
+这时我们需要用代码来动态制造promise链
+
+```js
+var funcs = [foo,bar,baz,qux]
+var result = Q(initialVal)
+funcs.forEach(function(func){
+	result = result.then(func)
+})
+return result
+```
+
+当然，我们可以再简洁一点
+
+```js
+var funcs = [foo,bar,baz,qux]
+funcs.reduce(function(pre,current),Q(initialVal){
+	return pre.then(current)
+})
+```
+
+看一个具体的例子
+
+```js
+				function foo(result) {
+					console.log(result);
+					return result+result;
+				}
+				//手动链接
+				Q('hello').then(foo).then(foo).then(foo);
+
+				//动态链接
+				var funcs = [foo,foo,foo];
+				var result = Q('hello');
+				funcs.forEach(function(func){
+					result = result.then(func);
+				});
+				//精简后的动态链接
+				funcs.reduce(function(prev,current){
+					return prev.then(current);
+				},Q('hello'));	
+```
+
+对于promise链，最重要的是需要理解为什么这个链能够顺序执行。如果能够理解这点，那么以后自己写promise链可以说是轻车熟路啊。
+
+## promise组合
+
+回到我们一开始读取文件内容的例子。如果现在让我们把它改写成promise链，是不是很简单呢？
+
+```js
+
 ```
 
 这次我们要介绍的是 async 的 `mapLimit(arr, limit, iterator, callback)` 接口。另外，还有个常用的控制并发连接数的接口是 `queue(worker, concurrency)`，大家可以去 https://github.com/caolan/async#queueworker-concurrency 看看说明。
