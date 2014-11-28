@@ -53,15 +53,15 @@ fs.readFile('sample01.txt', 'utf8', function (err, data) {
 
 先学习promise的基本概念。
 
-* promise只有三种状态，未完成，完成(fulfiled)和失败(rejected)。
+* promise只有三种状态，未完成，完成(fulfilled)和失败(rejected)。
 * promise的状态可以由未完成转换成完成，或者未完成转换成失败。
 * promise的状态转换只发生一次
 
-promise有一个then方法，then方法可以接受3个函数作为参数。前两个函数对应promise的两种状态fulfiled, rejected的回调函数。第三个函数用于处理进度信息。
+promise有一个then方法，then方法可以接受3个函数作为参数。前两个函数对应promise的两种状态fulfilled, rejected的回调函数。第三个函数用于处理进度信息。
 
 ```js
-promiseSomething().then(function(fulfiled){
-		//当promise状态变成fulfiled时，调用此函数
+promiseSomething().then(function(fulfilled){
+		//当promise状态变成fulfilled时，调用此函数
 	},function(rejected){
 		//当promise状态变成rejected时，调用此函数
 	},function(progress){
@@ -101,16 +101,16 @@ defer.reject('reject');		//没有输出。promise的状态只能改变一次
 then方法会返回一个promise，在下面这个例子中，我们用outputPromise指向then返回的promise。
 
 ```js
-var outputPromise = getInputPromise().then(function (fulfiled) {
+var outputPromise = getInputPromise().then(function (fulfilled) {
 	}, function (rejected) {
 	});
 ```
 
-现在outputPromise就变成了受 `function(fulfiled)` 或者 `function(rejected)`控制状态的promise了。怎么理解这句话呢？
+现在outputPromise就变成了受 `function(fulfilled)` 或者 `function(rejected)`控制状态的promise了。怎么理解这句话呢？
 
-* 当function(fulfiled)或者function(rejected)返回一个值，比如一个字符串，数组，对象等等，那么outputPromise的状态就会变成fulfiled。
+* 当function(fulfilled)或者function(rejected)返回一个值，比如一个字符串，数组，对象等等，那么outputPromise的状态就会变成fulfilled。
 
-在下面这个例子中，我们可以看到，当我们把inputPromise的状态通过defer.resovle()变成fulfiled时，控制台输出fulfiled.
+在下面这个例子中，我们可以看到，当我们把inputPromise的状态通过defer.resovle()变成fulfilled时，控制台输出fulfilled.
 
 当我们把inputPromise的状态通过defer.reject()变成rejected，控制台输出rejected
 
@@ -126,25 +126,25 @@ function getInputPromise() {
 }
 
 /**
- * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfilled)
  * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
  * 将then返回的promise赋给outputPromise
- * function(fulfiled) 和 function(rejected) 通过返回字符串将outputPromise的状态由
- * 未完成改变为fulfiled
+ * function(fulfilled) 和 function(rejected) 通过返回字符串将outputPromise的状态由
+ * 未完成改变为fulfilled
  * @private
  */
-var outputPromise = getInputPromise().then(function(fulfiled){
-	return 'fulfiled';
+var outputPromise = getInputPromise().then(function(fulfilled){
+	return 'fulfilled';
 },function(rejected){
 	return 'rejected';
 });
 
 /**
- * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印'fulfiled: fulfiled'。
- * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'fulfiled: rejected'。
+ * 当outputPromise状态由未完成变成fulfil时，调用function(fulfilled)，控制台打印'fulfilled: fulfilled'。
+ * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'fulfilled: rejected'。
  */
-outputPromise.then(function(fulfiled){
-	console.log('fulfiled: ' + fulfiled);
+outputPromise.then(function(fulfilled){
+	console.log('fulfilled: ' + fulfilled);
 },function(rejected){
 	console.log('rejected: ' + rejected);
 });
@@ -152,15 +152,15 @@ outputPromise.then(function(fulfiled){
 /**
  * 将inputPromise的状态由未完成变成rejected
  */
-defer.reject(); //输出 fulfiled: rejected
+defer.reject(); //输出 fulfilled: rejected
 
 /**
- * 将inputPromise的状态由未完成变成fulfiled
+ * 将inputPromise的状态由未完成变成fulfilled
  */
-//defer.resolve(); //输出 fulfiled: fulfiled
+//defer.resolve(); //输出 fulfilled: fulfilled
 ```
 
-* 当function(fulfiled)或者function(rejected)抛出异常时，那么outputPromise的状态就会变成rejected
+* 当function(fulfilled)或者function(rejected)抛出异常时，那么outputPromise的状态就会变成rejected
 
 ```js
 var Q = require('q');
@@ -176,25 +176,25 @@ function getInputPromise() {
 }
 
 /**
- * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfilled)
  * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
  * 将then返回的promise赋给outputPromise
- * function(fulfiled) 和 function(rejected) 通过抛出异常将outputPromise的状态由
+ * function(fulfilled) 和 function(rejected) 通过抛出异常将outputPromise的状态由
  * 未完成改变为reject
  * @private
  */
-var outputPromise = getInputPromise().then(function(fulfiled){
-	throw new Error('fulfiled');
+var outputPromise = getInputPromise().then(function(fulfilled){
+	throw new Error('fulfilled');
 },function(rejected){
 	throw new Error('rejected');
 });
 
 /**
- * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)。
+ * 当outputPromise状态由未完成变成fulfil时，调用function(fulfilled)。
  * 当outputPromise状态由未完成变成rejected, 调用function(rejected)。
  */
-outputPromise.then(function(fulfiled){
-	console.log('fulfiled: ' + fulfiled);
+outputPromise.then(function(fulfilled){
+	console.log('fulfilled: ' + fulfilled);
 },function(rejected){
 	console.log('rejected: ' + rejected);
 });
@@ -205,12 +205,12 @@ outputPromise.then(function(fulfiled){
 defer.reject();     //控制台打印 rejected [Error:rejected]
 
 /**
- * 将inputPromise的状态由未完成变成fulfiled
+ * 将inputPromise的状态由未完成变成fulfilled
  */
-//defer.resolve(); //控制台打印 rejected [Error:fulfiled]
+//defer.resolve(); //控制台打印 rejected [Error:fulfilled]
 ```
 
-* 当function(fulfiled)或者function(rejected)返回一个promise时，outputPromise就会成为这个新的promise.
+* 当function(fulfilled)或者function(rejected)返回一个promise时，outputPromise就会成为这个新的promise.
 
 这样做有什么意义呢? 主要在于聚合结果(Q.all)，管理延时，异常恢复等等
 
@@ -218,14 +218,14 @@ defer.reject();     //控制台打印 rejected [Error:rejected]
 
 ```js
 //错误的写法
-var outputPromise = getInputPromise().then(function(fulfiled){
+var outputPromise = getInputPromise().then(function(fulfilled){
 	fs.readFile('test.txt','utf8',function(err,data){
 		return data;
 	});
 });
 ```
 
-然而这样写是错误的，因为function(fulfiled)并没有返回任何值。需要下面的方式:
+然而这样写是错误的，因为function(fulfilled)并没有返回任何值。需要下面的方式:
 
 ```js
 var Q = require('q');
@@ -241,14 +241,14 @@ function getInputPromise() {
 }
 
 /**
- * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfilled)
  * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
  * 将then返回的promise赋给outputPromise
- * function(fulfiled)将新的promise赋给outputPromise
+ * function(fulfilled)将新的promise赋给outputPromise
  * 未完成改变为reject
  * @private
  */
-var outputPromise = getInputPromise().then(function(fulfiled){
+var outputPromise = getInputPromise().then(function(fulfilled){
 	var myDefer = Q.defer();
 	fs.readFile('test.txt','utf8',function(err,data){
 		if(!err && data) {
@@ -261,11 +261,11 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 });
 
 /**
- * 当outputPromise状态由未完成变成fulfil时，调用function(fulfiled)，控制台打印test.txt文件内容。
+ * 当outputPromise状态由未完成变成fulfil时，调用function(fulfilled)，控制台打印test.txt文件内容。
  *
  */
-outputPromise.then(function(fulfiled){
-	console.log(fulfiled);
+outputPromise.then(function(fulfilled){
+	console.log(fulfilled);
 },function(rejected){
 	console.log(rejected);
 });
@@ -276,7 +276,7 @@ outputPromise.then(function(fulfiled){
 //defer.reject();
 
 /**
- * 将inputPromise的状态由未完成变成fulfiled
+ * 将inputPromise的状态由未完成变成fulfilled
  */
 defer.resolve(); //控制台打印出 test.txt 的内容
 ```
@@ -290,7 +290,7 @@ defer.resolve(); //控制台打印出 test.txt 的内容
 * 没有提供function(rejected)
 
 ```js
-var outputPromise = getInputPromise().then(function(fulfiled){})
+var outputPromise = getInputPromise().then(function(fulfilled){})
 ```
 
 如果inputPromise的状态由未完成变成rejected, 此时对rejected的处理会由outputPromise来完成。
@@ -309,14 +309,14 @@ function getInputPromise() {
 }
 
 /**
- * 当inputPromise状态由未完成变成fulfil时，调用function(fulfiled)
+ * 当inputPromise状态由未完成变成fulfil时，调用function(fulfilled)
  * 当inputPromise状态由未完成变成rejected时，这个rejected会传向outputPromise
  */
-var outputPromise = getInputPromise().then(function(fulfiled){
-	return 'fulfiled'
+var outputPromise = getInputPromise().then(function(fulfilled){
+	return 'fulfilled'
 });
-outputPromise.then(function(fulfiled){
-	console.log('fulfiled: ' + fulfiled);
+outputPromise.then(function(fulfilled){
+	console.log('fulfilled: ' + fulfilled);
 },function(rejected){
 	console.log('rejected: ' + rejected);
 });
@@ -327,18 +327,18 @@ outputPromise.then(function(fulfiled){
 defer.reject('inputpromise rejected'); //控制台打印rejected: inputpromise rejected
 
 /**
- * 将inputPromise的状态由未完成变成fulfiled
+ * 将inputPromise的状态由未完成变成fulfilled
  */
 //defer.resolve();
 ```
 
-* 没有提供function(fulfiled)
+* 没有提供function(fulfilled)
 
 ```js
 var outputPromise = getInputPromise().then(null,function(rejected){})
 ```
 
-如果inputPromise的状态由未完成变成fulfiled, 此时对fulfil的处理会由outputPromise来完成。
+如果inputPromise的状态由未完成变成fulfilled, 此时对fulfil的处理会由outputPromise来完成。
 
 ```js
 var Q = require('q');
@@ -356,7 +356,7 @@ function getInputPromise() {
 /**
  * 当inputPromise状态由未完成变成fulfil时，传递给outputPromise
  * 当inputPromise状态由未完成变成rejected时，调用function(rejected)
- * function(fulfiled)将新的promise赋给outputPromise
+ * function(fulfilled)将新的promise赋给outputPromise
  * 未完成改变为reject
  * @private
  */
@@ -364,8 +364,8 @@ var outputPromise = getInputPromise().then(null,function(rejected){
 	return 'rejected';
 });
 
-outputPromise.then(function(fulfiled){
-	console.log('fulfiled: ' + fulfiled);
+outputPromise.then(function(fulfilled){
+	console.log('fulfilled: ' + fulfilled);
 },function(rejected){
 	console.log('rejected: ' + rejected);
 });
@@ -376,9 +376,9 @@ outputPromise.then(function(fulfiled){
 //defer.reject('inputpromise rejected');
 
 /**
- * 将inputPromise的状态由未完成变成fulfiled
+ * 将inputPromise的状态由未完成变成fulfilled
  */
-defer.resolve('inputpromise fulfiled'); //控制台打印fulfiled: inputpromise fulfiled
+defer.resolve('inputpromise fulfilled'); //控制台打印fulfilled: inputpromise fulfilled
 ```
 
 * 可以使用fail(function(error))来专门针对错误处理，而不是使用then(null,function(error))
@@ -403,14 +403,14 @@ function getInputPromise() {
 }
 
 /**
- * 当inputPromise状态由未完成变成fulfil时，调用then(function(fulfiled))
+ * 当inputPromise状态由未完成变成fulfil时，调用then(function(fulfilled))
  * 当inputPromise状态由未完成变成rejected时，调用fail(function(error))
- * function(fulfiled)将新的promise赋给outputPromise
+ * function(fulfilled)将新的promise赋给outputPromise
  * 未完成改变为reject
  * @private
  */
-var outputPromise = getInputPromise().then(function(fulfiled){
-	return fulfiled;
+var outputPromise = getInputPromise().then(function(fulfilled){
+	return fulfilled;
 }).fail(function(error){
 	console.log('fail: ' + error);
 });
@@ -420,9 +420,9 @@ var outputPromise = getInputPromise().then(function(fulfiled){
 defer.reject('inputpromise rejected');//控制台打印fail: inputpromise rejected
 
 /**
- * 将inputPromise的状态由未完成变成fulfiled
+ * 将inputPromise的状态由未完成变成fulfilled
  */
-//defer.resolve('inputpromise fulfiled');
+//defer.resolve('inputpromise fulfilled');
 ```
 
 * 可以使用progress(function(progress))来专门针对进度信息进行处理，而不是使用 `then(function(success){},function(error){},function(progress){})`
