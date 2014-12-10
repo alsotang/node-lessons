@@ -224,7 +224,7 @@ describe('test/app.test.js', function () {
     ```js
     var supertest = require('supertest');
     var app = express();
-    var agent = superagent.agent(app);
+    var agent = supertest.agent(app);
 
     agent.post('login').end(...);
     // then ..
