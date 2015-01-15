@@ -12,6 +12,8 @@
 
 更多 Node.js 入门资料请前往：https://cnodejs.org/getstart
 
+更多 Node.js 及前端简历请发至： alsotang@gmail.com，非常缺人！
+
 ## 课程列表
 
 * Lesson 0: [《搭建 Node.js 开发环境》](https://github.com/alsotang/node-lessons/tree/master/lesson0)
