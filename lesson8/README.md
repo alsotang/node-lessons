@@ -238,7 +238,7 @@ describe('test/app.test.js', function () {
     var supertest = require('supertest');
     var userCookie;
     supertest.post('login').end(function (err, res) {
-        userCookie = res.headres['Cookie']
+        userCookie = res.headers['Cookie']
       });
     // then ..
 
