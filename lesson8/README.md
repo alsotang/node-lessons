@@ -169,44 +169,45 @@ describe('test/app.test.js', function () {
 
   // 下面我们对于各种边界条件都进行测试，由于它们的代码雷同，
   // 所以我抽象出来了一个 testFib 方法。
-  var testFib = function (n, expect, done) {
+  var testFib = function (n, statusCode, expect, done) {
     request.get('/fib')
       .query({n: n})
+      .expect(statusCode)
       .end(function (err, res) {
         res.text.should.equal(expect);
         done(err);
       });
   };
   it('should return 0 when n === 0', function (done) {
-    testFib(0, '0', done);
+    testFib(0, 200, '0', done);
   });
 
   it('should equal 1 when n === 1', function (done) {
-    testFib(1, '1', done);
+    testFib(1, 200, '1', done);
   });
 
   it('should equal 55 when n === 10', function (done) {
-    testFib(10, '55', done);
+    testFib(10, 200, '55', done);
   });
 
   it('should throw when n > 10', function (done) {
-    testFib(11, 'n should <= 10', done);
+    testFib(11, 500, 'n should <= 10', done);
   });
 
   it('should throw when n < 0', function (done) {
-    testFib(-1, 'n should >= 0', done);
+    testFib(-1, 500, 'n should >= 0', done);
   });
 
   it('should throw when n isnt Number', function (done) {
-    testFib('good', 'n should be a Number', done);
+    testFib('good', 500, 'n should be a Number', done);
   });
 
   // 单独测试一下返回码 500
   it('should status 500 when error', function (done) {
     request.get('/fib')
       .query({n: 100})
+      .expect(500)
       .end(function (err, res) {
-        res.status.should.equal(500);
         done(err);
       });
   });
