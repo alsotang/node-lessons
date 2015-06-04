@@ -257,3 +257,4 @@ Nodeclub 里面的测试使用的技术跟前面介绍的是一样的，should m
 https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js
 
 
+[上一课](../../../tree/master/lesson7)[下一课](../../../tree/master/lesson9)
