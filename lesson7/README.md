@@ -132,3 +132,5 @@ npm test
 ```
 
 至此,我们实现了前端脚本的单元测试，基于 phanatomjs 你几乎可以调用所有的浏览器方法，而 mocha-phanatomjs 也可以很便捷地将测试结果反馈到 mocha，便于后续的持续集成。
+
+[上一课](../../../tree/master/lesson6)[下一课](../../../tree/master/lesson8)
