@@ -267,3 +267,5 @@ if (req.session.user) {
 ### etag 当做 session，保存 http 会话
 
 很黑客的一种玩法：https://cnodejs.org/topic/5212d82d0a746c580b43d948
+
+[上一课](../../../tree/master/lesson15)[下一课](../../../tree/master/lesson17)
