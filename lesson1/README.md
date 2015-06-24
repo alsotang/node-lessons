@@ -10,22 +10,26 @@
 
 ## 知识点
 
-1. 学习使用 npm 安装依赖
-2. 学习新建 express 实例，并定义 routes ，产生输出。
+1. 包管理器 npm 。使用 npm 安装包，并自动安装所需依赖。
+2. 框架 express 。学习新建 express 实例，并定义 routes ，产生输出。
 
 ## 课程内容
 
 按照惯例，我们来个 helloworld 入门。
+
+### 包管理器 npm
+
+npm 可以自动管理包的依赖. 只需要安装你想要的包, 不必考虑这个包的依赖包.
+
+在 PHP 中, 包管理使用的 `Composer`, python 中，包管理使用 `easy_install` 或者 `pip`，ruby 中我们使用 `gem`。而在 Node.js 中，对应就是 `npm`，npm 是 `Node.js Package Manager` 的意思。
+
+### 框架 Express
 
 express 是 Node.js 应用最广泛的 web 框架，现在是 4.x 版本，它非常薄。跟 Rails 比起来，完全两个极端。
 
 express 的官网是 http://expressjs.com/ ，我常常上去看它的 API。
 
 首先我们需要得到一个 express。
-
-从 php 和 python 来的同学可能对于“包依赖管理”的概念不是太熟悉，ruby 来的同学应该就熟悉多了。
-
-在 python 中，包管理使用 `easy_install` 或者 `pip`，ruby 中我们使用 `gem`。而在 Node.js 中，对应就是 `npm`，npm 是 `Node.js Package Manager` 的意思。
 
 不同于 ruby 的 gem 装在全局，Node.js 的依赖是以项目为单位管理的，直接就安装在项目的 `node_modules` 目录下，而且每个依赖都可以有指定版本的其他依赖，这些依赖像一棵树一样。根据我自己的使用经验来说，npm 的体验在 pip 和 gem 之上。
 
