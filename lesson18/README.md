@@ -82,7 +82,7 @@ function requestHandler(req, res) {
 理论上，这四种都能解决回调金字塔问题。而Connect和Express用的是`类似异步流程控制的思想`。
 
 <a name="next"></a>
-下面简要介绍下，或移步[@第五课](https://github.com/alsotang/node-lessons/tree/master/lesson5)。
+关于异步流程控制库下面简要介绍下，或移步[@第五课](https://github.com/alsotang/node-lessons/tree/master/lesson5)。
 异步流程控制库首先要求用户传入待执行的函数列表，记为funlist。流程控制库的任务是让这些函数**顺序执行**。
 
 callback是控制顺序执行的关键，funlist里的函数每当调用callback会执行下一个funlist里的函数……如下图
@@ -184,7 +184,7 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
 
 1. app是一个函数对象(包含handle方法)
 2. app具有Event所有属性(详见[utils-merge](https://github.com/jaredhanson/utils-merge)，十行代码)
-3. app有route属性(路由)、和stack属性(上一章提到的[middlewares](#middlewares)变量)
+3. app有route属性(路由)、和stack属性(用于存储中间件，类似上面的[middlewares](#middlewares))
 
 **输出**:
 
