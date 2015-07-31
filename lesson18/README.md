@@ -366,7 +366,7 @@ var server = http.createServer(this);
 return server.listen.apply(server, arguments);
 ```
 
-##总结
+##图解Connect
 
 Connect将中间件存储在app.stack中，通过构造handle种的next函数在请求到来时依次调用这些中间件。
 
@@ -400,7 +400,7 @@ request               app(out)
 
 ##Connect的subapp特性
 
-我们再看看Connect是怎么实现subapp的。
+我们再看看Connect是怎么实现subapp的，比较有趣。
 
 什么是subapp?
 
