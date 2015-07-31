@@ -2,7 +2,7 @@
 
 ##目标
 
-1. 理解中间件的概念，为何要使用中间件
+1. 理解中间件的概念
 2. 了解Connect的实现
 
 
@@ -28,11 +28,11 @@ function requestHandler(req, res) {
 server.listen(3000);
 ```
 
-里面的函数`requestHandler`就是所有http请求的响应函数，即所有的请求都经过这个函数的处理；这个函数可以理解为C语言里的Main函数，或者入口函数。
+里面的函数`requestHandler`就是所有http请求的响应函数，即所有的请求都经过这个函数的处理，是所有请求的入口函数。
 
 通过requestHandler函数我们能写一些简单的http逻辑，比如上面的例子，所有请求都返回`hello visitor!`。
 
-`然而`，我们的业务逻辑不可能这么简单。比如实现一个接口，要做的是当请求过来时，先判断来源的请求是否包含请求体，然后判断请求体中的id是不是在数据库中存在，最后若存在则返回true，不存在则返回false。
+`然而`，我们的业务逻辑不可能这么简单。例如:需要实现一个接口，要做的是当请求过来时，先判断来源的请求是否包含请求体，然后判断请求体中的id是不是在数据库中存在，最后若存在则返回true，不存在则返回false。
 
 ```
 1. 检测请求中请求提是否存在，若存在则解析请求体；
@@ -40,7 +40,7 @@ server.listen(3000);
 3. 根据数据库结果返回约定的值；
 ```
 
-我们首先想到的，很简单，抽离函数嘛，每个逻辑一个函数，简单好实现低耦合好维护。
+我们首先想到的，抽离函数，每个逻辑一个函数，简单好实现低耦合好维护。
 
 实现代码:
 
@@ -72,7 +72,7 @@ function requestHandler(req, res) {
 
 `然而`，业务逻辑越来越复杂，会出发展成30个回调逻辑，那么就出现了30个`});`及30个`err`异常。更严重的是，到时候写代码根本看不清自己写的逻辑在30层中的哪一层，极其容易出现**多次返回**或返回地方不对等问题，这就是**回调金字塔**问题了。
 
-有点基础的同学应该能想到解决回调金字塔的办法，朴灵的《深入浅出Node.js》里讲到的三种方法。下面列举了这三种方法加上ES6新增的Generator，共四种解决办法。
+大多数同学应该能想到解决回调金字塔的办法，朴灵的《深入浅出Node.js》里讲到的三种方法。下面列举了这三种方法加上ES6新增的Generator，共四种解决办法。
 
 - [EventProxy](https://github.com/JacksonTian/eventproxy) —— 事件发布订阅模式(第四课讲到)
 - [BlueBird](https://github.com/petkaantonov/bluebird) —— Promise方案(第十七课讲到)
@@ -82,6 +82,7 @@ function requestHandler(req, res) {
 理论上，这四种都能解决回调金字塔问题。而Connect和Express用的是`类似异步流程控制的思想`。
 
 <a name="next"></a>
+下面简要介绍下，或移步[@第五课](https://github.com/alsotang/node-lessons/tree/master/lesson5)。
 异步流程控制库首先要求用户传入待执行的函数列表，记为funlist。流程控制库的任务是让这些函数**顺序执行**。
 
 callback是控制顺序执行的关键，funlist里的函数每当调用callback会执行下一个funlist里的函数……如下图
@@ -102,7 +103,7 @@ fun1->fun2->fun3->fun4->fun5->fun6
 他们通过callback的调用完成了链式调用
 ```
 
-我们动手实现一个类似的链式调用，其中`middlewares===funlist`、`next===callback`，码如下：
+我们动手实现一个类似的链式调用，其中`funlist更名为middlewares`、`callback更名为xnext`，码如下：
 
 <a name="middlewares" comment="middlewares锚点"></a>
 ```js
@@ -153,17 +154,15 @@ function requestHandler(req, res) {
   next();
 }
 ```
-上面用middleware+next完成了业务逻辑的`链式调用`。
+上面用middlewares+next完成了业务逻辑的`链式调用`，而middlewares里的每个函数，都是一个`中间件`。
 
 整体思路是：
 
-1. 将所有`处理逻辑函数`存储在一个list中；
-2. 请求到达时`链式调用`list中的`处理逻辑函数`；
+1. 将所有`处理逻辑函数(中间件)`存储在一个list中；
+2. 请求到达时`链式调用`list中的`处理逻辑函数(中间件)`；
 
-这里list里的每个函数都是一个中间件。
-
-#[Connect](https://github.com/senchalabs/connect)及中间件
-Connect的思想跟上面阐述的思想基本一样，先将`处理逻辑`存起来，然后`链式调用`。
+#[Connect](https://github.com/senchalabs/connect)实现
+Connect的思想跟上面阐述的思想基本一样，先将处理逻辑存起来，然后链式调用。
 
 Connect中主要有五个函数
 PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/senchalabs/connect/blob/master/index.js" target="_blank">源码</a>看下面的函数介绍。
@@ -198,7 +197,7 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
 ```
 
 ##app.use(route, fn)
-作用是向stack中添加`逻辑处理函数`。
+作用是向stack中添加`逻辑处理函数`(中间件)。
 
 **输入**:
 
@@ -207,7 +206,7 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
 
 **tips:**
 
-上面的fn表示处理逻辑，它可以
+上面的fn表示处理逻辑，它可以是
 
 1. 一个普通的`function(req,res[,next]){}`；
 2. 一个[httpServer](https://lodejs.org/api/http.html#http_class_http_server)；
@@ -248,14 +247,14 @@ var app = connect();
 app.stack.push({route: '/api', handle: function(req, res, next) {}});
 ```
 
-最后，app.stack里**顺序存储**了所有的**逻辑处理函数**。
+最后，app.stack里**顺序存储**了所有的**逻辑处理函数**(中间件)。
 
 ```js
 app.stack = [function1, function2, function3, ... function30];
 ```
 
 ##app.handle(req, res, out)
-这个函数就是请求到达时，负责`顺序调用`我们`逻辑处理函数`的函数，类似上一章的requestHandler。
+这个函数就是请求到达时，负责`顺序调用`我们存储在stack中的`逻辑处理函数`(中间件)函数，类似上一章的requestHandler。
 
 **输入:**
 
@@ -268,7 +267,7 @@ app.stack = [function1, function2, function3, ... function30];
 可以回头看一下上面的[requestHandler函数](#middlewares)，handle的实现是这个函数的增强版
 
 1. 取得stack(存储`逻辑处理函数`列表)，index(列表下标)
-2. 构建next函数，next的作用就是执行下一个`逻辑处理函数`
+2. 构建next函数，next的作用是执行下一个`逻辑处理函数`
 3. 触发第一个next，触发链式调用
 
 **next函数实现:**
@@ -281,7 +280,7 @@ path是请求路径，route是`逻辑处理函数`自带的属性。
 2. 若路由不匹配，跳过此逻辑;
 3. 若路由匹配[下面的call](#call)执行匹配到的`逻辑处理函数`
 
-tips: 跟上一章最后的代码一样，每个`逻辑处理函数`在自己处理结束时调用`next`，存储在stack中的函数就实现了`链式调用`。
+tips: 跟上一章最后的代码一样，每个`逻辑处理函数`调用`next`来让后面的函数执行，存储在stack中的函数就实现了`链式调用`。不一定所有的函数都在返回的时候才调用`next`，为了不影响效率，有的函数可能先调用next，然而自己还没有返回，继续做自己的事情。
 
 核心代码：
 
@@ -401,7 +400,7 @@ request               app(out)
 
 ##Connect的subapp特性
 
-我们看看它是怎么实现subapp的。
+我们再看看Connect是怎么实现subapp的。
 
 什么是subapp?
 
@@ -453,7 +452,7 @@ connect在handle函数中的第三个参数`out`为这个特性实现提供可�
 #[Express](https://github.com/strongloop/express)
 大家都知道Express是Connect的升级版。
 
-Express不只是Connect的升级版，它还封装了很多对象来方便业务逻辑处理。
+Express不只是Connect的升级版，它还封装了很多对象来方便业务逻辑处理。Express里的Router是Connect的升级版。
 
 Express大概可以分为几个模块
 
@@ -496,7 +495,7 @@ res.render、res.redirect、res.sendFile等等。
 ##Express小结
 
 Express是一个中间件机制的httpServer框架，它本身实现了中间件机制，它也包含了中间件。比如3.x版本的Express
-本身自带bodyParser、cookieSession等中间件，而在4.x中去掉了。包括TJ本身写了很多中间件，比如node-querystring、
+本身自带bodyParser、cookieSession等中间件，而在4.x中去掉了。包括TJ也写了很多中间件，比如node-querystring、
 connect-redis等。
 
 实现业务逻辑解耦时，中间件是从纵向的方面进行的逻辑分解，前面的中间件处理的结果可以给后面用，比如bodyParser把解析
