@@ -103,7 +103,7 @@ fun1->fun2->fun3->fun4->fun5->fun6
 他们通过callback的调用完成了链式调用
 ```
 
-我们动手实现一个类似的链式调用，其中`funlist更名为middlewares`、`callback更名为xnext`，码如下：
+我们动手实现一个类似的链式调用，其中`funlist更名为middlewares`、`callback更名为next`，码如下：
 
 <a name="middlewares" comment="middlewares锚点"></a>
 ```js
@@ -213,6 +213,13 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
 3. 另一个connect的app对象(**sub app特性**)；
 
 由于它们的本质都是`处理逻辑`，都可以用一个`function(req,res,next){}`将它们概括起来，Connect把他们都转化为这个函数，然后把它们存起来。
+
+如何将这三种分别转换为function(req, res, next) {}的形式呢？
+  
+1. 不用转换；
+2. httpServer的定义是“对事件'request'后handler的对象”，我们可以从httpServer.listeners('request')中找到这个函数；
+3. 另一个connect对象，记得app的定义么？本身就是function(req, res, out) {}；
+
 
 **执行过程**:
 
@@ -368,7 +375,7 @@ return server.listen.apply(server, arguments);
 
 ##图解Connect
 
-Connect将中间件存储在app.stack中，通过构造handle种的next函数在请求到来时依次调用这些中间件。
+Connect将中间件存储在app.stack中，通过构造handle中的next函数在请求到来时依次调用这些中间件。
 
 图形总结
 
