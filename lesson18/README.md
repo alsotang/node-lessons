@@ -1,9 +1,24 @@
-一直在用Express开发，整理Connect/Express中间件的思想。这是从httpServer到Express的经过。
+#《何为 connect 中间件》
+
+##目标
+
+1. 理解中间件的概念，为何要使用中间件
+2. 了解Connect的实现
+
+
+##课程内容
+
+1. 原生httpServer遇到的问题
+2. 中间件思想
+3. Connect实现
+4. Express简介
+
+这是从httpServer到Express的升级过程。
 
 #HTTP
 Nodejs的经典httpServer代码
 
-```
+```js
 var http = require('http');
 
 var server = http.createServer(requestHandler);
@@ -29,7 +44,7 @@ server.listen(3000);
 
 实现代码:
 
-```
+```js
 function parseBody(req, callback) {
   //根据http协议从req中解析body
   callback(null, body);
@@ -59,12 +74,12 @@ function requestHandler(req, res) {
 
 有点基础的同学应该能想到解决回调金字塔的办法，朴灵的《深入浅出Node.js》里讲到的三种方法。下面列举了这三种方法加上ES6新增的Generator，共四种解决办法。
 
-- [EventProxy](https://github.com/JacksonTian/eventproxy) —— 事件发布订阅模式
-- [BlueBird](https://github.com/petkaantonov/bluebird) —— Promise方案
-- [Async](https://github.com/caolan/async) —— 异步流程控制库
+- [EventProxy](https://github.com/JacksonTian/eventproxy) —— 事件发布订阅模式(第四课讲到)
+- [BlueBird](https://github.com/petkaantonov/bluebird) —— Promise方案(第十七课讲到)
+- [Async](https://github.com/caolan/async) —— 异步流程控制库(第五课讲到)
 - [Generator](http://es6.ruanyifeng.com/#docs/generator) —— ES6原生Generator
 
-理论上，这四种都能解决回调金字塔问题。而Connect和Express用的是`类似异步流程控制的思想`(个人理解，如有错误请指出)。
+理论上，这四种都能解决回调金字塔问题。而Connect和Express用的是`类似异步流程控制的思想`。
 
 <a name="next"></a>
 异步流程控制库首先要求用户传入待执行的函数列表，记为funlist。流程控制库的任务是让这些函数**顺序执行**。
@@ -90,7 +105,7 @@ fun1->fun2->fun3->fun4->fun5->fun6
 我们动手实现一个类似的链式调用，其中`middlewares===funlist`、`next===callback`，码如下：
 
 <a name="middlewares" comment="middlewares锚点"></a>
-```
+```js
 var middlewares = [
   function fun1(req, res, next) {
     parseBody(req, function(err, body) {
@@ -145,20 +160,21 @@ function requestHandler(req, res) {
 1. 将所有`处理逻辑函数`存储在一个list中；
 2. 请求到达时`链式调用`list中的`处理逻辑函数`；
 
-#[Connect](https://github.com/senchalabs/connect)
+这里list里的每个函数都是一个中间件。
+
+#[Connect](https://github.com/senchalabs/connect)及中间件
 Connect的思想跟上面阐述的思想基本一样，先将`处理逻辑`存起来，然后`链式调用`。
 
 Connect中主要有五个函数
 PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/senchalabs/connect/blob/master/index.js" target="_blank">源码</a>看下面的函数介绍。
-```
+
 |函数名         |作用                          |
-| -------------|---------------------------- |
+| -------------|:----------------------------:|
 |createServer  |包装httpServer形成app         |
 |listen        |监听端口函数                   |
 |use           |向middlewares里面放入业务逻辑   |
 |handle        |上一章的requestHandler函数增强版|
 |call          |业务逻辑的真正执行者            |
-```
 
 ##createServer()
 **输入**:
@@ -194,7 +210,6 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
 上面的fn表示处理逻辑，它可以
 
 1. 一个普通的`function(req,res[,next]){}`；
-
 2. 一个[httpServer](https://lodejs.org/api/http.html#http_class_http_server)；
 3. 另一个connect的app对象(**sub app特性**)；
 
@@ -206,33 +221,36 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
 2. 把这个`处理逻辑`与route一起，放入`stack`中(存储处理逻辑，route用来匹配路由)
 
 核心代码片段
-```
+
+```js
 //route是路由路径，handle是一个`function(req, res, next) {...}`形式的业务逻辑
 this.stack.push({ route: path, handle: handle });
 ```
 
 **返回**:
 
-```
+```js
 //返回自己，可以完成链式调用
 return this;
 ```
 
 **总结:**:
 
-```
+```js
 var app = connect();
 app.use('/api', function(req, res, next) {});
 ```
+
 等价于
-```
+
+```js
 var app = connect();
 app.stack.push({route: '/api', handle: function(req, res, next) {}});
 ```
 
 最后，app.stack里**顺序存储**了所有的**逻辑处理函数**。
 
-```
+```js
 app.stack = [function1, function2, function3, ... function30];
 ```
 
@@ -247,7 +265,7 @@ app.stack = [function1, function2, function3, ... function30];
 
 **处理过程:**
 
-如果忘了，可以先复习一下上面的[requestHandler函数](#middlewares)，handle的实现是这个函数的增强版
+可以回头看一下上面的[requestHandler函数](#middlewares)，handle的实现是这个函数的增强版
 
 1. 取得stack(存储`逻辑处理函数`列表)，index(列表下标)
 2. 构建next函数，next的作用就是执行下一个`逻辑处理函数`
@@ -314,16 +332,14 @@ Connect中规定`function(err, req, res, next) {}`形式为错误处理函数，
 
 **输入:**
 
-```
 |参数名 |描述            |
-|------|---------------|
+|------|:---------------:|
 |handle|逻辑处理函数     |
 |route |路由            |
 |err   |是否发生过错误   |
 |req   |Nodejs对象      |
 |res   |Nodejs对象      |
 |next  |next函数        |
-```
 
 **处理过程:**
 
@@ -346,7 +362,7 @@ call函数是一个执行者，根据当前`错误情况`和`handle类型`决定
 
 代码
 
-```
+```js
 var server = http.createServer(this);
 return server.listen.apply(server, arguments);
 ```
@@ -441,16 +457,14 @@ Express不只是Connect的升级版，它还封装了很多对象来方便业务
 
 Express大概可以分为几个模块
 
-```
 |模块        |描述                   |
-|-----------|-----------------------|
+|-----------|:---------------------:|
 |router     |路由模块是Connect升级版  |
 |request    |经过Express封装的req对象 |
 |response   |经过Express封装的res对象 |
 |application|app上面的各种默认设置     |
-```
 
-Express不是一篇文章能说清楚的，所以只进行粗略概括。
+简要介绍一下每个模块
 
 ##Router
 
@@ -490,8 +504,8 @@ body的结果放在req.body中，后面的逻辑都可以从req.body中取值。
 
 #总结
 
-Connect用流程控制库的回调函数的思想来解耦回调逻辑；
-[Koa](https://github.com/koajs/koa)用Generator方法实现；
+Connect用流程控制库的回调函数及中间件的思想来解耦回调逻辑；
+[Koa](https://github.com/koajs/koa)用Generator方法解决回调问题；
 
 我们应该也可以用事件、Promise的方式实现；
 
