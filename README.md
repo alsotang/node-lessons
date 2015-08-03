@@ -34,12 +34,12 @@
 * Lesson 15: [《Mongodb 与 Mongoose 的使用》](https://github.com/alsotang/node-lessons/tree/master/lesson15)
 * Lesson 16: [《cookie 与 session》](https://github.com/alsotang/node-lessons/tree/master/lesson16) -- by [@Ricardo-Li](https://github.com/Ricardo-Li/)
 * Lesson 17: [《使用 promise 替代回调函数》](https://github.com/alsotang/node-lessons/tree/master/lesson17) -- by [@eeandrew](https://github.com/eeandrew)
+* Lesson 18: [《何为 connect 中间件》](https://github.com/alsotang/node-lessons/tree/master/lesson18) -- by [@albin3](https://github.com/albin3)
 
 ## 计划
 * 《http 中各个 header 的含义》
 * 《操作 mysql》
 * 《在全新的 vps 上搭建 node.js、mongodb、nginx》
-* 《何为 connect 中间件》
 * 《一个简单的 blog 程序》
 
 ## 本课程特点
