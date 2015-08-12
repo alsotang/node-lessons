@@ -8,11 +8,13 @@
 
 这个课程是希望提供更多的 Node.js 实战机会，通过每一节精心安排的课程目标，让 Node.js 的初学者们可以循序渐进地，有目的有挑战地开展 Node.js 的学习。
 
+## 广告
+
 本课程的更新信息可见我的微博：http://weibo.com/tangzhanli
 
 更多 Node.js 入门资料请前往：https://cnodejs.org/getstart
 
-更多 Node.js 及前端简历请发至： alsotang@gmail.com，非常缺人！
+新手搭建 Node.js 云主机，推荐使用无需备案的 [Linode(https://www.linode.com)](https://www.linode.com/?r=15ca84df052ab2ac2cc4ac21714969900782a827) 或 [DigitalOcean(https://www.digitalocean.com/)](https://www.digitalocean.com/?refcode=eba02656eeb3)
 
 ## 课程列表
 
@@ -37,6 +39,7 @@
 * Lesson 18: [《何为 connect 中间件》](https://github.com/alsotang/node-lessons/tree/master/lesson18) -- by [@albin3](https://github.com/albin3)
 
 ## 计划
+
 * 《http 中各个 header 的含义》
 * 《操作 mysql》
 * 《在全新的 vps 上搭建 node.js、mongodb、nginx》
