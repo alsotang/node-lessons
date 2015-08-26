@@ -37,8 +37,8 @@ server.listen(3000);
 
 ```
 1. 检测请求中请求提是否存在，若存在则解析请求体；
-1. 查看请求体中的id是否存在，若存在则去数据库查询；
-1. 根据数据库结果返回约定的值；
+2. 查看请求体中的id是否存在，若存在则去数据库查询；
+3. 根据数据库结果返回约定的值；
 ```
 
 我们首先想到的，抽离函数，每个逻辑一个函数，简单好实现低耦合好维护。
@@ -89,14 +89,14 @@ function requestHandler(req, res) {
 callback是控制顺序执行的关键，funlist里的函数每当调用callback会执行下一个funlist里的函数……如下图
 
 ```
-使用cb表示callback，cb()表示调用；w1表示wait 函数1，即等待函数1调用callback；run()表示该函数正在执行。
+使用cb表示callback，cb()表示调用；wi表示wait 函数i，即等待函数i调用callback；run()表示该函数正在执行。
 
 时序   1     2     3     4     5     6
 fun1  cb()  -     -     -     -     -
 fun2  run() cb()  -     -     -     -
 fun3  w2    run() cb()  -     -     -
 fun4  w3    w3    run() cb()  -     -
-fun5  w4    w4    w4()  run() cb()  -
+fun5  w4    w4    w4    run() cb()  -
 fun6  w5    w5    w5    w5    run() end()
 
 执行顺序为
