@@ -226,3 +226,5 @@ newFoo(); // { value: 100 }
 ```
 
 完。
+
+[上一课](../../../tree/master/lesson10)[下一课](../../../tree/master/lesson12)

@@ -87,3 +87,5 @@ push 完成后，在命令键入 `heroku open`，则 heroku 会自动打开浏�
 国内的话，其实在阿里云上面也可以考虑这么搞一搞。
 
 完。
+
+[上一课](../../../tree/master/lesson11)[下一课](../../../tree/master/lesson13)
