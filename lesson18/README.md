@@ -86,23 +86,7 @@ function requestHandler(req, res) {
 关于异步流程控制库下面简要介绍下，或移步[@第五课](https://github.com/alsotang/node-lessons/tree/master/lesson5)。
 异步流程控制库首先要求用户传入待执行的函数列表，记为funlist。流程控制库的任务是让这些函数 **顺序执行** 。
 
-callback是控制顺序执行的关键，funlist里的函数每当调用callback会执行下一个funlist里的函数……如下图
-
-```
-使用cb表示callback，cb()表示调用；w1表示wait 函数1，即等待函数1调用callback；run()表示该函数正在执行。
-
-时序   1     2     3     4     5     6
-fun1  cb()  -     -     -     -     -
-fun2  run() cb()  -     -     -     -
-fun3  w2    run() cb()  -     -     -
-fun4  w3    w3    run() cb()  -     -
-fun5  w4    w4    w4()  run() cb()  -
-fun6  w5    w5    w5    w5    run() end()
-
-执行顺序为
-fun1->fun2->fun3->fun4->fun5->fun6
-他们通过callback的调用完成了链式调用
-```
+callback是控制顺序执行的关键，funlist里的函数每当调用callback会执行下一个funlist里的函数
 
 我们动手实现一个类似的链式调用，其中 `funlist` 更名为 `middlewares`、`callback` 更名为 `next`，码如下：
 
