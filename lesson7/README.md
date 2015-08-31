@@ -2,18 +2,15 @@
 
 ## 目标
 
-建立一个 lesson7 项目，在其中编写代码。
+建立一个 lesson7 项目，在其中编写代码，我们暂时命名为 *vendor*
+根据下面的步骤，最终的项目结构应该长[这样](https://github.com/alsotang/node-lessons/tree/master/lesson7/vendor)
 
-main.js: 类似上文提到的 fibonacci 函数。
+这次我们测试的对象是上文提到的 fibonacci 函数
 
 此函数的定义为 `int fibonacci(int n)`
 
 * 当 n === 0 时，返回 0；n === 1时，返回 1;
 * n > 1 时，返回 `fibonacci(n) === fibonacci(n-1) + fibonacci(n-2)`，如 `fibonacci(10) === 55`;
-
-vendor文件夹: 前端单元测试的环境。
-
-vendor/tests.js 编写针对前端脚本的测试用例
 
 ## 知识点
 
@@ -33,20 +30,21 @@ vendor/tests.js 编写针对前端脚本的测试用例
 
 #### 浏览器环境执行
 
-我们首先搭建一个测试原型，只需要执行
+我们首先搭建一个测试原型，用 mocha 自带的脚手架可以自动生成。
 
-```js
-//f2e 是原型生成的目录
-mocha init f2e
+```shell
+cd vendor            # 进入我们的项目文件夹
+npm i -g mocha       # 安装全局的 mocha 命令行工具
+mocha init .         # 生成脚手架
 ```
 
-mocha就会自动帮我们生成一个简单的测试原型
+mocha就会自动帮我们生成一个简单的测试原型, 目录结构如下
 ```shell
 .
-├── index.html
+├── index.html       # 这是前端单元测试的入口
 ├── mocha.css
 ├── mocha.js
-└── tests.js
+└── tests.js         # 我们的单元测试代码将在这里编写
 ```
 
 其中 index.html 是单元测试的入口，tests.js 是我们的测试用例文件。
@@ -55,7 +53,7 @@ mocha就会自动帮我们生成一个简单的测试原型
 
 ```html
 <div id="mocha"></div>
-<script src='chai.js'></script>
+<script src='https://raw.githubusercontent.com/chaijs/chai/master/chai.js'></script>
 <script>
   var fibonacci = function (n) {
     if (n === 0) {
@@ -94,16 +92,25 @@ mocha没有提供一个命令行的前端脚本测试环境(因为我们的脚�
 npm i -g mocha-phantomjs
 ```
 
-然后将index.html对应部分修改为
+然后在 index.html 的页面下加上这段兼容代码
+
+```html
+<script>mocha.run()</script>
+```
+
+改为
 
 ```html
 <script>
-  if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
-  else { mocha.run(); }
+  if (window.mochaPhantomJS) {
+    mochaPhantomJS.run();
+  } else {
+    mocha.run();
+  }
 </script>
 ```
 
-然后我们在命令行中运行
+这时候, 我们在命令行中运行
 
 ```shell
 mocha-phantomjs index.html
@@ -111,17 +118,18 @@ mocha-phantomjs index.html
 
 结果展现是不是和后端代码测试很类似 :smile:
 
-你也可以直接在package.json中定义
+更进一步，我们可以直接在 package.json 的 scripts 中添加
+(package.json 通过 `npm init` 生成，这里不再赘述)
 
 ```json
 "scripts": {
-  "test": "./node_modules/.bin/mocha-phantomjs vendor/index.html"
+  "test": "mocha-phantomjs index.html"
 },
 ```
 
 将mocha-phantomjs作为依赖
 
-```bash
+```shell
 npm i mocha-phantomjs --save-dev
 ```
 
@@ -131,4 +139,7 @@ npm i mocha-phantomjs --save-dev
 npm test
 ```
 
+运行结果如下:
+
 至此,我们实现了前端脚本的单元测试，基于 phanatomjs 你几乎可以调用所有的浏览器方法，而 mocha-phanatomjs 也可以很便捷地将测试结果反馈到 mocha，便于后续的持续集成。
+
