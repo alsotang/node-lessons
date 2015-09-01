@@ -8,7 +8,8 @@
   </head>
   <body>
     <div id="mocha"></div>
-    <script type="text/javascript">
+    <script src='https://raw.githubusercontent.com/chaijs/chai/master/chai.js'></script>
+    <script>
       var fibonacci = function (n) {
         if (n === 0) {
           return 0;
@@ -19,13 +20,15 @@
         return fibonacci(n-1) + fibonacci(n-2);
       };
     </script>
-    <script src='chai.js'></script>
     <script src="mocha.js"></script>
     <script>mocha.setup('bdd')</script>
     <script src="tests.js"></script>
     <script>
-      if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
-      else { mocha.run(); }
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+      } else {
+        mocha.run();
+      }
     </script>
   </body>
 </html>

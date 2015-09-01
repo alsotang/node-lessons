@@ -1,0 +1,11 @@
+{
+  "name": "lesson7-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mocha.js",
+  "scripts": {
+    "test": "mocha-phantomjs index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
