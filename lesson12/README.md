@@ -2,7 +2,7 @@
 
 ## 目标
 
-将 https://github.com/Ricardo-Li/node-practice-2 这个项目部署上 heroku，成为一个线上项目
+将 https://github.com/Ricardo-Li/node-practice-2 (这个项目已经被删了。参照 https://github.com/alsotang/node-lessons/tree/master/lesson3 的代码自己操作一下吧。)这个项目部署上 heroku，成为一个线上项目
 
 我部署的在这里 http://serene-falls-9294.herokuapp.com/
 
