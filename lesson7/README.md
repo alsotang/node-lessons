@@ -33,14 +33,14 @@
 我们首先搭建一个测试原型，用 mocha 自带的脚手架可以自动生成。
 
 ```shell
-cd vendor            # 进入我们的项目文件夹
+mkdir lession7 && cd lession7 #创建并进入项目文件夹
 npm i -g mocha       # 安装全局的 mocha 命令行工具
-mocha init .         # 生成脚手架
+mocha init vendor . # 生成脚手架 vendor为要生成脚手架的目录，可随意命名
 ```
 
 mocha就会自动帮我们生成一个简单的测试原型, 目录结构如下
 ```shell
-.
+vendor
 ├── index.html       # 这是前端单元测试的入口
 ├── mocha.css
 ├── mocha.js
