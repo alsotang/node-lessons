@@ -21,6 +21,16 @@ $ nvm
 ```
 
 当看到有输出时，则 nvm 安装成功。
+如果遇到关闭shell后遇到以下提示:  
+
+```
+-bash: nvm: command not found
+```
+请执行:  
+
+```
+$ source ~/.nvm/nvm.sh
+```
 
 ### 安装 Node.js
 
