@@ -66,31 +66,35 @@ REPL(read–eval–print loop) 应该就出来了，那我们就成功了。
 
 ### 完善安装
 
-上述过程完成后，有时会出现，当开启一个新的 shell 窗口时，找不到 node 命令的情况。
+上述过程完成后，有时会出现，当开启一个新的 shell 窗口时，找不到 node 命令的情况(`-bash: nvm: command not found`)。
 
 这种情况一般来自两个原因
 
-一、shell 不知道 nvm 的存在
+一、shell 不知道 nvm 的存在  
+
+解决方式：  
+安装完后，为了让你可以直接在shell使用nvm命令，必须在你的 .bash_profile 加入以下这行（习惯把设定放在.bashrc惹人可以把以下的.bash_profile改成.bashrc）  
+
+```
+ source $(brew --prefix nvm)/nvm.sh
+ ```  
+或者直接执行以下命令来加入  
+
+```
+ $ echo "source $(brew --prefix nvm)/nvm.sh" >> .bash_profile
+ ```
+记得重新source您的 .bash_profile 来让设定生效  
+
+```
+ $ . ~/.bash_profile
+```
+
+
 
 二、nvm 已经存在，但是没有 default 的 Node.js 版本可用。
 
-解决方式：
-
-一、检查 `~/.profile` 或者 `~/.bash_profile` 中有没有这样两句
-
-```
-export NVM_DIR="/Users/YOURUSERNAME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-```
-
-没有的话，加进去。
-
-这两句会在 bash 启动的时候被调用，然后注册 nvm 命令。
-
-二、
-
-调用
-
+解决方式：   
+调用  
 `$ nvm ls`
 
 看看像不像上述图1中一样，有 default 的指向。
