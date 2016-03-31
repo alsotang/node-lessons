@@ -141,7 +141,7 @@ var outputPromise = getInputPromise().then(function(fulfilled){
 
 /**
  * 当outputPromise状态由未完成变成fulfil时，调用function(fulfilled)，控制台打印'fulfilled: fulfilled'。
- * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'fulfilled: rejected'。
+ * 当outputPromise状态由未完成变成rejected, 调用function(rejected), 控制台打印'rejected: rejected'。
  */
 outputPromise.then(function(fulfilled){
 	console.log('fulfilled: ' + fulfilled);
