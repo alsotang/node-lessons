@@ -17,7 +17,9 @@
 
 首先去弄个 benchmark 库，https://github.com/bestiejs/benchmark.js 。
 
-这个库已经两年没有更新了，两年前发了个 1.0.0 版本，直到现在。
+<del> 这个库已经两年没有更新了，两年前发了个 1.0.0 版本，直到现在。 </del>
+
+这个库的最新版本是 2.1.0
 
 用法也特别简单，照着官网的 copy 下来就好。
 
@@ -58,7 +60,7 @@ suite
   console.log(String(event.target));
 })
 .on('complete', function() {
-  console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+  console.log('Fastest is ' + this.filter('fastest').map('name'));
 })
 // 这里的 async 不是 mocha 测试那个 async 的意思，这个选项与它的时间计算有关，默认勾上就好了。
 .run({ 'async': true });
