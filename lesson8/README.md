@@ -239,12 +239,12 @@ describe('test/app.test.js', function () {
     var supertest = require('supertest');
     var userCookie;
     supertest.post('login').end(function (err, res) {
-        userCookie = res.headers['Cookie']
+        userCookie = res.headers['set-cookie']
       });
     // then ..
 
     supertest.post('create_topic')
-      .set('Cookie', userCookie)
+      .set('cookie', userCookie)
       .end(...)
     ```
 
