@@ -87,6 +87,19 @@ export NVM_DIR="/Users/YOURUSERNAME/.nvm"
 
 这两句会在 bash 启动的时候被调用，然后注册 nvm 命令。
 
+若mac系统第一次使用.bash，系统中不存在.bash_profile，可以通过在终端中输入命令
+1.进入当前用户的home目录
+cd ~
+2.创建.bash_profile
+touch .bash_profile
+3.编辑.bash_profile文件
+open -e .bash_profile
+4.将下面的命令复制进去
+export NVM_DIR="/Users/YOURUSERNAME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+5.保存文件，关闭.bash_profile
+6.更新刚配置的环境变量
+source .bash_profile
 二、
 
 调用
