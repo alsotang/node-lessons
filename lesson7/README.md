@@ -53,7 +53,7 @@ mocha就会自动帮我们生成一个简单的测试原型, 目录结构如下
 
 ```html
 <div id="mocha"></div>
-<script src='https://raw.githubusercontent.com/chaijs/chai/master/chai.js'></script>
+<script src='https://cdn.rawgit.com/chaijs/chai/master/chai.js'></script>
 <script>
   var fibonacci = function (n) {
     if (n === 0) {
