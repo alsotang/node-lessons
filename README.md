@@ -10,7 +10,7 @@
 
 ## 广告
 
-本课程的更新信息可见我的微博：http://weibo.com/tangzhanli
+**需要内推腾讯的同学请参照此贴：** https://cnodejs.org/topic/58351689bde2b59e06141e9f
 
 更多 Node.js 入门资料请前往：https://cnodejs.org/getstart
 
