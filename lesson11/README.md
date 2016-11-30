@@ -12,6 +12,8 @@
 
 ## 课程内容
 
+**es6中新增了 let 关键词，与块级作用域，相关知识参考： http://es6.ruanyifeng.com/#docs/let **
+
 ### var 作用域
 
 先来看个简单的例子：
