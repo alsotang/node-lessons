@@ -38,6 +38,8 @@ npm i -g mocha       # 安装全局的 mocha 命令行工具
 mocha init .         # 生成脚手架
 ```
 
+如果上一步出错，返回上一级（lesson7），然后“mocha init vendor”
+
 mocha就会自动帮我们生成一个简单的测试原型, 目录结构如下
 ```shell
 .
