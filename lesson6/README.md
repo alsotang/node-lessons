@@ -173,7 +173,7 @@ var fibonacci = function (n) {
     throw new Error('n should be a Number');
   }
   if (n < 0) {
-    throw new Error('n should >= 0')
+    throw new Error('n should >= 0');
   }
   if (n > 10) {
     throw new Error('n should <= 10');
