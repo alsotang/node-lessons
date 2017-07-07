@@ -74,7 +74,7 @@ app.get('/', function (req, res) {
   res.send(md5Value);
 });
 
-app.listen(3000, function (req, res) {
+app.listen(3000, function () {
   console.log('app is running at port 3000');
 });
 
