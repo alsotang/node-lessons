@@ -86,7 +86,7 @@ describe('simple test', function () {
 
 mocha没有提供一个命令行的前端脚本测试环境(因为我们的脚本文件需要运行在浏览器环境中)，因此我们使用phantomjs帮助我们搭建一个模拟环境。不重复制造轮子，这里直接使用mocha-phantomjs帮助我们在命令行运行测试。
 
-首先安装mocha-phanatomjs
+首先安装mocha-phantomjs
 
 ```shell
 npm i -g mocha-phantomjs
