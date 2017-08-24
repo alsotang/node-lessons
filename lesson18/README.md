@@ -184,7 +184,7 @@ PS: Connect的核心代码是200+行，建议对照<a href="https://github.com/s
   route   stack
 ```
 
-##app.use(route, fn)
+## app.use(route, fn)
 
 作用是向stack中添加 `逻辑处理函数` (中间件)。
 
@@ -320,7 +320,7 @@ middleware4 :  不匹配路由，skip
 ```
 
 <a name="call"></a>
-##call(handle, route, err, req, res, next)
+## call(handle, route, err, req, res, next)
 
 > 这里有个比较有趣的知识，`console.log(Function.length)`会返回函数定义的参数个数。值跟在函数体内执行`arguments.length`一样。
 
@@ -352,7 +352,7 @@ Connect中规定`function(err, req, res, next) {}`形式为错误处理函数，
 
 call函数是一个执行者，根据当前`错误情况`和`handle类型`决定`是否执行`当前的handle。
 
-##listen
+## listen
 
 创建一个httpServer，将Connect自己的业务逻辑作为requestHandler，监听端口
 
@@ -363,7 +363,7 @@ var server = http.createServer(this);
 return server.listen.apply(server, arguments);
 ```
 
-##图解Connect
+## 图解Connect
 
 Connect将中间件存储在app.stack中，通过构造handle中的next函数在请求到来时依次调用这些中间件。
 
@@ -395,7 +395,7 @@ request               app(out)
   end(response在处理过程中已经返回了)
 ```
 
-##Connect的subapp特性
+## Connect的subapp特性
 
 我们再看看Connect是怎么实现subapp的，比较有趣。
 
@@ -462,19 +462,19 @@ Express大概可以分为几个模块
 
 简要介绍一下每个模块
 
-##Router
+## Router
 
 在Connect中间件特性的基础上，加入了如下特性，是Connect的升级版
 
 1. 正则匹配route;
 2. 进行将http的方法在route中分解开;
 
-##Request
+## Request
 
 在Request中集成了http.IncomingMessage(可读流+事件)，并在其上增加了新的属性，方便使用，我们最常用的应该是
 req.param。
 
-##Response
+## Response
 
 在Response中集成了http.ServerResponse(可写流+事件)，并在其上增加了很多方便返回的函数，有我们熟悉的res.json、
 res.render、res.redirect、res.sendFile等等。
@@ -485,11 +485,11 @@ res.render、res.redirect、res.sendFile等等。
 我们的业务逻辑是把流读为String/Object再进行逻辑处理，处理完再推送给另一个stream，有没有可能在流的层面进行逻辑解
 耦提供服务呢？求大神解答了…至少这种写法在大流量、逻辑简单的情况下是有用的。
 
-##Application
+## Application
 
 除了上面的三个模块以外，还需要有个地方存储整个app的属性、设置等。比较常用的是app.engine函数设置模板引擎。
 
-##Express小结
+## Express小结
 
 Express是一个中间件机制的httpServer框架，它本身实现了中间件机制，它也包含了中间件。比如3.x版本的Express
 本身自带bodyParser、cookieSession等中间件，而在4.x中去掉了。包括TJ也写了很多中间件，比如node-querystring、
