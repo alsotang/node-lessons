@@ -19,7 +19,7 @@ var web_development = "python php ruby javascript jsonp perhapsphpisoutdated";
 
 开始这门课之前，大家先去看两篇文章。
 
-《正则表达式30分钟入门教程》：http://deerchao.net/tutorials/regex/regex.htm
+《正则表达式30分钟入门教程》：http://www.cnblogs.com/deerchao/archive/2006/08/24/zhengzhe30fengzhongjiaocheng.html
 
 上面这篇介绍了正则表达式的基础知识，但是对于零宽断言没有展开来讲，零宽断言看下面这篇：
 
