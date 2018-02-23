@@ -122,7 +122,9 @@ function 构造函数、闭包、字面量哈希，都可以混在一起写，�
 
 js 中，匿名函数非常的方便，有效利用函数式编程的特性可以使人写代码时心情愉悦。
 
-使用 lodash：https://lodash.com/docs
+* 使用 lodash：https://lodash.com/docs
+
+* 使用 Ramda：http://ramdajs.com/docs/
 
 ### 泛型
 
