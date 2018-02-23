@@ -4,9 +4,10 @@
   "description": "使用 superagent 与 cheerio 完成简单爬虫",
   "main": "app.js",
   "dependencies": {
-    "cheerio": "^0.17.0",
-    "express": "^4.9.5",
-    "superagent": "^0.20.0"
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "phantom": "^4.0.12",
+    "superagent": "^3.8.2"
   },
   "devDependencies": {},
   "scripts": {
