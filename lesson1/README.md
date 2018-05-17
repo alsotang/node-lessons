@@ -124,7 +124,7 @@ scheme有我们很熟悉的`http`、`https`、`ftp`，以及著名的`ed2k`，`t
 ### 尾声
 
 在了解完端口和url之后，再去看例子代码，相信应该好理解很多。
-有必要的话，还可以在解刨一下express的use逻辑，对峙`http.createServer`，相信还有火花，:)
+有必要的话，还可以在解剖一下express的use逻辑，对峙`http.createServer`，相信还有火花，:)
 
 
 
