@@ -31,7 +31,7 @@ var web_development = "python php ruby javascript jsonp perhapsphpisoutdated";
 
 伴随着 perl，有一个类似正则表达式的标准被实现了出来，叫 pcre：Perl Compatible Regular Expressions。
 
-不遗憾的是，js 里面的正则与 pcre 不是兼容的。很多语言都这样。
+不过遗憾的是，js 里面的正则与 pcre 不是兼容的。很多语言都这样。
 
 如果需要测试你自己写的正则表达式，建议上这里：http://refiddle.com/ ，可以所见即所得地调试。
 
