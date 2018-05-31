@@ -156,7 +156,7 @@ var Post = mongoose.model('Post', {
 });
 ```
 
-评论就不要自己做了，接入多说：http://duoshuo.com/
+<del> 评论就不要自己做了，接入多说：http://duoshuo.com/ </del>
 
 编辑器就纯文本好了，用 markdown 写。
 

@@ -35,7 +35,7 @@ OK，基础知识前面都讲得很多了，这节课我不会事无巨细地写
 
 为什么说 supertest 是 superagent 的孪生库呢，因为他们的 API 是一模一样的。superagent 是用来抓取页面用的，而 supertest，是专门用来配合 express （准确来说是所有兼容 connect 的 web 框架）进行集成测试的。
 
-将使你有一个 app: `var app = express();`，想对它的 get 啊，post 接口啊之类的进行测试，那么只要把它传给 supertest：`var request = require('supertest')(app)`。之后调用 `requset.get('/path')` 时，就可以对 app 的 path 路径进行访问了。它的 API 参照 superagent 的来就好了：http://visionmedia.github.io/superagent/ 。
+假使你有一个 app: `var app = express();`，想对它的 get 啊，post 接口啊之类的进行测试，那么只要把它传给 supertest：`var request = require('supertest')(app)`。之后调用 `requset.get('/path')` 时，就可以对 app 的 path 路径进行访问了。它的 API 参照 superagent 的来就好了：http://visionmedia.github.io/superagent/ 。
 
 我们来新建一个项目
 
