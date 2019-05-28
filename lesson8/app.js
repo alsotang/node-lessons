@@ -35,6 +35,10 @@ app.get('/fib', function (req, res) {
 
 module.exports = app;
 
-app.listen(3000, function () {
-  console.log('app is listening at port 3000');
-});
+// 测试用例运行时，不监听端口 
+// 兼容新版本依赖下，运行测试用例时重复监听同一端口，导致测试用例无法退出（端口没有被使用）或监听端口报错的问题（端口已被使用）
+if(!module.parent){
+  app.listen(3000, function () {
+    console.log('app is listening at port 3000');
+  });
+}
