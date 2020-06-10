@@ -322,7 +322,7 @@ middleware4 :  不匹配路由，skip
 <a name="call"></a>
 ## call(handle, route, err, req, res, next)
 
-> 这里有个比较有趣的知识，`console.log(Function.length)`会返回函数定义的参数个数。值跟在函数体内执行`arguments.length`一样。
+> 这里有个比较有趣的知识，`console.log(Function.length)`会返回函数定义的参数个数。
 
 Connect中规定`function(err, req, res, next) {}`形式为错误处理函数，`function(req, res, next) {}`为正常的业务逻辑处理函数。那么，可以根据Function.length以判断它是否为错误处理函数。
 
