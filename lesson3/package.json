@@ -6,7 +6,7 @@
   "dependencies": {
     "cheerio": "^0.17.0",
     "express": "^4.9.5",
-    "superagent": "^0.20.0"
+    "superagent": "^5.1.0"
   },
   "devDependencies": {},
   "scripts": {
