@@ -38,7 +38,7 @@ OK，新建一个文件夹叫 lesson1 的，进去里面安装 express
 ```
 $ mkdir lesson1 && cd lesson1
 # 这里没有从官方 npm 安装，而是使用了大淘宝的 npm 镜像
-$ npm install express --registry=https://registry.npm.taobao.org
+$ npm install express --registry=https://registry.npmmirror.com
 ```
 
 安装完成后，我们的 lesson1 目录下应该会出现一个 `node_modules` 文件夹，`ls` 看看
