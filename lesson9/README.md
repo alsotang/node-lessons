@@ -33,7 +33,7 @@ var web_development = "python php ruby javascript jsonp perhapsphpisoutdated";
 
 不过遗憾的是，js 里面的正则与 pcre 不是兼容的。很多语言都这样。
 
-如果需要测试你自己写的正则表达式，建议上这里：http://refiddle.com/ ，可以所见即所得地调试。
+如果需要测试你自己写的正则表达式，建议上这里：https://coddy.tech/tools/regex-tester ，可以所见即所得地调试。
 
 接下来我们主要讲讲 js 中需要注意的地方，至于正则表达式的内容，上面那两篇文章足够学习了。
 
